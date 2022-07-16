@@ -58,8 +58,22 @@
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"first_name\",\"family_name\":\"last_name\",\"picture\":\"picture\",\"birthdate\":\"birthday\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"given_name\",\"family_name\":\"family_name\",\"picture\":\"picture\",\"birthdate\":\"birthdays\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"],\"LogoutURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"]}",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": []
   }
 }

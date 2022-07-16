@@ -50,11 +50,6 @@
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
-        "logicalId": "authUdemyAWSAmplifyReact"
-      },
-      "lastPushTimeStamp": "2022-07-16T13:08:19.334Z",
       "output": {
         "UserPoolId": "us-east-2_HF1uxG64J",
         "AppClientIDWeb": "1a4j08p21pc9p4uli60cj40j42",
@@ -63,10 +58,15 @@
         "IdentityPoolId": "us-east-2:52deba07-0a89-4d2f-b1b0-9bd831dc122d",
         "UserPoolArn": "arn:aws:cognito-idp:us-east-2:782949811649:userpool/us-east-2_HF1uxG64J",
         "IdentityPoolName": "testAuthIdentityPool__staging",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"],\"LogoutURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"]}",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"]}",
         "UserPoolName": "UdemyAWSAmplifyReact"
       },
-      "lastPushDirHash": "nuNzqL/X9a0SAgZWYLHC2de3W+o="
+      "lastPushTimeStamp": "2022-07-16T15:05:23.180Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
+        "logicalId": "authUdemyAWSAmplifyReact"
+      },
+      "lastPushDirHash": "0WW9dPEn7nGETGeda4NRZVQz3+I="
     }
   }
 }
