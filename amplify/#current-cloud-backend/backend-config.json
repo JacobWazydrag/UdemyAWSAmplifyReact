@@ -8,17 +8,14 @@
       "frontendAuthConfig": {
         "socialProviders": [
           "FACEBOOK",
-          "GOOGLE"
+          "GOOGLE",
+          "AMAZON"
         ],
         "usernameAttributes": [
           "EMAIL"
         ],
         "signupAttributes": [
-          "EMAIL",
-          "GIVEN_NAME",
-          "FAMILY_NAME",
-          "PICTURE",
-          "BIRTHDATE"
+          "EMAIL"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
@@ -36,6 +33,39 @@
         "verificationMechanisms": [
           "EMAIL"
         ]
+      }
+    }
+  },
+  "storage": {
+    "s3udemyawsamplifyreactstorage48843bf6": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  },
+  "api": {
+    "udemyawsamplifyreact": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "UdemyAWSAmplifyReact",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authUdemyAWSAmplifyReact"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
       }
     }
   }

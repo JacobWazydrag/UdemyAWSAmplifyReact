@@ -3,10 +3,10 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-2",
-    "aws_cognito_identity_pool_id": "us-east-2:52deba07-0a89-4d2f-b1b0-9bd831dc122d",
+    "aws_cognito_identity_pool_id": "us-east-2:446af370-b93f-4ded-81f9-47e8cd035ad3",
     "aws_cognito_region": "us-east-2",
-    "aws_user_pools_id": "us-east-2_HF1uxG64J",
-    "aws_user_pools_web_client_id": "1a4j08p21pc9p4uli60cj40j42",
+    "aws_user_pools_id": "us-east-2_nynTdimU1",
+    "aws_user_pools_web_client_id": "1ttu6ammm4lcq0ig6pk71lt70o",
     "oauth": {
         "domain": "xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com",
         "scope": [
@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://dev.jacobwazydragcourse.click,https://www.jacobwazydragcourse.click,https://qa.jacobwazydragcourse.click",
-        "redirectSignOut": "https://dev.jacobwazydragcourse.click,https://www.jacobwazydragcourse.click,https://qa.jacobwazydragcourse.click",
+        "redirectSignIn": "http://localhost:3000/",
+        "redirectSignOut": "http://localhost:3000/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -26,14 +26,11 @@ const awsmobile = {
     ],
     "aws_cognito_social_providers": [
         "FACEBOOK",
-        "GOOGLE"
+        "GOOGLE",
+        "AMAZON"
     ],
     "aws_cognito_signup_attributes": [
-        "EMAIL",
-        "GIVEN_NAME",
-        "FAMILY_NAME",
-        "PICTURE",
-        "BIRTHDATE"
+        "EMAIL"
     ],
     "aws_cognito_mfa_configuration": "OFF",
     "aws_cognito_mfa_types": [
@@ -50,7 +47,12 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_user_files_s3_bucket": "udemyawsamplifyreact-storage-48843bf6102759-staging",
+    "aws_user_files_s3_bucket_region": "us-east-2",
+    "aws_appsync_graphqlEndpoint": "https://xeiz2i4rvvgxhjs7ch3uvaziqu.appsync-api.us-east-2.amazonaws.com/graphql",
+    "aws_appsync_region": "us-east-2",
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
 };
 
 

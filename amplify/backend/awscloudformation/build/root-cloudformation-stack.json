@@ -159,7 +159,7 @@
         "Parameters": {
           "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "udemya79f2a43c",
+          "resourceNameTruncated": "udemya334db048",
           "userPoolName": "UdemyAWSAmplifyReact",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
@@ -171,15 +171,15 @@
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Symbols,Requires Uppercase",
-          "requiredAttributes": "email,given_name,family_name,picture,birthdate",
+          "requiredAttributes": "email",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
           "userpoolClientWriteAttributes": "",
           "userpoolClientReadAttributes": "",
-          "userpoolClientLambdaRole": "UdemyA79f2a43c_userpoolclient_lambda_role",
+          "userpoolClientLambdaRole": "UdemyA334db048_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "79f2a43c",
+          "sharedId": "334db048",
           "resourceName": "UdemyAWSAmplifyReact",
           "authSelections": "identityPoolAndUserPool",
           "serviceName": "Cognito",
@@ -192,9 +192,9 @@
           "authProviders": "",
           "hostedUI": true,
           "hostedUIDomainName": "xfvhs58rx9xr",
-          "authProvidersUserPool": "Facebook,Google",
-          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"first_name\",\"family_name\":\"last_name\",\"picture\":\"picture\",\"birthdate\":\"birthday\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"given_name\",\"family_name\":\"family_name\",\"picture\":\"picture\",\"birthdate\":\"birthdays\",\"username\":\"sub\"}}]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://xfvhs58rx9xr-staging.auth.us-east-2.amazoncognito.com/oauth2/idpresponse\"]}",
+          "authProvidersUserPool": "Facebook,Google,LoginWithAmazon",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile profile:user_id\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"user_id\"}}]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
           "authRoleArn": {
@@ -211,7 +211,60 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"706056917128237\",\"client_secret\":\"a28ccb95812e9793311d6db2d0efa19f\"},{\"ProviderName\":\"Google\",\"client_id\":\"116561981045-t95mr3cdids4apctbel1eptivmvemtdu.apps.googleusercontent.com\",\"client_secret\":\"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\"}]",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\"},{\"ProviderName\":\"Google\"},{\"ProviderName\":\"LoginWithAmazon\"}]",
+          "env": "staging"
+        }
+      }
+    },
+    "storages3udemyawsamplifyreactstorage48843bf6": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "udemyawsamplifyreact-storage-48843bf6",
+          "selectedGuestPermissions": "",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_b1b9350a",
+          "s3ProtectedPolicy": "Protected_policy_b1b9350a",
+          "s3PublicPolicy": "Public_policy_b1b9350a",
+          "s3ReadPolicy": "read_policy_b1b9350a",
+          "s3UploadsPolicy": "Uploads_policy_b1b9350a",
+          "authPolicyName": "s3_amplify_b1b9350a",
+          "unauthPolicyName": "s3_amplify_b1b9350a",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "DISALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "DISALLOW",
+          "s3PermissionsGuestUploads": "DISALLOW",
+          "env": "staging"
+        }
+      }
+    },
+    "apiudemyawsamplifyreact": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "Parameters": {
+          "AppSyncApiName": "udemyawsamplifyreact",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "AuthCognitoUserPoolId": {
+            "Fn::GetAtt": [
+              "authUdemyAWSAmplifyReact",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "S3DeploymentBucket": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/5ceb91e37f695dd084940da02896691b221b247a",
           "env": "staging"
         }
       }
