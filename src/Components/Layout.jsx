@@ -23,7 +23,9 @@ const useStyles = makeStyles({
     root: { display: 'flex' },
     page: {
         background: '#f9f9f9',
-        width: '100%'
+        width: '100%',
+        padding: 50,
+        marginBottom: 50
     },
     drawer: {
         width: drawerWidth,
@@ -110,7 +112,7 @@ export default function Layout({ children, user, signout }) {
                                 <FaceIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={user.username}
+                                primary={user.attributes.preferred_username}
                                 secondary={'Artist'}></ListItemText>
                         </ListItem>
                         <ListItem button onClick={() => signout()}>

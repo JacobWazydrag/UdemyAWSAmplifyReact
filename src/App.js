@@ -25,9 +25,9 @@ export default function App() {
                     'cognito:groups'
                 ] &&
                 user
-                    .getSignInUserSession()
-                    .getAccessToken()
-                    .payload['cognito:groups'].includes('Admin') ? (
+                .getSignInUserSession()
+                .getAccessToken()
+                .payload['cognito:groups'].includes('Admin') ? (
                     <main>
                         <h1>
                             Hello {user.username} Admin!, please develope these

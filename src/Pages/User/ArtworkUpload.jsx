@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
-import { Typography, Button, message, Input, Icon } from '@mui/material';
+import {
+    Typography,
+    Button,
+    TextField,
+    Grid,
+    Paper
+} from '@mui/material';
 import FileUpload from '../../Components/FileUpload';
-import Axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { createArtwork } from '../../graphql/mutations';
+import config from '../../aws-exports';
 
-const Artshows = [
-    { key: 1, value: 'Africa' },
-    { key: 2, value: 'Europe' },
-    { key: 3, value: 'Asia' },
-    { key: 4, value: 'North America' },
-    { key: 5, value: 'South America' },
-    { key: 6, value: 'Australia' },
-    { key: 7, value: 'Antarctica' }
-];
+const {
+    aws_user_files_s3_bucket_region: region,
+    aws_user_files_s3_bucket: bucket
+} = config;
 
 export default function ArtworkUpload() {
     const [TitleValue, setTitleValue] = useState('');
     const [DescriptionValue, setDescriptionValue] = useState('');
+    const [StatusValue, setStatusValue] = useState('');
     const [PriceValue, setPriceValue] = useState(0);
-    const [ArtshowValue, setArtshowValue] = useState(1);
+    // const [ImagesUploadingToS3] = useState(null);
+    // const [ArtshowValue, setArtshowValue] = useState(1);
 
     const [Images, setImages] = useState([]);
 
@@ -33,89 +39,158 @@ export default function ArtworkUpload() {
         setPriceValue(event.currentTarget.value);
     };
 
-    const onArtshowsSelectChange = (event) => {
-        setArtshowValue(event.currentTarget.value);
+    const onStatusChange = (event) => {
+        setStatusValue(event.currentTarget.value);
     };
+
+    // const onArtshowsSelectChange = (event) => {
+    //     setArtshowValue(event.currentTarget.value);
+    // };
 
     const updateImages = (newImages) => {
         setImages(newImages);
     };
-    const onSubmit = (event) => {
+
+    const uploadImageToS3 = async (image) => {
+        console.log(image);
+        let file = image;
+        let extension = image.name.split('.')[1];
+        let name = image.name.split('.')[0];
+        let key = `images/${uuidv4()}${name}.${extension}`;
+        // let url = `https://${bucket}.s3.${region}.amazonaws.com/public/${`images/${uuidv4()}${name}.${extension}`}`;
+        return new Promise((resolve, reject) => {
+            Storage.put(key, file, {
+                level: 'public',
+                contentType: file.type
+            })
+                .then((res) => {
+                    console.log('res', res);
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                });
+            // let url2 = Storage.get(key, { level: 'public' });
+            resolve({ bucket: bucket, region: region, key: key });
+        });
+    };
+
+    const onSubmit = async (event) => {
         event.preventDefault();
 
         if (
             !TitleValue ||
             !DescriptionValue ||
             !PriceValue ||
-            !ArtshowValue ||
+            // !ArtshowValue ||
+            !StatusValue ||
             !Images
         ) {
             return alert('fill all the fields first!');
         }
 
-        const variables = {
+        const inputs = {
             title: TitleValue,
             description: DescriptionValue,
-            price: PriceValue,
-            images: Images,
-            artshows: ArtshowValue
+            price: parseInt(PriceValue),
+            status: StatusValue
+            // artshows: ArtshowValue
         };
-
-        Axios.post('/api/product/uploadProduct', variables).then((response) => {
-            // if (response.data.success) {
-            //     alert('Product Successfully Uploaded');
-            //     props.history.push('/');
-            // } else {
-            //     alert('Failed to upload Product');
-            // }
+        // first try to upload the images to a bucket
+        let promises = [];
+        Images.map((image, i) => {
+            return promises.push(uploadImageToS3(image));
         });
+        Promise.all(promises)
+            .then((uploadedImgs) => {
+                console.log(
+                    'Yayy, all images are uploaded successfully',
+                    uploadedImgs
+                );
+                inputs.image1 = uploadedImgs[0];
+                inputs.image2 = uploadedImgs[1];
+                inputs.image3 = uploadedImgs[2];
+            })
+            .catch((err) => {
+                console.log('erre', err);
+            });
+
+        try {
+            await API.graphql(
+                graphqlOperation(createArtwork, { input: inputs })
+            );
+            setTitleValue('');
+            setDescriptionValue('');
+            setStatusValue('');
+            setPriceValue('');
+            setImages([]);
+            console.log('success!!!');
+        } catch (err) {
+            console.log('error creating todo:', err);
+        }
     };
 
     return (
-        <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
+        <Paper
+            style={{
+                height: '100%',
+                textAlign: 'center',
+                marginLeft: 50,
+                marginRight: 50,
+                marginTop: 50,
+                marginBottom: -50,
+                minWidth: 350
+            }}
+            elevation={3}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <Typography level={2}> Upload Travel Product</Typography>
+            <img style={{float: 'left', height: 100, width: 100, paddingLeft: 5, paddingTop: 5}} src="/ArtSpace_Logo.webp" alt="Artpsace Logo" /><Typography variant={'h2'}> Upload Artwork!</Typography>
             </div>
-
-            <form onSubmit={onSubmit}>
-                {/* DropZone */}
-                <FileUpload refreshFunction={updateImages} />
-
-                <br />
-                <br />
-                <label>Title</label>
-                <Input onChange={onTitleChange} value={TitleValue} />
-                <br />
-                <br />
-                <label>Description</label>
-                <textarea
-                    onChange={onDescriptionChange}
-                    value={DescriptionValue}
-                />
-                <br />
-                <br />
-                <label>Price($)</label>
-                <Input
-                    onChange={onPriceChange}
-                    value={PriceValue}
-                    type='number'
-                />
-                <br />
-                <br />
-                <select
-                    onChange={onArtshowsSelectChange}
-                    value={ArtshowValue}>
-                    {Artshows.map((item) => (
-                        <option key={item.key} value={item.key}>
-                            {item.value}{' '}
-                        </option>
-                    ))}
-                </select>
-                <br />
-                <br />
-
-                <Button onClick={onSubmit}>Submit</Button>
-            </form>
-        </div>
+            <Grid container direction='column' spacing={2}>
+                <Grid item xs={6} rowSpacing={5}>
+                    <TextField
+                        style={{ width: '35%', margin: 10 }}
+                        label={'Title'}
+                        onChange={onTitleChange}
+                        value={TitleValue}
+                    />
+                    <TextField
+                        style={{ width: '35%', margin: 10 }}
+                        label={'Description'}
+                        onChange={onDescriptionChange}
+                        value={DescriptionValue}
+                        type='textarea'
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        style={{ width: '35%', margin: 10 }}
+                        label={'Price $'}
+                        onChange={onPriceChange}
+                        value={PriceValue}
+                        type='number'
+                    />
+                    <TextField
+                        style={{ width: '35%', margin: 10 }}
+                        label={'Status'}
+                        onChange={onStatusChange}
+                        value={StatusValue}
+                    />
+                </Grid>
+            </Grid>
+            <FileUpload refreshFunction={updateImages} />
+            <Button
+                disabled={
+                    !TitleValue ||
+                    !DescriptionValue ||
+                    !PriceValue ||
+                    // !ArtshowValue ||
+                    !StatusValue ||
+                    !Images.length > 0
+                }
+                variant='contained'
+                onClick={onSubmit}
+                style={{ width: '100%'}}>
+                Submit
+            </Button>
+        </Paper>
     );
 }
