@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import {
-    Typography,
-    Button,
-    TextField,
-    Grid,
-    Paper
-} from '@mui/material';
+import { Typography, Button, TextField, Grid, Paper } from '@mui/material';
 import FileUpload from '../../Components/FileUpload';
 import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createArtwork } from '../../graphql/mutations';
 import config from '../../aws-exports';
-
+import ArtSpaceLogo from '../../Assets/ArtSpace_Logo.webp';
 const {
     aws_user_files_s3_bucket_region: region,
     aws_user_files_s3_bucket: bucket
@@ -52,7 +46,6 @@ export default function ArtworkUpload() {
     };
 
     const uploadImageToS3 = async (image) => {
-        console.log(image);
         let file = image;
         let extension = image.name.split('.')[1];
         let name = image.name.split('.')[0];
@@ -64,13 +57,12 @@ export default function ArtworkUpload() {
                 contentType: file.type
             })
                 .then((res) => {
-                    console.log('res', res);
+                    resolve({ bucket: bucket, region: region, key: key });
                 })
                 .catch((err) => {
                     console.log('err', err);
                 });
             // let url2 = Storage.get(key, { level: 'public' });
-            resolve({ bucket: bucket, region: region, key: key });
         });
     };
 
@@ -91,7 +83,7 @@ export default function ArtworkUpload() {
         const inputs = {
             title: TitleValue,
             description: DescriptionValue,
-            price: parseInt(PriceValue),
+            price: PriceValue,
             status: StatusValue
             // artshows: ArtshowValue
         };
@@ -109,24 +101,20 @@ export default function ArtworkUpload() {
                 inputs.image1 = uploadedImgs[0];
                 inputs.image2 = uploadedImgs[1];
                 inputs.image3 = uploadedImgs[2];
+                API.graphql(graphqlOperation(createArtwork, { input: inputs }))
+                    .then((el) => console.log(el))
+                    .catch((err) => {
+                        console.log('err');
+                    });
+                setTitleValue('');
+                setDescriptionValue('');
+                setStatusValue('');
+                setPriceValue('');
+                setImages([]);
             })
             .catch((err) => {
                 console.log('erre', err);
             });
-
-        try {
-            await API.graphql(
-                graphqlOperation(createArtwork, { input: inputs })
-            );
-            setTitleValue('');
-            setDescriptionValue('');
-            setStatusValue('');
-            setPriceValue('');
-            setImages([]);
-            console.log('success!!!');
-        } catch (err) {
-            console.log('error creating todo:', err);
-        }
     };
 
     return (
@@ -142,7 +130,18 @@ export default function ArtworkUpload() {
             }}
             elevation={3}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <img style={{float: 'left', height: 100, width: 100, paddingLeft: 5, paddingTop: 5}} src="/ArtSpace_Logo.webp" alt="Artpsace Logo" /><Typography variant={'h2'}> Upload Artwork!</Typography>
+                <img
+                    style={{
+                        float: 'left',
+                        height: 100,
+                        width: 100,
+                        paddingLeft: 5,
+                        paddingTop: 5
+                    }}
+                    src={ArtSpaceLogo}
+                    alt='Artpsace Logo'
+                />
+                <Typography variant={'h2'}> Upload Artwork!</Typography>
             </div>
             <Grid container direction='column' spacing={2}>
                 <Grid item xs={6} rowSpacing={5}>
@@ -188,7 +187,7 @@ export default function ArtworkUpload() {
                 }
                 variant='contained'
                 onClick={onSubmit}
-                style={{ width: '100%'}}>
+                style={{ width: '100%' }}>
                 Submit
             </Button>
         </Paper>

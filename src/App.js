@@ -47,7 +47,7 @@ export default function App() {
                                 />
                                 <Route path='/artwork' element={<Artwork />} />
                                 <Route
-                                    path='/artwork-detail/:id'
+                                    path='/artwork/:id'
                                     element={<ArtworkDetail />}
                                 />
                                 <Route path='/profile' element={<Profile />} />

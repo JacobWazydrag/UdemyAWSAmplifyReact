@@ -123,7 +123,7 @@ function FileUpload(props) {
 
             <aside style={thumbsContainer}>
                 {ImageUrls.map((image, index) => (
-                    <>
+                    <div key={index}>
                         <ClearIcon
                             style={{
                                 fontSize: 35,
@@ -141,7 +141,7 @@ function FileUpload(props) {
                                 />
                             </div>
                         </div>
-                    </>
+                    </div>
                 ))}
             </aside>
         </Grid>
