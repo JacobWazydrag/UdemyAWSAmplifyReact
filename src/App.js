@@ -14,6 +14,12 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import Layout from './Components/Layout';
 import Profile from './Pages/User/Profile';
 import ArtworkUpload from './Pages/User/ArtworkUpload';
+import  AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
+import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
+import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
+import HomeAdmin from './Pages/Admin/Home.Admin';
+import LayoutAdmin from './Components/Layout.Admin';
+
 Amplify.configure(awsExports);
 
 export default function App() {
@@ -25,16 +31,31 @@ export default function App() {
                     'cognito:groups'
                 ] &&
                 user
-                .getSignInUserSession()
-                .getAccessToken()
-                .payload['cognito:groups'].includes('Admin') ? (
-                    <main>
-                        <h1>
-                            Hello {user.username} Admin!, please develope these
-                            routes.
-                        </h1>
-                        <button onClick={signOut}>Sign out</button>
-                    </main>
+                    .getSignInUserSession()
+                    .getAccessToken()
+                    .payload['cognito:groups'].includes('Admin') ? (
+                    <ThemeProvider theme={theme}>
+                        <LayoutAdmin user={user} signout={signOut}>
+                            <Routes>
+                                <Route path='/' element={<HomeAdmin />} />
+                                <Route path='/all-artshows' element={<AllArtshowsAdmin />} />
+                                <Route
+                                    path='/artshow-detail/:id'
+                                    element={<ArtshowDetail />}
+                                />
+                                <Route path='/all-artworks' element={<AllArtworksAdmin />} />
+                                <Route
+                                    path='/all-artworks/:id'
+                                    element={<ArtworkDetail />}
+                                />
+                                <Route path='/artists' element={<AllArtistsAdmin />} />
+                                <Route
+                                    path='/upload-artwork'
+                                    element={<ArtworkUpload />}
+                                />
+                            </Routes>
+                        </LayoutAdmin>
+                    </ThemeProvider>
                 ) : (
                     <ThemeProvider theme={theme}>
                         <Layout user={user} signout={signOut}>

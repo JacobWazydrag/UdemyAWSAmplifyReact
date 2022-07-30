@@ -9,7 +9,6 @@ import { Grid } from '@mui/material';
 export default function ArtworkDetail() {
     const ID = useParams().id;
     const [artwork, setArtwork] = useState({});
-
     useEffect(() => {
         API.graphql(graphqlOperation(getArtwork, { id: ID }))
             .then((el) => {
@@ -20,11 +19,24 @@ export default function ArtworkDetail() {
             });
     }, []);
 
-    return (
+    const refreshAction = () => {
+        API.graphql(graphqlOperation(getArtwork, { id: ID }))
+            .then((el) => {
+                setArtwork(el.data.getArtwork);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
+    return (
         <>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <h1>{Object.keys(artwork).length !== 0 ? artwork.title : "No Artwork Here"}</h1>
+                <h1>
+                    {Object.keys(artwork).length !== 0
+                        ? artwork.title
+                        : 'No Artwork Here'}
+                </h1>
             </div>
             <Grid container columns={2} spacing={20} justifyContent={'center'}>
                 <Grid item>
@@ -33,9 +45,7 @@ export default function ArtworkDetail() {
                     ) : null}
                 </Grid>
                 <Grid item>
-                    <ArtworkInfo
-                        detail={artwork}
-                    />
+                    <ArtworkInfo refreshAction={refreshAction} detail={artwork} />
                 </Grid>
             </Grid>
         </>

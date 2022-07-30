@@ -4,7 +4,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 export default function Artwork() {
-    const [hasError, setErrors] = useState(false);
+    // const [hasError, setErrors] = useState(false);
     const [artworks, setArtworks] = useState([]);
     const [mainImageUrlFromArtworks, setMainImageUrlFromArtworks] = useState(
         []
@@ -26,7 +26,6 @@ export default function Artwork() {
     };
 
     const returnMyUrlsForMainImage = async (image) => {
-        console.log(image)
         return new Promise((resolve, reject) => {
             Storage.get(image.image1.key, { level: 'public' })
                 .then((url) => resolve(url))

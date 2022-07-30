@@ -3,6 +3,8 @@ import Dropzone from 'react-dropzone';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Grid, Typography } from '@mui/material';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Alert from '@mui/material/Alert';
 
 function FileUpload(props) {
@@ -10,6 +12,11 @@ function FileUpload(props) {
     const [Images, setImages] = useState([]);
 
     const onDrop = (files) => {
+        if (Images.length === 3) {
+            return alert(
+                'Only 3 images allowed. Please delete one to make room and continue uploading'
+            );
+        }
         let srcToUse = URL.createObjectURL(files[0]);
         setImageURLs([...ImageUrls, srcToUse]);
         setImages([...Images, files[0]]);
@@ -30,6 +37,11 @@ function FileUpload(props) {
         props.refreshFunction(newImages);
     };
 
+    if (props.images.length === 0) {
+        Images.map((image, index) => {
+            return onDelete(image);
+        });
+    }
     const thumbsContainer = {
         display: 'flex',
         flexDirection: 'row',
@@ -81,43 +93,80 @@ function FileUpload(props) {
                     isDragAccept,
                     isDragReject
                 }) => (
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '240px',
-                            border: isDragAccept
-                                ? '3px dashed #00e676'
-                                : isDragReject
-                                ? '3px dashed #ff1744'
-                                : '3px dashed grey',
-                            backgroundColor: isDragAccept
-                                ? '#dcf9e3'
-                                : isDragReject
-                                ? '#dfa0a0'
-                                : '#efefef',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            margin: '50px'
-                        }}
-                        {...getRootProps()}>
-                        <input {...getInputProps()} />
+                    <>
+                        <div
+                            style={{
+                                width: '100%',
+                                height: '240px',
+                                border: isDragAccept
+                                    ? '3px dashed #00e676'
+                                    : isDragReject
+                                    ? '3px dashed #ff1744'
+                                    : '3px dashed grey',
+                                backgroundColor: isDragAccept
+                                    ? '#dcf9e3'
+                                    : isDragReject
+                                    ? '#dfa0a0'
+                                    : '#efefef',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                margin: '50px'
+                            }}
+                            {...getRootProps()}>
+                            <input {...getInputProps()} />
 
-                        {isDragAccept ? (
-                            <Alert severity='success'>
-                                Great! Let go to start uploading
-                            </Alert>
-                        ) : isDragReject ? (
-                            <Alert severity='error'>
-                                Only allowed to upload images.
-                            </Alert>
+                            {isDragAccept ? (
+                                <Alert severity='success'>
+                                    Great! Let go to start uploading
+                                </Alert>
+                            ) : isDragReject ? (
+                                <Alert severity='error'>
+                                    Only allowed to upload images.
+                                </Alert>
+                            ) : (
+                                <Typography variant='h5'>
+                                    <AddIcon
+                                        style={{ fontSize: '3rem' }}></AddIcon>
+                                    Drag 'n' drop your artwork here, or click!
+                                </Typography>
+                            )}
+                        </div>
+                        {Images.length === 3 ? (
+                            <div
+                                style={{
+                                    display: 'inline-flex',
+                                    paddingLeft: 50,
+                                    marginTop: '-50px'
+                                }}>
+                                <CheckCircleOutlineIcon
+                                    style={{
+                                        fontSize: 30,
+                                        color: 'limegreen'
+                                    }}></CheckCircleOutlineIcon>
+                                <Typography variant='h6'>
+                                    {Images.length}/3 Images Staged!
+                                </Typography>
+                            </div>
                         ) : (
-                            <Typography variant='h5'>
-                                <AddIcon style={{ fontSize: '3rem' }}></AddIcon>
-                                Drag 'n' drop your artwork here, or click!
-                            </Typography>
+                            <div
+                                style={{
+                                    display: 'inline-flex',
+                                    paddingLeft: 50,
+                                    marginTop: '-50px'
+                                }}>
+                                <WarningAmberIcon
+                                    style={{
+                                        fontSize: 30,
+                                        color: 'red'
+                                    }}
+                                />
+                                <Typography variant='h6'>
+                                    {Images.length}/3 Images Staged
+                                </Typography>
+                            </div>
                         )}
-                    </div>
+                    </>
                 )}
             </Dropzone>
 

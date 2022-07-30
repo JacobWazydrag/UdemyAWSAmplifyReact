@@ -10,9 +10,8 @@ import {
 import PaletteIcon from '@mui/icons-material/Palette';
 import HomeIcon from '@mui/icons-material/Home';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import FaceIcon from '@mui/icons-material/Face';
 import LogoutIcon from '@mui/icons-material/Logout';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -45,7 +44,7 @@ const useStyles = makeStyles({
         overflowWrap: 'break-word'
     }
 });
-export default function Layout({ children, user, signout }) {
+export default function LayoutAdmin({ children, user, signout }) {
     const classes = useStyles();
     let navigate = useNavigate();
     const location = useLocation();
@@ -53,19 +52,14 @@ export default function Layout({ children, user, signout }) {
     const menuItems = [
         { text: 'Home', icon: <HomeIcon color='primary' />, path: '/' },
         {
-            text: 'Artworks',
+            text: 'All Artworks',
             icon: <PaletteIcon color='primary' />,
-            path: '/artwork'
+            path: '/all-artworks'
         },
         {
-            text: 'Artshows',
+            text: 'All Artshows',
             icon: <StorefrontIcon color='primary' />,
-            path: '/artshow'
-        },
-        {
-            text: 'Upload Artwork',
-            icon: <FileUploadIcon color='primary' />,
-            path: '/upload-artwork'
+            path: '/all-artshows'
         }
     ];
     return (
@@ -129,11 +123,11 @@ export default function Layout({ children, user, signout }) {
                                     : null
                             }>
                             <ListItemIcon>
-                                <FaceIcon />
+                                <AdminPanelSettingsIcon />
                             </ListItemIcon>
                             <ListItemText
                                 primary={user.attributes.preferred_username}
-                                secondary={'Artist'}></ListItemText>
+                                secondary={'Admin'}></ListItemText>
                         </ListItem>
                         <ListItem button onClick={() => signout()}>
                             <ListItemIcon>

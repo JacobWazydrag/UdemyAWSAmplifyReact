@@ -14,10 +14,7 @@ const {
 export default function ArtworkUpload() {
     const [TitleValue, setTitleValue] = useState('');
     const [DescriptionValue, setDescriptionValue] = useState('');
-    const [StatusValue, setStatusValue] = useState('');
     const [PriceValue, setPriceValue] = useState(0);
-    // const [ImagesUploadingToS3] = useState(null);
-    // const [ArtshowValue, setArtshowValue] = useState(1);
 
     const [Images, setImages] = useState([]);
 
@@ -32,14 +29,6 @@ export default function ArtworkUpload() {
     const onPriceChange = (event) => {
         setPriceValue(event.currentTarget.value);
     };
-
-    const onStatusChange = (event) => {
-        setStatusValue(event.currentTarget.value);
-    };
-
-    // const onArtshowsSelectChange = (event) => {
-    //     setArtshowValue(event.currentTarget.value);
-    // };
 
     const updateImages = (newImages) => {
         setImages(newImages);
@@ -69,23 +58,11 @@ export default function ArtworkUpload() {
     const onSubmit = async (event) => {
         event.preventDefault();
 
-        if (
-            !TitleValue ||
-            !DescriptionValue ||
-            !PriceValue ||
-            // !ArtshowValue ||
-            !StatusValue ||
-            !Images
-        ) {
-            return alert('fill all the fields first!');
-        }
-
         const inputs = {
             title: TitleValue,
             description: DescriptionValue,
             price: PriceValue,
-            status: StatusValue
-            // artshows: ArtshowValue
+            status: "STAGED"
         };
         // first try to upload the images to a bucket
         let promises = [];
@@ -94,23 +71,25 @@ export default function ArtworkUpload() {
         });
         Promise.all(promises)
             .then((uploadedImgs) => {
-                console.log(
-                    'Yayy, all images are uploaded successfully',
-                    uploadedImgs
-                );
+                // console.log(
+                //     'Yayy, all images are uploaded successfully',
+                //     uploadedImgs
+                // );
                 inputs.image1 = uploadedImgs[0];
                 inputs.image2 = uploadedImgs[1];
                 inputs.image3 = uploadedImgs[2];
                 API.graphql(graphqlOperation(createArtwork, { input: inputs }))
-                    .then((el) => console.log(el))
+                    .then((el) => console.log('upload successful'))
                     .catch((err) => {
                         console.log('err');
                     });
                 setTitleValue('');
                 setDescriptionValue('');
-                setStatusValue('');
                 setPriceValue('');
                 setImages([]);
+                return alert(
+                    'Successfully uploaded! Navigate to Artworks to see your work!'
+                );
             })
             .catch((err) => {
                 console.log('erre', err);
@@ -150,6 +129,7 @@ export default function ArtworkUpload() {
                         label={'Title'}
                         onChange={onTitleChange}
                         value={TitleValue}
+                        error={!TitleValue}
                     />
                     <TextField
                         style={{ width: '35%', margin: 10 }}
@@ -157,6 +137,7 @@ export default function ArtworkUpload() {
                         onChange={onDescriptionChange}
                         value={DescriptionValue}
                         type='textarea'
+                        error={!DescriptionValue}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -166,24 +147,17 @@ export default function ArtworkUpload() {
                         onChange={onPriceChange}
                         value={PriceValue}
                         type='number'
-                    />
-                    <TextField
-                        style={{ width: '35%', margin: 10 }}
-                        label={'Status'}
-                        onChange={onStatusChange}
-                        value={StatusValue}
+                        error={!PriceValue}
                     />
                 </Grid>
             </Grid>
-            <FileUpload refreshFunction={updateImages} />
+            <FileUpload refreshFunction={updateImages} images={Images} />
             <Button
                 disabled={
                     !TitleValue ||
                     !DescriptionValue ||
                     !PriceValue ||
-                    // !ArtshowValue ||
-                    !StatusValue ||
-                    !Images.length > 0
+                    Images.length !== 3
                 }
                 variant='contained'
                 onClick={onSubmit}
