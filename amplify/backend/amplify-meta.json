@@ -58,11 +58,12 @@
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
         "UserPoolName": "UdemyAWSAmplifyReact"
       },
-      "lastPushTimeStamp": "2022-07-17T16:13:41.321Z",
+      "lastPushTimeStamp": "2022-07-31T00:05:31.099Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
         "logicalId": "authUdemyAWSAmplifyReact"
-      }
+      },
+      "lastPushDirHash": "r+JT2nN5bzpRivQ8aedsr2N08jA="
     }
   },
   "storage": {
@@ -70,7 +71,7 @@
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "lastPushTimeStamp": "2022-07-17T16:13:41.327Z",
+      "lastPushTimeStamp": "2022-07-31T00:05:30.850Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3udemyawsamplifyreactstorage48843bf6"
@@ -112,8 +113,77 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiudemyawsamplifyreact"
       },
-      "lastPushTimeStamp": "2022-07-17T16:13:45.671Z",
+      "lastPushTimeStamp": "2022-07-31T00:05:30.856Z",
       "lastPushDirHash": "TT1ju5PW2assKJTrrZioYA1nyeI="
+    },
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "UdemyAWSAmplifyReact",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueries01ecf446",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
+        "logicalId": "apiAdminQueries"
+      },
+      "lastPushTimeStamp": "2022-07-31T00:05:31.099Z",
+      "output": {
+        "ApiName": "AdminQueries",
+        "RootUrl": "https://iiy6mcnm2j.execute-api.us-east-2.amazonaws.com/staging",
+        "ApiId": "iiy6mcnm2j"
+      },
+      "lastPushDirHash": "C8VX5HNy3XwpquJkWTKDYraE7tc="
+    }
+  },
+  "function": {
+    "AdminQueries01ecf446": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "UdemyAWSAmplifyReact",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2022-07-31T00:02:52.495Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-07-31T00:02:54.864Z",
+      "distZipFilename": "AdminQueries01ecf446-74696e564f733666776b-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+        "s3Key": "amplify-builds/AdminQueries01ecf446-74696e564f733666776b-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/function/AdminQueries01ecf446-cloudformation-template.json",
+        "logicalId": "functionAdminQueries01ecf446"
+      },
+      "lastPushTimeStamp": "2022-07-31T00:05:31.099Z",
+      "output": {
+        "Region": "us-east-2",
+        "Arn": "arn:aws:lambda:us-east-2:782949811649:function:AdminQueries01ecf446-staging",
+        "Name": "AdminQueries01ecf446-staging",
+        "LambdaExecutionRole": "AdminQueries01ecf446LambdaRole-staging"
+      },
+      "lastPushDirHash": "t/ZKvafRy1wUhXDs4HjuDioc/90="
     }
   }
 }

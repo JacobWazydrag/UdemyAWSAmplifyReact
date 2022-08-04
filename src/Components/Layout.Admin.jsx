@@ -12,6 +12,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import GroupsIcon from '@mui/icons-material/Groups';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -60,6 +61,11 @@ export default function LayoutAdmin({ children, user, signout }) {
             text: 'All Artshows',
             icon: <StorefrontIcon color='primary' />,
             path: '/all-artshows'
+        },
+        {
+            text: 'All Artists',
+            icon: <GroupsIcon color='primary' />,
+            path: '/all-artists'
         }
     ];
     return (
@@ -91,7 +97,7 @@ export default function LayoutAdmin({ children, user, signout }) {
                             padding: 10
                         }}
                         variant='h5'>
-                        Artist Portal
+                        Admin Portal
                     </Typography>
                 </div>
                 <List>
@@ -114,11 +120,11 @@ export default function LayoutAdmin({ children, user, signout }) {
                     <Divider style={{ width: 240 }} />
                     <List>
                         <ListItem
-                            key={'profile'}
+                            key={'admin-profile'}
                             button
-                            onClick={() => navigate('/profile')}
+                            onClick={() => navigate('/admin-profile')}
                             style={
-                                location.pathname === '/profile'
+                                location.pathname === '/admin-profile'
                                     ? { background: '#f4f4f4' }
                                     : null
                             }>

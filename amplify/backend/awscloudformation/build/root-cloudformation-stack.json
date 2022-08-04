@@ -194,7 +194,6 @@
           "hostedUIDomainName": "xfvhs58rx9xr",
           "authProvidersUserPool": "Facebook,Google,LoginWithAmazon",
           "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile profile:user_id\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"user_id\"}}]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
           "authRoleArn": {
@@ -211,7 +210,9 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\"},{\"ProviderName\":\"Google\"},{\"ProviderName\":\"LoginWithAmazon\"}]",
+          "hostedUIProviderCreds": "[]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+          "adminQueryGroup": "Admin",
           "env": "staging"
         }
       }
@@ -265,6 +266,50 @@
           },
           "S3DeploymentBucket": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/5ceb91e37f695dd084940da02896691b221b247a",
+          "env": "staging"
+        }
+      }
+    },
+    "apiAdminQueries": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
+        "Parameters": {
+          "authUdemyAWSAmplifyReactUserPoolId": {
+            "Fn::GetAtt": [
+              "authUdemyAWSAmplifyReact",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "functionAdminQueries01ecf446Arn": {
+            "Fn::GetAtt": [
+              "functionAdminQueries01ecf446",
+              "Outputs.Arn"
+            ]
+          },
+          "functionAdminQueries01ecf446Name": {
+            "Fn::GetAtt": [
+              "functionAdminQueries01ecf446",
+              "Outputs.Name"
+            ]
+          },
+          "env": "staging"
+        }
+      }
+    },
+    "functionAdminQueries01ecf446": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/function/AdminQueries01ecf446-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+          "s3Key": "amplify-builds/AdminQueries01ecf446-74696e564f733666776b-build.zip",
+          "authUdemyAWSAmplifyReactUserPoolId": {
+            "Fn::GetAtt": [
+              "authUdemyAWSAmplifyReact",
+              "Outputs.UserPoolId"
+            ]
+          },
           "env": "staging"
         }
       }

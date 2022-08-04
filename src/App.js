@@ -14,11 +14,14 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import Layout from './Components/Layout';
 import Profile from './Pages/User/Profile';
 import ArtworkUpload from './Pages/User/ArtworkUpload';
-import  AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
+import AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
 import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
 import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
 import HomeAdmin from './Pages/Admin/Home.Admin';
 import LayoutAdmin from './Components/Layout.Admin';
+import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
+import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
+import ProfileAdmin from './Pages/Admin/Profile.Admin';
 
 Amplify.configure(awsExports);
 
@@ -31,27 +34,41 @@ export default function App() {
                     'cognito:groups'
                 ] &&
                 user
-                    .getSignInUserSession()
-                    .getAccessToken()
-                    .payload['cognito:groups'].includes('Admin') ? (
+                .getSignInUserSession()
+                .getAccessToken()
+                .payload['cognito:groups'].includes('Admin') ? (
                     <ThemeProvider theme={theme}>
+                        {console.log('user', user)}
                         <LayoutAdmin user={user} signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<HomeAdmin />} />
-                                <Route path='/all-artshows' element={<AllArtshowsAdmin />} />
+                                <Route
+                                    path='/all-artshows'
+                                    element={<AllArtshowsAdmin />}
+                                />
                                 <Route
                                     path='/artshow-detail/:id'
                                     element={<ArtshowDetail />}
                                 />
-                                <Route path='/all-artworks' element={<AllArtworksAdmin />} />
+                                <Route
+                                    path='/all-artworks'
+                                    element={<AllArtworksAdmin />}
+                                />
                                 <Route
                                     path='/all-artworks/:id'
-                                    element={<ArtworkDetail />}
+                                    element={<AllArtworksDetailAdmin />}
                                 />
-                                <Route path='/artists' element={<AllArtistsAdmin />} />
                                 <Route
-                                    path='/upload-artwork'
-                                    element={<ArtworkUpload />}
+                                    path='/all-artists'
+                                    element={<AllArtistsAdmin />}
+                                />
+                                <Route
+                                    path='/all-artists/:id'
+                                    element={<AllArtistDetailAdmin />}
+                                />
+                                <Route
+                                    path='/admin-profile'
+                                    element={<ProfileAdmin />}
                                 />
                             </Routes>
                         </LayoutAdmin>

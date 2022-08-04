@@ -116,9 +116,6 @@
     "hostedUIProviderMeta": {
       "Type": "String"
     },
-    "oAuthMetadata": {
-      "Type": "String"
-    },
     "usernameCaseSensitive": {
       "Type": "String"
     },
@@ -138,6 +135,12 @@
       "Type": "CommaDelimitedList"
     },
     "hostedUIProviderCreds": {
+      "Type": "String"
+    },
+    "oAuthMetadata": {
+      "Type": "String"
+    },
+    "adminQueryGroup": {
       "Type": "String"
     }
   },
