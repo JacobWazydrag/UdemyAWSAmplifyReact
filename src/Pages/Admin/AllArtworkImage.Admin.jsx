@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Storage } from 'aws-amplify';
-import {ImageGallery} from 'react-image-gallery';
+import ImageGallery from 'react-image-gallery';
 import _ from 'underscore';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -50,7 +50,7 @@ export default function AllArtworkImageAdmin(props) {
                     lazyLoad={true}
                     showPlayButton={false}
                     items={imageUrls}
-                />
+                ></ImageGallery>
             )}
         </div>
     );
