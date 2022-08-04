@@ -16,7 +16,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ArtSpaceLogo from '../Assets/ArtSpace_Logo.webp';
+// import ArtSpaceLogo from '../Assets/ArtSpace_Logo.webp';
 
 let drawerWidth = 240;
 
@@ -79,7 +79,7 @@ export default function Layout({ children, user, signout }) {
                     paper: classes.drawerPaper
                 }}>
                 <div>
-                    <img
+                    {/* <img
                         style={{
                             float: 'left',
                             height: 50,
@@ -91,7 +91,7 @@ export default function Layout({ children, user, signout }) {
                         }}
                         src={ArtSpaceLogo}
                         alt='Artpsace Logo'
-                    />
+                    /> */}
                     <Typography
                         style={{
                             padding: 10

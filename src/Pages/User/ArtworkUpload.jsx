@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createArtwork } from '../../graphql/mutations';
 import config from '../../aws-exports';
-import ArtSpaceLogo from '../../Assets/ArtSpace_Logo.webp';
+// import ArtSpaceLogo from '../../Assets/ArtSpace_Logo.webp';
 const {
     aws_user_files_s3_bucket_region: region,
     aws_user_files_s3_bucket: bucket
@@ -109,7 +109,7 @@ export default function ArtworkUpload() {
             }}
             elevation={3}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <img
+                {/* <img
                     style={{
                         float: 'left',
                         height: 100,
@@ -119,7 +119,7 @@ export default function ArtworkUpload() {
                     }}
                     src={ArtSpaceLogo}
                     alt='Artpsace Logo'
-                />
+                /> */}
                 <Typography variant={'h2'}> Upload Artwork!</Typography>
             </div>
             <Grid container direction='column' spacing={2}>
