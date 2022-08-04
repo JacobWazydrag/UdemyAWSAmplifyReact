@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://dev.jacobwazydragcourse.click/",
-        "redirectSignOut": "https://dev.jacobwazydragcourse.click/",
+        "redirectSignIn": "http://localhost:3000/",
+        "redirectSignOut": "http://localhost:3000/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -52,7 +52,14 @@ const awsmobile = {
     "aws_user_files_s3_bucket_region": "us-east-2",
     "aws_appsync_graphqlEndpoint": "https://xeiz2i4rvvgxhjs7ch3uvaziqu.appsync-api.us-east-2.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-2",
-    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS"
+    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+    "aws_cloud_logic_custom": [
+        {
+            "name": "AdminQueries",
+            "endpoint": "https://iiy6mcnm2j.execute-api.us-east-2.amazonaws.com/staging",
+            "region": "us-east-2"
+        }
+    ]
 };
 
 

@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "UdemyAWSAmplifyReact": {}
+      },
+      "function": {
+        "AdminQueries01ecf446": {
+          "deploymentBucketName": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+          "s3Key": "amplify-builds/AdminQueries01ecf446-74696e564f733666776b-build.zip"
+        }
       }
     }
   }
