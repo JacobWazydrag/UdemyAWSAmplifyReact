@@ -89,7 +89,7 @@ export default function Artwork() {
                     <h2>No post yet...</h2>
                 </div>
             ) : (
-                <>{renderCards}</>
+                <>{renderCards()}</>
             )}
             
         </Grid>
