@@ -7,7 +7,7 @@ import awsExports from './aws-exports';
 import { Routes, Route } from 'react-router-dom';
 import Artshow from './Pages/User/Artshow';
 import ArtshowDetail from './Pages/User/ArtshowDetail';
-import Artwork from './Pages/User/Artwork';
+// import Artwork from './Pages/User/Artwork';
 import ArtworkDetail from './Pages/User/ArtworkDetail';
 import Home from './Pages/User/Home';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -16,7 +16,7 @@ import Profile from './Pages/User/Profile';
 import ArtworkUpload from './Pages/User/ArtworkUpload';
 import AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
 import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
-import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
+// import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
 import HomeAdmin from './Pages/Admin/Home.Admin';
 import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
@@ -50,10 +50,10 @@ export default function App() {
                                     path='/artshow-detail/:id'
                                     element={<ArtshowDetail />}
                                 />
-                                <Route
+                                {/* <Route
                                     path='/all-artworks'
                                     element={<AllArtworksAdmin />}
-                                />
+                                /> */}
                                 <Route
                                     path='/all-artworks/:id'
                                     element={<AllArtworksDetailAdmin />}
@@ -83,7 +83,7 @@ export default function App() {
                                     path='/artshow-detail/:id'
                                     element={<ArtshowDetail />}
                                 />
-                                <Route path='/artwork' element={<Artwork />} />
+                                {/* <Route path='/artwork' element={<Artwork />} /> */}
                                 <Route
                                     path='/artwork/:id'
                                     element={<ArtworkDetail />}
