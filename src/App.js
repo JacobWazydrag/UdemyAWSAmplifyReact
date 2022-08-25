@@ -1,13 +1,14 @@
+import * as React from 'react'
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+export default function App () {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          This is the PROD Environment!
+          This is the QA Environment!
         </p>
         <a
           className="App-link"
@@ -21,5 +22,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
