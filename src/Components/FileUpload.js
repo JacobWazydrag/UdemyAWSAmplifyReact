@@ -7,7 +7,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Alert from '@mui/material/Alert';
 
-function FileUpload(props) {
+export default function FileUpload(props) {
     const [ImageUrls, setImageURLs] = useState([]);
     const [Images, setImages] = useState([]);
 
@@ -196,5 +196,3 @@ function FileUpload(props) {
         </Grid>
     );
 }
-
-export default FileUpload;

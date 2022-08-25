@@ -9,7 +9,6 @@ import {
     CardActions,
     CardContent,
     Divider,
-    IconButton,
     Typography
 } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';

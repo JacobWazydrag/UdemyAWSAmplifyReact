@@ -62,7 +62,7 @@ export default function Artwork() {
                     </a>
                     <CardContent>
                         <Typography variant='body2' color='text.secondary'>
-                        {artwork.title}
+                            {artwork.title}
                         </Typography>
                         <Typography variant='body2' color='text.secondary'>
                             {artwork.price}
@@ -89,10 +89,8 @@ export default function Artwork() {
                     <h2>No post yet...</h2>
                 </div>
             ) : (
-                // <>{renderCards()}</>
-                <div>hello</div>
+                <>{renderCards}</>
             )}
-            
         </Grid>
     );
 }

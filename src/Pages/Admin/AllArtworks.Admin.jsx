@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { listArtworks } from '../../graphql/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
@@ -16,7 +15,6 @@ export default function AllArtworksAdmin() {
         getMainUrls();
     }, [artworks]);
 
-    let nextToken;
     async function getAllArworks() {
         await API.graphql(graphqlOperation(listArtworks))
             .then((el) => {
@@ -54,7 +52,7 @@ export default function AllArtworksAdmin() {
                 headerName: 'Main Artwork Image',
                 width: 200,
                 renderCell: (params) => (
-                    <img style={{width: '100%', height: 150}} src={params.value} />
+                    <img style={{width: '100%', height: 150}} src={params.value} alt="test"/>
                 )
             },
             {
