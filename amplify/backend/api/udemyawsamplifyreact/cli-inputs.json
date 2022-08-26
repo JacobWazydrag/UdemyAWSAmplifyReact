@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "udemyawsamplifyreact",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\jgwja\\OneDrive\\Udemy\\AwsAmplifyReact\\awsAmplifyReactApp\\popupshop-spacerental\\amplify\\backend\\api\\udemyawsamplifyreact\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authUdemyAWSAmplifyReact"
+    }
+  }
+}
