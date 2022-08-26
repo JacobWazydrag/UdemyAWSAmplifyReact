@@ -1,0 +1,51 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Artshow
+    @model
+    @auth(
+        rules: [
+            { allow: owner, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
+    type: String!
+    description: String!
+    status: String!
+}
+
+type Artwork
+    @model
+    @auth(
+        rules: [
+            { allow: owner, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
+    title: String
+    description: String
+    status: String
+    price: Int
+    image1: S3Object
+    image2: S3Object
+    image3: S3Object
+}
+
+type S3Object {
+    bucket: String!
+    region: String!
+    key: String!
+}
