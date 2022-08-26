@@ -32,7 +32,6 @@ amplify/backend/.temp
 build/
 dist/
 node_modules/
-aws-exports.ts
 aws-exports.js
 aws-exports1.ts
 awsconfiguration.json
