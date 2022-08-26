@@ -50,23 +50,22 @@
           "EMAIL"
         ]
       },
+      "output": {
+        "UserPoolId": "us-east-2_nynTdimU1",
+        "AppClientIDWeb": "1ttu6ammm4lcq0ig6pk71lt70o",
+        "AppClientID": "3apar4lskjq6slf7k5923tjbu8",
+        "HostedUIDomain": "xfvhs58rx9xr-staging",
+        "IdentityPoolId": "us-east-2:446af370-b93f-4ded-81f9-47e8cd035ad3",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-2:782949811649:userpool/us-east-2_nynTdimU1",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+        "UserPoolName": "UdemyAWSAmplifyReact"
+      },
+      "lastPushTimeStamp": "2022-08-26T00:16:35.887Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
         "logicalId": "authUdemyAWSAmplifyReact"
-      },
-      "lastPushTimeStamp": "2022-07-16T13:08:19.334Z",
-      "output": {
-        "UserPoolId": "us-east-2_HF1uxG64J",
-        "AppClientIDWeb": "1a4j08p21pc9p4uli60cj40j42",
-        "AppClientID": "215di4pupo254ihk73rfqaqhkk",
-        "HostedUIDomain": "xfvhs58rx9xr-staging",
-        "IdentityPoolId": "us-east-2:52deba07-0a89-4d2f-b1b0-9bd831dc122d",
-        "UserPoolArn": "arn:aws:cognito-idp:us-east-2:782949811649:userpool/us-east-2_HF1uxG64J",
-        "IdentityPoolName": "testAuthIdentityPool__staging",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"],\"LogoutURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"]}",
-        "UserPoolName": "UdemyAWSAmplifyReact"
-      },
-      "lastPushDirHash": "nuNzqL/X9a0SAgZWYLHC2de3W+o="
+      }
     }
   }
 }
