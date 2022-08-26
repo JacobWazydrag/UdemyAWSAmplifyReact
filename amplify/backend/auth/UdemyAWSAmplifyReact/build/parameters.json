@@ -1,7 +1,7 @@
 {
   "identityPoolName": "testAuthIdentityPool",
   "allowUnauthenticatedIdentities": false,
-  "resourceNameTruncated": "udemya79f2a43c",
+  "resourceNameTruncated": "udemya334db048",
   "userPoolName": "UdemyAWSAmplifyReact",
   "autoVerifiedAttributes": [
     "email"
@@ -23,20 +23,16 @@
     "Requires Uppercase"
   ],
   "requiredAttributes": [
-    "email",
-    "given_name",
-    "family_name",
-    "picture",
-    "birthdate"
+    "email"
   ],
   "aliasAttributes": [],
   "userpoolClientGenerateSecret": false,
   "userpoolClientRefreshTokenValidity": 30,
   "userpoolClientWriteAttributes": [],
   "userpoolClientReadAttributes": [],
-  "userpoolClientLambdaRole": "UdemyA79f2a43c_userpoolclient_lambda_role",
+  "userpoolClientLambdaRole": "UdemyA334db048_userpoolclient_lambda_role",
   "userpoolClientSetAttributes": false,
-  "sharedId": "79f2a43c",
+  "sharedId": "334db048",
   "resourceName": "UdemyAWSAmplifyReact",
   "authSelections": "identityPoolAndUserPool",
   "serviceName": "Cognito",
@@ -53,10 +49,10 @@
   "hostedUIDomainName": "xfvhs58rx9xr",
   "authProvidersUserPool": [
     "Facebook",
-    "Google"
+    "Google",
+    "LoginWithAmazon"
   ],
-  "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"first_name\",\"family_name\":\"last_name\",\"picture\":\"picture\",\"birthdate\":\"birthday\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"given_name\":\"given_name\",\"family_name\":\"family_name\",\"picture\":\"picture\",\"birthdate\":\"birthdays\",\"username\":\"sub\"}}]",
-  "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"],\"LogoutURLs\":[\"https://dev.jacobwazydragcourse.click\",\"https://www.jacobwazydragcourse.click\",\"https://qa.jacobwazydragcourse.click\"]}",
+  "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile profile:user_id\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"user_id\"}}]",
   "usernameCaseSensitive": false,
   "useEnabledMfas": true,
   "authRoleArn": {
@@ -72,5 +68,8 @@
     ]
   },
   "breakCircularDependency": true,
-  "dependsOn": []
+  "dependsOn": [],
+  "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\"},{\"ProviderName\":\"Google\"},{\"ProviderName\":\"LoginWithAmazon\"}]",
+  "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+  "adminQueryGroup": "Admin"
 }
