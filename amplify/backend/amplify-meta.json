@@ -61,7 +61,7 @@
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
         "UserPoolName": "UdemyAWSAmplifyReact"
       },
-      "lastPushTimeStamp": "2022-08-26T00:16:35.887Z",
+      "lastPushTimeStamp": "2022-08-26T00:37:43.020Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
         "logicalId": "authUdemyAWSAmplifyReact"

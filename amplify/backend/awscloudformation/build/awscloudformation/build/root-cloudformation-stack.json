@@ -211,7 +211,7 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"706056917128237\",\"client_secret\":\"a28ccb95812e9793311d6db2d0efa19f\"},{\"ProviderName\":\"Google\",\"client_id\":\"116561981045-t95mr3cdids4apctbel1eptivmvemtdu.apps.googleusercontent.com\",\"client_secret\":\"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\"}]",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"706056917128237\",\"client_secret\":\"c2403ef6969d2e989e5ee7bcf91d50d4\"},{\"ProviderName\":\"Google\",\"client_id\":\"958544426706-tm32sifuecoaqoi5mg7076dnbr8juc29.apps.googleusercontent.com\",\"client_secret\":\"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\"}]",
           "env": "staging"
         }
       }
