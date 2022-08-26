@@ -11,14 +11,14 @@ import awsExports from './aws-exports';
 // import ArtworkDetail from './Pages/User/ArtworkDetail';
 // import Home from './Pages/User/Home';
 import { createTheme, ThemeProvider } from '@mui/material';
-// import Layout from './Components/Layout';
+import Layout from './Components/Layout';
 // import Profile from './Pages/User/Profile';
 // import ArtworkUpload from './Pages/User/ArtworkUpload';
 // import AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
 // import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
 // import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
 // import HomeAdmin from './Pages/Admin/Home.Admin';
-// import LayoutAdmin from './Components/Layout.Admin';
+import LayoutAdmin from './Components/Layout.Admin';
 // import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
 // import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
 // import ProfileAdmin from './Pages/Admin/Profile.Admin';
@@ -40,8 +40,8 @@ export default function App() {
                 .payload['cognito:groups'].includes('Admin') ? (
                     <ThemeProvider theme={theme}>
                         {console.log('user', user)}
-                        {/* <LayoutAdmin user={user} signout={signOut}>
-                            <Routes>
+                        <LayoutAdmin user={user} signout={signOut}>
+                            {/* <Routes>
                                 <Route path='/' element={<HomeAdmin />} />
                                 <Route
                                     path='/all-artshows'
@@ -71,13 +71,13 @@ export default function App() {
                                     path='/admin-profile'
                                     element={<ProfileAdmin />}
                                 />
-                            </Routes>
-                        </LayoutAdmin> */}
+                            </Routes> */}
+                        </LayoutAdmin>
                     </ThemeProvider>
                 ) : (
                     <ThemeProvider theme={theme}>
-                        {/* <Layout user={user} signout={signOut}>
-                            <Routes>
+                        <Layout user={user} signout={signOut}>
+                            {/* <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/artshow' element={<Artshow />} />
                                 <Route
@@ -94,8 +94,8 @@ export default function App() {
                                     path='/upload-artwork'
                                     element={<ArtworkUpload />}
                                 />
-                            </Routes>
-                        </Layout> */}
+                            </Routes> */}
+                        </Layout>
                     </ThemeProvider>
                 )
             }
