@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import { Amplify } from 'aws-amplify';
 import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import awsExports from '../../aws-exports';
+import awsExports from '../../aws-exports.ts';
 import { AccountFormAdmin } from './AccountForm.Admin';
 import { AccountProfileAdmin } from './AccountProfile.Admin';
 

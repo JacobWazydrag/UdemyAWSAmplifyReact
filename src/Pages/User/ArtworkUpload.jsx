@@ -4,7 +4,7 @@ import FileUpload from '../../Components/FileUpload';
 import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createArtwork } from '../../graphql/mutations';
-import config from '../../aws-exports';
+import config from '../../aws-exports.ts';
 // import ArtSpaceLogo from '../../Assets/ArtSpace_Logo.webp';
 const {
     aws_user_files_s3_bucket_region: region,
