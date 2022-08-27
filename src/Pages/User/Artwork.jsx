@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// import { listArtworks } from '../../graphql/queries';
-// import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { listArtworks } from '../../graphql/queries';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 export default function Artwork() {
@@ -9,21 +9,21 @@ export default function Artwork() {
     const [mainImageUrlFromArtworks, setMainImageUrlFromArtworks] = useState(
         []
     );
-    // useEffect(() => {
-    //     getArtworks();
-    // }, []);
+    useEffect(() => {
+        getArtworks();
+    }, []);
 
     // useEffect(() => {
     //     getMainUrls();
     // }, [artworks]);
 
-    // const getArtworks = async () => {
-    //     await API.graphql(graphqlOperation(listArtworks))
-    //         .then((el) => {
-    //             setArtworks(el.data.listArtworks.items);
-    //         })
-    //         .catch((err) => console.log(err));
-    // };
+    const getArtworks = async () => {
+        await API.graphql(graphqlOperation(listArtworks))
+            .then((el) => {
+                setArtworks(el.data.listArtworks.items);
+            })
+            .catch((err) => console.log(err));
+    };
 
     // const returnMyUrlsForMainImage = async (image) => {
     //     return new Promise((resolve, reject) => {
