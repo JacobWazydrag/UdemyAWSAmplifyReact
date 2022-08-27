@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { listArtworks } from '../../graphql/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function Artwork() {
     // const [hasError, setErrors] = useState(false);
@@ -52,14 +53,14 @@ export default function Artwork() {
         return (
             <Grid key={index} item>
                 <Card sx={{ maxWidth: 345 }}>
-                    <a href={`/artwork/${artwork.id}`}>
+                    <Link to={`/artwork/${artwork.id}`}>
                         <CardMedia
                             component='img'
                             height='194'
                             image={mainImageUrlFromArtworks[index]}
                             alt='Paella dish'
                         />
-                    </a>
+                    </Link>
                     <CardContent>
                         <Typography variant='body2' color='text.secondary'>
                             {artwork.title}
