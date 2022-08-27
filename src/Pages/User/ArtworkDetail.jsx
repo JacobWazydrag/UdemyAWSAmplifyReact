@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getArtwork } from '../../graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
-// import ArtworkImage from './ArtworkImage';
+import ArtworkImage from './ArtworkImage';
 import ArtworkInfo from './ArtworkInfo';
 import { Grid } from '@mui/material';
 
@@ -40,9 +40,9 @@ export default function ArtworkDetail() {
             </div>
             <Grid container columns={2} spacing={20} justifyContent={'center'}>
                 <Grid item>
-                    {/* {Object.keys(artwork).length !== 0 ? (
+                    {Object.keys(artwork).length !== 0 ? (
                         <ArtworkImage detail={artwork} />
-                    ) : null} */}
+                    ) : null}
                 </Grid>
                 <Grid item>
                     <ArtworkInfo refreshAction={refreshAction} detail={artwork} />
