@@ -13,9 +13,9 @@ export default function Artwork() {
         getArtworks();
     }, []);
 
-    // useEffect(() => {
-    //     getMainUrls();
-    // }, [artworks]);
+    useEffect(() => {
+        getMainUrls();
+    }, [artworks]);
 
     const getArtworks = async () => {
         await API.graphql(graphqlOperation(listArtworks))
@@ -25,33 +25,33 @@ export default function Artwork() {
             .catch((err) => console.log(err));
     };
 
-    // const returnMyUrlsForMainImage = async (image) => {
-    //     return new Promise((resolve, reject) => {
-    //         Storage.get(image.image1.key, { level: 'public' })
-    //             .then((url) => resolve(url))
-    //             .catch((err) => console.log(err));
-    //         // let url2 = Storage.get(key, { level: 'public' });
-    //     });
-    // };
-    // const getMainUrls = () => {
-    //     let promises = [];
-    //     artworks.map((image, i) => {
-    //         return promises.push(returnMyUrlsForMainImage(image));
-    //     });
+    const returnMyUrlsForMainImage = async (image) => {
+        return new Promise((resolve, reject) => {
+            Storage.get(image.image1.key, { level: 'public' })
+                .then((url) => resolve(url))
+                .catch((err) => console.log(err));
+            // let url2 = Storage.get(key, { level: 'public' });
+        });
+    };
+    const getMainUrls = () => {
+        let promises = [];
+        artworks.map((image, i) => {
+            return promises.push(returnMyUrlsForMainImage(image));
+        });
 
-    //     Promise.all(promises)
-    //         .then((imageUrls) => {
-    //             setMainImageUrlFromArtworks(imageUrls);
-    //         })
-    //         .catch((err) => {
-    //             console.log('erre', err);
-    //         });
-    // };
+        Promise.all(promises)
+            .then((imageUrls) => {
+                setMainImageUrlFromArtworks(imageUrls);
+            })
+            .catch((err) => {
+                console.log('erre', err);
+            });
+    };
 
     const renderCards = artworks.map((artwork, index) => {
         return (
             <Grid key={index} item>
-                {/* <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }}>
                     <a href={`/artwork/${artwork.id}`}>
                         <CardMedia
                             component='img'
@@ -71,7 +71,7 @@ export default function Artwork() {
                             {artwork.status}
                         </Typography>
                     </CardContent>
-                </Card> */}
+                </Card>
             </Grid>
         );
     });
