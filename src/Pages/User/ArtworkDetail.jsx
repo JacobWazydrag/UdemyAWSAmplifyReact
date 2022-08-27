@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getArtwork } from '../../graphql/queries';
 import { API, graphqlOperation } from 'aws-amplify';
 // import ArtworkImage from './ArtworkImage';
-// import ArtworkInfo from './ArtworkInfo';
+import ArtworkInfo from './ArtworkInfo';
 import { Grid } from '@mui/material';
 
 export default function ArtworkDetail() {
@@ -19,15 +19,15 @@ export default function ArtworkDetail() {
             });
     }, []);
 
-    // const refreshAction = () => {
-    //     API.graphql(graphqlOperation(getArtwork, { id: ID }))
-    //         .then((el) => {
-    //             setArtwork(el.data.getArtwork);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
+    const refreshAction = () => {
+        API.graphql(graphqlOperation(getArtwork, { id: ID }))
+            .then((el) => {
+                setArtwork(el.data.getArtwork);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <>
@@ -45,7 +45,7 @@ export default function ArtworkDetail() {
                     ) : null} */}
                 </Grid>
                 <Grid item>
-                    {/* <ArtworkInfo refreshAction={refreshAction} detail={artwork} /> */}
+                    <ArtworkInfo refreshAction={refreshAction} detail={artwork} />
                 </Grid>
             </Grid>
         </>
