@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Storage } from 'aws-amplify';
-// import ImageGallery from 'react-image-gallery';
+import ImageGallery from 'react-image-gallery';
 import _ from 'underscore';
 // import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -43,15 +43,15 @@ export default function ArtworkImage(props) {
     return (
         <div style={{maxHeight: 600, maxWidth: 600}}>
             {imageUrls.length === 0 ? null : (
-                <div>Test</div>
-                // <ImageGallery
-                //     showBullets={true}
-                //     showIndex={true}
-                //     showThumbnails={true}
-                //     lazyLoad={true}
-                //     showPlayButton={false}
-                //     items={imageUrls}
-                // />
+                // <div>Test</div>
+                <ImageGallery
+                    showBullets={true}
+                    showIndex={true}
+                    showThumbnails={true}
+                    lazyLoad={true}
+                    showPlayButton={false}
+                    items={imageUrls}
+                />
             )}
         </div>
     );
