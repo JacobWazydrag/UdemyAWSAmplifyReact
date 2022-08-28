@@ -7,67 +7,67 @@
 //     ListItemText,
 //     Typography
 // } from '@mui/material';
-import PaletteIcon from '@mui/icons-material/Palette';
-import HomeIcon from '@mui/icons-material/Home';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+// import PaletteIcon from '@mui/icons-material/Palette';
+// import HomeIcon from '@mui/icons-material/Home';
+// import StorefrontIcon from '@mui/icons-material/Storefront';
 // import FaceIcon from '@mui/icons-material/Face';
 // import LogoutIcon from '@mui/icons-material/Logout';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { makeStyles } from '@mui/styles';
+// import FileUploadIcon from '@mui/icons-material/FileUpload';
+// import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { useLocation, useNavigate } from 'react-router-dom';
 // import ArtSpaceLogo from '../Assets/ArtSpace_Logo.webp';
 
-let drawerWidth = 240;
+// let drawerWidth = 240;
 
-const useStyles = makeStyles({
-    root: { display: 'flex' },
-    page: {
-        background: '#f9f9f9',
-        width: '100%',
-        padding: 50,
-        marginBottom: 50
-    },
-    drawer: {
-        width: drawerWidth,
-        height: 'web-kit-available'
-    },
-    drawerPaper: {
-        width: drawerWidth + 1
-    },
-    active: {
-        background: '#f4f4f4'
-    },
-    drawerFooter: {
-        position: 'absolute',
-        bottom: '0px',
-        width: drawerWidth,
-        overflowWrap: 'break-word'
-    }
-});
+// const useStyles = makeStyles({
+//     root: { display: 'flex' },
+//     page: {
+//         background: '#f9f9f9',
+//         width: '100%',
+//         padding: 50,
+//         marginBottom: 50
+//     },
+//     drawer: {
+//         width: drawerWidth,
+//         height: 'web-kit-available'
+//     },
+//     drawerPaper: {
+//         width: drawerWidth + 1
+//     },
+//     active: {
+//         background: '#f4f4f4'
+//     },
+//     drawerFooter: {
+//         position: 'absolute',
+//         bottom: '0px',
+//         width: drawerWidth,
+//         overflowWrap: 'break-word'
+//     }
+// });
 export default function Layout({ children, user, signout }) {
-    const classes = useStyles();
-    let navigate = useNavigate();
-    const location = useLocation();
+    // const classes = useStyles();
+    // let navigate = useNavigate();
+    // const location = useLocation();
 
-    const menuItems = [
-        { text: 'Home', icon: <HomeIcon color='primary' />, path: '/' },
-        {
-            text: 'Artworks',
-            icon: <PaletteIcon color='primary' />,
-            path: '/artwork'
-        },
-        {
-            text: 'Artshows',
-            icon: <StorefrontIcon color='primary' />,
-            path: '/artshow'
-        },
-        {
-            text: 'Upload Artwork',
-            icon: <FileUploadIcon color='primary' />,
-            path: '/upload-artwork'
-        }
-    ];
+    // const menuItems = [
+    //     { text: 'Home', icon: <HomeIcon color='primary' />, path: '/' },
+    //     {
+    //         text: 'Artworks',
+    //         icon: <PaletteIcon color='primary' />,
+    //         path: '/artwork'
+    //     },
+    //     {
+    //         text: 'Artshows',
+    //         icon: <StorefrontIcon color='primary' />,
+    //         path: '/artshow'
+    //     },
+    //     {
+    //         text: 'Upload Artwork',
+    //         icon: <FileUploadIcon color='primary' />,
+    //         path: '/upload-artwork'
+    //     }
+    // ];
     return (
         // <div className={classes.root}>
         //     app bar
