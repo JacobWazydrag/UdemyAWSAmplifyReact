@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Storage } from 'aws-amplify';
-import ImageGallery from 'react-image-gallery';
+// import ImageGallery from 'react-image-gallery';
 import _ from 'underscore';
-import 'react-image-gallery/styles/css/image-gallery.css';
+// import 'react-image-gallery/styles/css/image-gallery.css';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 export default function ArtworkImage(props) {
     const [imageUrls, setImgUrls] = useState([]);
@@ -39,19 +41,28 @@ export default function ArtworkImage(props) {
                 console.log('error', err);
             });
     };
-    
+console.log(imageUrls)
     return (
-        <div style={{maxHeight: 600, maxWidth: 600}}>
+        <div style={{ maxHeight: 600, maxWidth: 600 }}>
             {imageUrls.length === 0 ? null : (
                 // <div>Test</div>
-                <ImageGallery
-                    showBullets={true}
-                    showIndex={true}
-                    showThumbnails={true}
-                    lazyLoad={true}
-                    showPlayButton={false}
-                    items={imageUrls}
-                />
+                // <ImageGallery
+                //     showBullets={true}
+                //     showIndex={true}
+                //     showThumbnails={true}
+                //     lazyLoad={true}
+                //     showPlayButton={false}
+                //     items={imageUrls}
+                // />
+                <Carousel>
+                    {imageUrls.map((el, i) => {
+                        return (
+                            <div key={i}>
+                                <img src={el.original} />
+                            </div>
+                        );
+                    })}
+                </Carousel>
             )}
         </div>
     );
