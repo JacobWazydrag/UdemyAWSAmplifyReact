@@ -1,17 +1,17 @@
-import {
-    Divider,
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography
-} from '@mui/material';
+// import {
+//     Divider,
+//     Drawer,
+//     List,
+//     ListItem,
+//     ListItemIcon,
+//     ListItemText,
+//     Typography
+// } from '@mui/material';
 import PaletteIcon from '@mui/icons-material/Palette';
 import HomeIcon from '@mui/icons-material/Home';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import FaceIcon from '@mui/icons-material/Face';
-import LogoutIcon from '@mui/icons-material/Logout';
+// import FaceIcon from '@mui/icons-material/Face';
+// import LogoutIcon from '@mui/icons-material/Logout';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
@@ -69,82 +69,83 @@ export default function Layout({ children, user, signout }) {
         }
     ];
     return (
-        <div className={classes.root}>
-            {/* app bar */}
-            <Drawer
-                className={classes.drawer}
-                variant='permanent'
-                anchor='left'
-                classes={{
-                    paper: classes.drawerPaper
-                }}>
-                <div>
-                    {/* <img
-                        style={{
-                            float: 'left',
-                            height: 50,
-                            width: 50,
-                            paddingLeft: 5,
-                            paddingright: 5,
-                            paddingTop: 5,
-                            marginRight: '10px'
-                        }}
-                        src={ArtSpaceLogo}
-                        alt='Artpsace Logo'
-                    /> */}
-                    <Typography
-                        style={{
-                            padding: 10
-                        }}
-                        variant='h5'>
-                        Artist Portal
-                    </Typography>
-                </div>
-                <List>
-                    {menuItems.map((item) => (
-                        <ListItem
-                            button
-                            onClick={() => navigate(item.path)}
-                            key={item.text}
-                            style={
-                                location.pathname === item.path
-                                    ? { background: '#f4f4f4' }
-                                    : null
-                            }>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text}></ListItemText>
-                        </ListItem>
-                    ))}
-                </List>
-                <div className={classes.drawerFooter}>
-                    <Divider style={{ width: 240 }} />
-                    <List>
-                        <ListItem
-                            key={'profile'}
-                            button
-                            onClick={() => navigate('/profile')}
-                            style={
-                                location.pathname === '/profile'
-                                    ? { background: '#f4f4f4' }
-                                    : null
-                            }>
-                            <ListItemIcon>
-                                <FaceIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={user.attributes.preferred_username}
-                                secondary={'Artist'}></ListItemText>
-                        </ListItem>
-                        <ListItem button onClick={() => signout()}>
-                            <ListItemIcon>
-                                <LogoutIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'Logout'}></ListItemText>
-                        </ListItem>
-                    </List>
-                </div>
-            </Drawer>
-            <div className={classes.page}>{children}</div>
-        </div>
+        // <div className={classes.root}>
+        //     app bar
+        //     <Drawer
+        //         className={classes.drawer}
+        //         variant='permanent'
+        //         anchor='left'
+        //         classes={{
+        //             paper: classes.drawerPaper
+        //         }}>
+        //         <div>
+        //             {/* <img
+        //                 style={{
+        //                     float: 'left',
+        //                     height: 50,
+        //                     width: 50,
+        //                     paddingLeft: 5,
+        //                     paddingright: 5,
+        //                     paddingTop: 5,
+        //                     marginRight: '10px'
+        //                 }}
+        //                 src={ArtSpaceLogo}
+        //                 alt='Artpsace Logo'
+        //             /> */}
+        //             <Typography
+        //                 style={{
+        //                     padding: 10
+        //                 }}
+        //                 variant='h5'>
+        //                 Artist Portal
+        //             </Typography>
+        //         </div>
+        //         <List>
+        //             {menuItems.map((item) => (
+        //                 <ListItem
+        //                     button
+        //                     onClick={() => navigate(item.path)}
+        //                     key={item.text}
+        //                     style={
+        //                         location.pathname === item.path
+        //                             ? { background: '#f4f4f4' }
+        //                             : null
+        //                     }>
+        //                     <ListItemIcon>{item.icon}</ListItemIcon>
+        //                     <ListItemText primary={item.text}></ListItemText>
+        //                 </ListItem>
+        //             ))}
+        //         </List>
+        //         <div className={classes.drawerFooter}>
+        //             <Divider style={{ width: 240 }} />
+        //             <List>
+        //                 <ListItem
+        //                     key={'profile'}
+        //                     button
+        //                     onClick={() => navigate('/profile')}
+        //                     style={
+        //                         location.pathname === '/profile'
+        //                             ? { background: '#f4f4f4' }
+        //                             : null
+        //                     }>
+        //                     <ListItemIcon>
+        //                         <FaceIcon />
+        //                     </ListItemIcon>
+        //                     <ListItemText
+        //                         primary={user.attributes.preferred_username}
+        //                         secondary={'Artist'}></ListItemText>
+        //                 </ListItem>
+        //                 <ListItem button onClick={() => signout()}>
+        //                     <ListItemIcon>
+        //                         <LogoutIcon />
+        //                     </ListItemIcon>
+        //                     <ListItemText primary={'Logout'}></ListItemText>
+        //                 </ListItem>
+        //             </List>
+        //         </div>
+        //     </Drawer>
+        //     <div className={classes.page}>{children}</div>
+        // </div>
+        <div>test</div>
     );
 }
