@@ -7,7 +7,7 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '../../aws-exports';
-// import { AccountForm } from './AccountForm';
+import { AccountForm } from './AccountForm';
 import { AccountProfile } from './AccountProfile';
 
 Amplify.configure(awsExports);
@@ -37,7 +37,7 @@ function Profile() {
                                                 <AccountProfile />
                                             </Grid>
                                             <Grid item lg={8} md={6} xs={12}>
-                                                {/* <AccountForm /> */}
+                                                <AccountForm />
                                             </Grid>
                                         </Grid>
                                     </Container>
