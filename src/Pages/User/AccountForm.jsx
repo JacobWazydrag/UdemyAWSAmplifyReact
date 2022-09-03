@@ -13,7 +13,8 @@ import {
     Tooltip
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-// import MuiPhoneNumber from 'material-ui-phone-number';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
 var _ = require('lodash');
@@ -24,7 +25,6 @@ export const AccountForm = (props) => {
     const [formFeedback, setFormFeedback] = useState(null);
 
     const handleChange = (event) => {
-        console.log(event)
         if (event.target.value) {
             setValues({
                 ...values,
@@ -72,12 +72,12 @@ export const AccountForm = (props) => {
     useEffect(() => {
         initializeForm();
     }, []);
-
+    console.log(values, 'values');
     return (
         <Authenticator>
             {({ signOut, user }) => (
                 <form autoComplete='on' {...props}>
-                    {/* <Card>
+                    <Card>
                         <CardHeader
                             subheader='The information can be edited'
                             title='Profile'
@@ -141,7 +141,24 @@ export const AccountForm = (props) => {
                                         />
                                     </Grid>
                                     <Grid item md={6} xs={12}>
-                                        <MuiPhoneNumber
+                                        <PhoneInput
+                                            name='phone_number'
+                                            placeholder='Enter phone number'
+                                            value={
+                                                values.phone_number
+                                                    ? values.phone_number
+                                                    : ''
+                                            }
+                                            onChange={(e) =>
+                                                handleChange({
+                                                    target: {
+                                                        name: 'phone_number',
+                                                        value: e
+                                                    }
+                                                })
+                                            }
+                                        />
+                                        {/* <MuiPhoneNumber
                                             name='phone_number'
                                             label='Phone Number'
                                             data-cy='user-phone'
@@ -161,7 +178,7 @@ export const AccountForm = (props) => {
                                                     }
                                                 })
                                             }
-                                        />
+                                        /> */}
                                     </Grid>
                                     <Grid item md={6} xs={12}>
                                         <TextField
@@ -345,7 +362,7 @@ export const AccountForm = (props) => {
                                     : ''}
                             </Alert>
                         )}
-                    </Stack> */}
+                    </Stack>
                 </form>
             )}
         </Authenticator>
