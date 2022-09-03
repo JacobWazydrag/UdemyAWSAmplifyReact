@@ -158,27 +158,6 @@ export const AccountForm = (props) => {
                                                 })
                                             }
                                         />
-                                        {/* <MuiPhoneNumber
-                                            name='phone_number'
-                                            label='Phone Number'
-                                            data-cy='user-phone'
-                                            defaultCountry={'us'}
-                                            value={
-                                                values.phone_number
-                                                    ? values.phone_number
-                                                    : ''
-                                            }
-                                            onChange={(e) =>
-                                                handleChange({
-                                                    target: {
-                                                        name: 'phone_number',
-                                                        value:
-                                                            '+' +
-                                                            e.replace(/\D/g, '')
-                                                    }
-                                                })
-                                            }
-                                        /> */}
                                     </Grid>
                                     <Grid item md={6} xs={12}>
                                         <TextField
