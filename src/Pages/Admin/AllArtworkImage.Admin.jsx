@@ -49,7 +49,7 @@ export default function AllArtworkImageAdmin(props) {
                     {imageUrls.map((el, i) => {
                         return (
                             <div key={i}>
-                                <img src={el.original} />
+                                <img src={el.original} alt={"image" + i}/>
                             </div>
                         );
                     })}

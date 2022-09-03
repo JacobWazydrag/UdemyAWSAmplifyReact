@@ -8,16 +8,15 @@ import {
     Divider,
     Grid,
     TextField,
-    // Autocomplete,
     Alert,
     Stack,
     Tooltip
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
-// import { countries } from '../listItems';
 var _ = require('lodash');
 
 export const AccountFormAdmin = (props) => {
@@ -142,11 +141,9 @@ export const AccountFormAdmin = (props) => {
                                         />
                                     </Grid>
                                     <Grid item md={6} xs={12}>
-                                        <MuiPhoneNumber
+                                        <PhoneInput
                                             name='phone_number'
-                                            label='Phone Number'
-                                            data-cy='user-phone'
-                                            defaultCountry={'us'}
+                                            placeholder='Enter phone number'
                                             value={
                                                 values.phone_number
                                                     ? values.phone_number
@@ -156,9 +153,7 @@ export const AccountFormAdmin = (props) => {
                                                 handleChange({
                                                     target: {
                                                         name: 'phone_number',
-                                                        value:
-                                                            '+' +
-                                                            e.replace(/\D/g, '')
+                                                        value: e
                                                     }
                                                 })
                                             }

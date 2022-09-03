@@ -13,7 +13,8 @@ import {
     Tooltip
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { Auth } from 'aws-amplify';
 var _ = require('lodash');
@@ -24,7 +25,7 @@ export const AccountForm = (props) => {
     const [formFeedback, setFormFeedback] = useState(null);
 
     const handleChange = (event) => {
-        console.log(event)
+        console.log(event);
         if (event.target.value) {
             setValues({
                 ...values,
@@ -141,11 +142,9 @@ export const AccountForm = (props) => {
                                         />
                                     </Grid>
                                     <Grid item md={6} xs={12}>
-                                        <MuiPhoneNumber
+                                        <PhoneInput
                                             name='phone_number'
-                                            label='Phone Number'
-                                            data-cy='user-phone'
-                                            defaultCountry={'us'}
+                                            placeholder='Enter phone number'
                                             value={
                                                 values.phone_number
                                                     ? values.phone_number
@@ -155,9 +154,7 @@ export const AccountForm = (props) => {
                                                 handleChange({
                                                     target: {
                                                         name: 'phone_number',
-                                                        value:
-                                                            '+' +
-                                                            e.replace(/\D/g, '')
+                                                        value: e
                                                     }
                                                 })
                                             }

@@ -19,6 +19,9 @@ type Artshow
     type: String!
     description: String!
     status: String!
+    time_period_start: Date!
+    time_period_end: Date!
+    artists: [ID!]
 }
 
 type Artwork
