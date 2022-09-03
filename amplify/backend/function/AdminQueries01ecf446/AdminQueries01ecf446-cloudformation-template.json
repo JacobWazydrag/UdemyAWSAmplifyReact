@@ -1,13 +1,13 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.26\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"9.1.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "env": {
       "Type": "String"
     },
-    "authartspaceforms155ed2da155ed2daUserPoolId": {
+    "authUdemyAWSAmplifyReactUserPoolId": {
       "Type": "String",
-      "Default": "authartspaceforms155ed2da155ed2daUserPoolId"
+      "Default": "authUdemyAWSAmplifyReactUserPoolId"
     },
     "deploymentBucketName": {
       "Type": "String"
@@ -38,12 +38,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries3d917b0f",
+            "AdminQueries01ecf446",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries3d917b0f",
+                  "AdminQueries01ecf446",
                   "-",
                   {
                     "Ref": "env"
@@ -58,9 +58,9 @@
             "ENV": {
               "Ref": "env"
             },
-            "GROUP": "admins",
+            "GROUP": "Admin",
             "USERPOOL": {
-              "Ref": "authartspaceforms155ed2da155ed2daUserPoolId"
+              "Ref": "authUdemyAWSAmplifyReactUserPoolId"
             }
           }
         },
@@ -88,12 +88,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries3d917b0fLambdaRole",
+            "AdminQueries01ecf446LambdaRole",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries3d917b0fLambdaRole",
+                  "AdminQueries01ecf446LambdaRole",
                   "-",
                   {
                     "Ref": "env"
@@ -189,7 +189,7 @@
                     },
                     ":userpool/",
                     {
-                      "Ref": "authartspaceforms155ed2da155ed2daUserPoolId"
+                      "Ref": "authUdemyAWSAmplifyReactUserPoolId"
                     }
                   ]
                 ]

@@ -1,11 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "userPoolGroups": {
-            "adminsGroupRole": "string",
-            "artistsGroupRole": "string",
-            "devGroupRole": "string"
-        },
-        "artspaceforms155ed2da155ed2da": {
+        "UdemyAWSAmplifyReact": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "HostedUIDomain": "string",
@@ -14,36 +9,32 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string",
-            "CreatedSNSRole": "string",
-            "GoogleWebClient": "string",
-            "FacebookWebClient": "string",
-            "AmazonWebClient": "string"
+            "AppClientID": "string"
         }
     },
-    "function": {
-        "AdminQueries3d917b0f": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
+    "storage": {
+        "s3udemyawsamplifyreactstorage48843bf6": {
+            "BucketName": "string",
+            "Region": "string"
         }
     },
     "api": {
+        "udemyawsamplifyreact": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        },
         "AdminQueries": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"
-        },
-        "artspaceforms": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
         }
     },
-    "storage": {
-        "artspaceartistformimages": {
-            "BucketName": "string",
-            "Region": "string"
+    "function": {
+        "AdminQueries01ecf446": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     }
 }

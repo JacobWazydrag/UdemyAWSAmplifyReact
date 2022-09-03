@@ -152,96 +152,48 @@
         }
       }
     },
-    "authuserPoolGroups": {
+    "authUdemyAWSAmplifyReact": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/auth/UdemyAWSAmplifyReact-cloudformation-template.json",
         "Parameters": {
-          "AuthRoleArn": {
-            "Fn::GetAtt": [
-              "AuthRole",
-              "Arn"
-            ]
-          },
-          "UnauthRoleArn": {
-            "Fn::GetAtt": [
-              "UnauthRole",
-              "Arn"
-            ]
-          },
-          "authartspaceforms155ed2da155ed2daUserPoolId": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "authartspaceforms155ed2da155ed2daAppClientIDWeb": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.AppClientIDWeb"
-            ]
-          },
-          "authartspaceforms155ed2da155ed2daAppClientID": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.AppClientID"
-            ]
-          },
-          "authartspaceforms155ed2da155ed2daIdentityPoolId": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.IdentityPoolId"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "authartspaceforms155ed2da155ed2da": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/auth/artspaceforms155ed2da155ed2da-cloudformation-template.json",
-        "Parameters": {
-          "identityPoolName": "artspaceforms155ed2da_identitypool_155ed2da",
+          "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "artspa155ed2da",
-          "userPoolName": "artspaceforms155ed2da_userpool_155ed2da",
+          "resourceNameTruncated": "udemya334db048",
+          "userPoolName": "UdemyAWSAmplifyReact",
           "autoVerifiedAttributes": "email",
-          "mfaConfiguration": "OPTIONAL",
+          "mfaConfiguration": "OFF",
           "mfaTypes": "SMS Text Message",
           "smsAuthenticationMessage": "Your authentication code is {####}",
           "smsVerificationMessage": "Your verification code is {####}",
-          "emailVerificationSubject": "Your verification code",
-          "emailVerificationMessage": "Your verification code is {####}",
+          "emailVerificationSubject": "Verification code: {####}",
+          "emailVerificationMessage": "Verification code: {####}",
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": "",
-          "requiredAttributes": "email,name,phone_number",
+          "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Symbols,Requires Uppercase",
+          "requiredAttributes": "email",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
-          "userpoolClientWriteAttributes": "address,birthdate,family_name,middle_name,gender,locale,given_name,nickname,preferred_username,picture,profile,updated_at,website,zoneinfo,email,name,phone_number",
-          "userpoolClientReadAttributes": "address,birthdate,email,family_name,middle_name,gender,locale,given_name,name,nickname,phone_number,preferred_username,picture,profile,updated_at,website,zoneinfo,email_verified,phone_number_verified",
-          "userpoolClientLambdaRole": "artspa155ed2da_userpoolclient_lambda_role",
-          "userpoolClientSetAttributes": true,
-          "sharedId": "155ed2da",
-          "resourceName": "artspaceforms155ed2da155ed2da",
+          "userpoolClientWriteAttributes": "",
+          "userpoolClientReadAttributes": "",
+          "userpoolClientLambdaRole": "UdemyA334db048_userpoolclient_lambda_role",
+          "userpoolClientSetAttributes": false,
+          "sharedId": "334db048",
+          "resourceName": "UdemyAWSAmplifyReact",
           "authSelections": "identityPoolAndUserPool",
-          "useDefault": "manual",
-          "thirdPartyAuth": true,
-          "authProviders": "graph.facebook.com,accounts.google.com,www.amazon.com",
-          "usernameAttributes": "email, phone_number",
-          "userPoolGroups": true,
-          "adminQueries": true,
-          "triggers": "{}",
-          "hostedUI": true,
-          "hostedUIDomainName": "artspaceforms155ed2da-155ed2da",
-          "authProvidersUserPool": "",
-          "hostedUIProviderMeta": "[]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.artspaceartists.com/\"],\"LogoutURLs\":[\"https://www.artspaceartists.com/signout/\"]}",
-          "userPoolGroupList": "admins,artists,dev",
-          "adminQueryGroup": "admins",
           "serviceName": "Cognito",
+          "usernameAttributes": "email",
+          "useDefault": "manual",
+          "userPoolGroups": false,
+          "userPoolGroupList": "",
+          "adminQueries": false,
+          "thirdPartyAuth": false,
+          "authProviders": "",
+          "hostedUI": true,
+          "hostedUIDomainName": "xfvhs58rx9xr",
+          "authProvidersUserPool": "Facebook,Google,LoginWithAmazon",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile profile:user_id\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"user_id\"}}]",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
           "authRoleArn": {
@@ -258,132 +210,107 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUIProviderCreds": "[]",
-          "facebookAppId": "298480202428481",
-          "googleClientId": "167869457579-09ne8ssnnjl6d7gf0l8boe81q0gm2mhb.apps.googleusercontent.com",
-          "amazonAppId": "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",
-          "env": "prod"
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"706056917128237\",\"client_secret\":\"c2403ef6969d2e989e5ee7bcf91d50d4\"},{\"ProviderName\":\"Google\",\"client_id\":\"958544426706-tm32sifuecoaqoi5mg7076dnbr8juc29.apps.googleusercontent.com\",\"client_secret\":\"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\"},{\"ProviderName\":\"LoginWithAmazon\",\"client_id\":\"amzn1.application-oa2-client.69e56d7557cc4655925a22b4baf3a3e0\",\"client_secret\":\"09163fac649e8054da1b3631ff87b436b8649d6eed993c8ff36d225c17e32e7b\"}]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+          "adminQueryGroup": "Admin",
+          "env": "staging"
         }
       }
     },
-    "functionAdminQueries3d917b0f": {
+    "storages3udemyawsamplifyreactstorage48843bf6": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/function/AdminQueries3d917b0f-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-artspaceforms-prod-155530-deployment",
-          "s3Key": "amplify-builds/AdminQueries3d917b0f-6436694d59366d6f4f6e-build.zip",
-          "authartspaceforms155ed2da155ed2daUserPoolId": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "apiAdminQueries": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
-        "Parameters": {
-          "authartspaceforms155ed2da155ed2daUserPoolId": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "functionAdminQueries3d917b0fArn": {
-            "Fn::GetAtt": [
-              "functionAdminQueries3d917b0f",
-              "Outputs.Arn"
-            ]
-          },
-          "functionAdminQueries3d917b0fName": {
-            "Fn::GetAtt": [
-              "functionAdminQueries3d917b0f",
-              "Outputs.Name"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "apiartspaceforms": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "Parameters": {
-          "AppSyncApiName": "artspaceforms",
-          "DynamoDBBillingMode": "PAY_PER_REQUEST",
-          "DynamoDBEnableServerSideEncryption": false,
-          "AuthCognitoUserPoolId": {
-            "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "S3DeploymentBucket": "amplify-artspaceforms-prod-155530-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/8d3f164110a06a4a6e054c91b12ef8ff22b95f20",
-          "env": "prod"
-        }
-      }
-    },
-    "storageartspaceartistformimages": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-artspaceforms-prod-155530-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "Parameters": {
-          "bucketName": "artspaceartistformimagebucket",
+          "bucketName": "udemyawsamplifyreact-storage-48843bf6",
           "selectedGuestPermissions": "",
-          "selectedAuthenticatedPermissions": "",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
           "authRoleName": {
             "Ref": "AuthRoleName"
           },
-          "s3PrivatePolicy": "Private_policy_6d799482",
-          "s3ProtectedPolicy": "Protected_policy_6d799482",
-          "s3PublicPolicy": "Public_policy_6d799482",
-          "s3ReadPolicy": "read_policy_6d799482",
-          "s3UploadsPolicy": "Uploads_policy_6d799482",
-          "authPolicyName": "s3_amplify_6d799482",
-          "unauthPolicyName": "s3_amplify_6d799482",
-          "AuthenticatedAllowList": "DISALLOW",
+          "s3PrivatePolicy": "Private_policy_b1b9350a",
+          "s3ProtectedPolicy": "Protected_policy_b1b9350a",
+          "s3PublicPolicy": "Public_policy_b1b9350a",
+          "s3ReadPolicy": "read_policy_b1b9350a",
+          "s3UploadsPolicy": "Uploads_policy_b1b9350a",
+          "authPolicyName": "s3_amplify_b1b9350a",
+          "unauthPolicyName": "s3_amplify_b1b9350a",
+          "AuthenticatedAllowList": "ALLOW",
           "GuestAllowList": "DISALLOW",
-          "s3PermissionsAuthenticatedPrivate": "DISALLOW",
-          "s3PermissionsAuthenticatedProtected": "DISALLOW",
-          "s3PermissionsAuthenticatedPublic": "DISALLOW",
-          "s3PermissionsAuthenticatedUploads": "DISALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
           "s3PermissionsGuestPublic": "DISALLOW",
           "s3PermissionsGuestUploads": "DISALLOW",
-          "authartspaceforms155ed2da155ed2daUserPoolId": {
+          "env": "staging"
+        }
+      }
+    },
+    "apiudemyawsamplifyreact": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "Parameters": {
+          "AppSyncApiName": "udemyawsamplifyreact",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "AuthCognitoUserPoolId": {
             "Fn::GetAtt": [
-              "authartspaceforms155ed2da155ed2da",
+              "authUdemyAWSAmplifyReact",
               "Outputs.UserPoolId"
             ]
           },
-          "authuserPoolGroupsadminsGroupRole": {
+          "S3DeploymentBucket": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/5ceb91e37f695dd084940da02896691b221b247a",
+          "env": "staging"
+        }
+      }
+    },
+    "apiAdminQueries": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
+        "Parameters": {
+          "authUdemyAWSAmplifyReactUserPoolId": {
             "Fn::GetAtt": [
-              "authuserPoolGroups",
-              "Outputs.adminsGroupRole"
+              "authUdemyAWSAmplifyReact",
+              "Outputs.UserPoolId"
             ]
           },
-          "authuserPoolGroupsartistsGroupRole": {
+          "functionAdminQueries01ecf446Arn": {
             "Fn::GetAtt": [
-              "authuserPoolGroups",
-              "Outputs.artistsGroupRole"
+              "functionAdminQueries01ecf446",
+              "Outputs.Arn"
             ]
           },
-          "authuserPoolGroupsdevGroupRole": {
+          "functionAdminQueries01ecf446Name": {
             "Fn::GetAtt": [
-              "authuserPoolGroups",
-              "Outputs.devGroupRole"
+              "functionAdminQueries01ecf446",
+              "Outputs.Name"
             ]
           },
-          "env": "prod"
+          "env": "staging"
+        }
+      }
+    },
+    "functionAdminQueries01ecf446": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplify9701e0c9649e4-staging-102759-deployment/amplify-cfn-templates/function/AdminQueries01ecf446-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
+          "s3Key": "amplify-builds/AdminQueries01ecf446-626662616c6b556d364e-build.zip",
+          "authUdemyAWSAmplifyReactUserPoolId": {
+            "Fn::GetAtt": [
+              "authUdemyAWSAmplifyReact",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "env": "staging"
         }
       }
     },
@@ -391,7 +318,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authartspaceforms155ed2da155ed2da"
+        "authUdemyAWSAmplifyReact"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -462,7 +389,7 @@
           }
         },
         "Handler": "index.handler",
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 300,
         "Role": {
           "Fn::GetAtt": [
@@ -486,7 +413,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authartspaceforms155ed2da155ed2da",
+            "authUdemyAWSAmplifyReact",
             "Outputs.IdentityPoolId"
           ]
         },
