@@ -53,17 +53,17 @@ export default function LayoutAdmin({ children, user, signout }) {
     const menuItems = [
         { text: 'Home', icon: <HomeIcon color='primary' />, path: '/' },
         {
-            text: 'All Artworks',
+            text: 'Artworks',
             icon: <PaletteIcon color='primary' />,
             path: '/all-artworks'
         },
         {
-            text: 'All Artshows',
+            text: 'Artshows',
             icon: <StorefrontIcon color='primary' />,
             path: '/all-artshows'
         },
         {
-            text: 'All Artists',
+            text: 'Artists',
             icon: <GroupsIcon color='primary' />,
             path: '/all-artists'
         }
