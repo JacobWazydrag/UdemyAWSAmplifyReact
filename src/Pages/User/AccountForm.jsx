@@ -1,83 +1,83 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Grid,
-    TextField,
-    Alert,
-    Stack,
-    Tooltip
-} from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import MuiPhoneNumber from 'material-ui-phone-number';
+// import {
+//     Box,
+//     Button,
+//     Card,
+//     CardContent,
+//     CardHeader,
+//     Divider,
+//     Grid,
+//     TextField,
+//     Alert,
+//     Stack,
+//     Tooltip
+// } from '@mui/material';
+// import CircularProgress from '@mui/material/CircularProgress';
+// import MuiPhoneNumber from 'material-ui-phone-number';
 import { Authenticator } from '@aws-amplify/ui-react';
-import { Auth } from 'aws-amplify';
-var _ = require('lodash');
+// import { Auth } from 'aws-amplify';
+// var _ = require('lodash');
 
 export const AccountForm = (props) => {
-    const [values, setValues] = useState({});
-    const [userValues, setUserValues] = useState({});
-    const [formFeedback, setFormFeedback] = useState(null);
+    // const [values, setValues] = useState({});
+    // const [userValues, setUserValues] = useState({});
+    // const [formFeedback, setFormFeedback] = useState(null);
 
-    const handleChange = (event) => {
-        console.log(event)
-        if (event.target.value) {
-            setValues({
-                ...values,
-                [event.target.name]: event.target.value
-            });
-        } else {
-            delete values[event.target.name];
-            setValues({
-                ...values
-            });
-        }
-    };
+    // const handleChange = (event) => {
+    //     console.log(event)
+    //     if (event.target.value) {
+    //         setValues({
+    //             ...values,
+    //             [event.target.name]: event.target.value
+    //         });
+    //     } else {
+    //         delete values[event.target.name];
+    //         setValues({
+    //             ...values
+    //         });
+    //     }
+    // };
 
-    const updateUsers = async (user) => {
-        try {
-            const user = await Auth.currentAuthenticatedUser();
-            await Auth.updateUserAttributes(user, values);
-            setFormFeedback('success');
-        } catch (error) {
-            console.log(error);
-            setFormFeedback('error');
-        }
-    };
+    // const updateUsers = async (user) => {
+    //     try {
+    //         const user = await Auth.currentAuthenticatedUser();
+    //         await Auth.updateUserAttributes(user, values);
+    //         setFormFeedback('success');
+    //     } catch (error) {
+    //         console.log(error);
+    //         setFormFeedback('error');
+    //     }
+    // };
 
-    const closeDialog = () => {
-        setFormFeedback(null);
-    };
+    // const closeDialog = () => {
+    //     setFormFeedback(null);
+    // };
 
-    const initializeForm = async () => {
-        try {
-            const user = await Auth.currentAuthenticatedUser();
-            let valuesObj = {};
-            for (const [key, value] of Object.entries(user.attributes)) {
-                if (key !== 'sub') {
-                    valuesObj[key] = value;
-                }
-            }
-            setValues(valuesObj);
-            setUserValues(valuesObj);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    // const initializeForm = async () => {
+    //     try {
+    //         const user = await Auth.currentAuthenticatedUser();
+    //         let valuesObj = {};
+    //         for (const [key, value] of Object.entries(user.attributes)) {
+    //             if (key !== 'sub') {
+    //                 valuesObj[key] = value;
+    //             }
+    //         }
+    //         setValues(valuesObj);
+    //         setUserValues(valuesObj);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
 
-    useEffect(() => {
-        initializeForm();
-    }, []);
+    // useEffect(() => {
+    //     initializeForm();
+    // }, []);
 
     return (
         <Authenticator>
             {({ signOut, user }) => (
                 <form autoComplete='on' {...props}>
-                    <Card>
+                    {/* <Card>
                         <CardHeader
                             subheader='The information can be edited'
                             title='Profile'
@@ -345,7 +345,7 @@ export const AccountForm = (props) => {
                                     : ''}
                             </Alert>
                         )}
-                    </Stack>
+                    </Stack> */}
                 </form>
             )}
         </Authenticator>
