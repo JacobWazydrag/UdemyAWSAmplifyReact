@@ -1,4 +1,29 @@
 {
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-artspaceforms-prod-155530-authRole",
+      "UnauthRoleArn": "arn:aws:iam::621367702086:role/amplify-artspaceforms-prod-155530-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::621367702086:role/amplify-artspaceforms-prod-155530-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-artspaceforms-prod-155530-deployment",
+      "UnauthRoleName": "amplify-artspaceforms-prod-155530-unauthRole",
+      "StackName": "amplify-artspaceforms-prod-155530",
+      "StackId": "arn:aws:cloudformation:us-east-2:621367702086:stack/amplify-artspaceforms-prod-155530/8c3abbd0-c27e-11ec-9607-0a3463e4c534",
+      "AmplifyAppId": "d22ji2qwvlmh6r"
+    },
+    "categories": {
+      "auth": {
+        "userPoolGroups": {},
+        "artspaceforms155ed2da155ed2da": {}
+      },
+      "function": {
+        "AdminQueries3d917b0f": {
+          "deploymentBucketName": "amplify-artspaceforms-prod-155530-deployment",
+          "s3Key": "amplify-builds/AdminQueries3d917b0f-6436694d59366d6f4f6e-build.zip"
+        }
+      }
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplify9701e0c9649e4-staging-102759-authRole",

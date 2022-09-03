@@ -1,0 +1,25 @@
+{
+  "resourceName": "artspaceartistformimages",
+  "policyUUID": "6d799482",
+  "bucketName": "artspaceartistformimagebucket",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [],
+  "triggerFunction": "NONE",
+  "groupAccess": {
+    "admins": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ],
+    "artists": [
+      "CREATE_AND_UPDATE",
+      "READ"
+    ],
+    "dev": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}

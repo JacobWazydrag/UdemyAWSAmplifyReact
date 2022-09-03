@@ -1,10 +1,10 @@
 {
-  "AppSyncApiName": "udemyawsamplifyreact",
+  "AppSyncApiName": "artspaceforms",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
-      "authUdemyAWSAmplifyReact",
+      "authartspaceforms155ed2da155ed2da",
       "Outputs.UserPoolId"
     ]
   }

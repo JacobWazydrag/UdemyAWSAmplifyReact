@@ -1,6 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "UdemyAWSAmplifyReact": {
+        "userPoolGroups": {
+            "adminsGroupRole": "string",
+            "artistsGroupRole": "string",
+            "devGroupRole": "string"
+        },
+        "artspaceforms155ed2da155ed2da": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "HostedUIDomain": "string",
@@ -9,32 +14,36 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
-        }
-    },
-    "storage": {
-        "s3udemyawsamplifyreactstorage48843bf6": {
-            "BucketName": "string",
-            "Region": "string"
-        }
-    },
-    "api": {
-        "udemyawsamplifyreact": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        },
-        "AdminQueries": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string",
+            "GoogleWebClient": "string",
+            "FacebookWebClient": "string",
+            "AmazonWebClient": "string"
         }
     },
     "function": {
-        "AdminQueries01ecf446": {
+        "AdminQueries3d917b0f": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
+        }
+    },
+    "api": {
+        "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        },
+        "artspaceforms": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "storage": {
+        "artspaceartistformimages": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }
