@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 // import MuiPhoneNumber from 'material-ui-phone-number';
 import { Authenticator } from '@aws-amplify/ui-react';
 // import { Auth } from 'aws-amplify';
-// var _ = require('lodash');
+var _ = require('lodash');
 
 export const AccountForm = (props) => {
     // const [values, setValues] = useState({});
