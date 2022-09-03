@@ -43,12 +43,11 @@ console.log(imageUrls)
     return (
         <div style={{ maxHeight: 600, maxWidth: 600 }}>
             {imageUrls.length === 0 ? null : (
-                <Carousel>
+                <Carousel showStatus={false}>
                     {imageUrls.map((el, i) => {
                         return (
                             <div key={i}>
                                 <img src={el.original} />
-                                <p className='legend'>Legend 1</p>
                             </div>
                         );
                     })}
