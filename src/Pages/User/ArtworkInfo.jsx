@@ -44,7 +44,7 @@ export default function ArtworkInfo(props) {
         )
             .then((el) => {
                 setTimeout(() => {
-                    props.refreshAction()
+                    props.refreshAction();
                 }, 500);
             })
             .catch((err) => {
@@ -140,28 +140,32 @@ export default function ArtworkInfo(props) {
                                 <Typography>{artwork.status}</Typography>
                             </Grid>
                         </Grid>
-                        <ButtonGroup
-                            style={{ marginTop: '20px' }}
-                            disableElevation
-                            variant='contained'>
-                            <Button
-                                onClick={() => {
-                                    updateArtworkStatus(props.detail.id);
-                                }}
-                                style={{ marginRight: '10px' }}
-                                variant='contained'
-                                endIcon={<PublishIcon />}>
-                                Publish
-                            </Button>
-                            <Button
-                                onClick={() => removeArtwork(props.detail.id)}
-                                style={{ marginRight: '10px' }}
-                                variant='contained'
-                                color='error'
-                                endIcon={<DeleteForeverIcon />}>
-                                Delete forever
-                            </Button>
-                        </ButtonGroup>
+                        {artwork.status === 'PUBLISHED' ? null : (
+                            <ButtonGroup
+                                style={{ marginTop: '20px' }}
+                                disableElevation
+                                variant='contained'>
+                                <Button
+                                    onClick={() => {
+                                        updateArtworkStatus(props.detail.id);
+                                    }}
+                                    style={{ marginRight: '10px' }}
+                                    variant='contained'
+                                    endIcon={<PublishIcon />}>
+                                    Publish
+                                </Button>
+                                <Button
+                                    onClick={() =>
+                                        removeArtwork(props.detail.id)
+                                    }
+                                    style={{ marginRight: '10px' }}
+                                    variant='contained'
+                                    color='error'
+                                    endIcon={<DeleteForeverIcon />}>
+                                    Delete forever
+                                </Button>
+                            </ButtonGroup>
+                        )}
                     </CardContent>
                 </Card>
             )}
