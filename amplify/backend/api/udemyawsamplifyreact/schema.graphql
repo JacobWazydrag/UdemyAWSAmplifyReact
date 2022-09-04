@@ -19,6 +19,9 @@ type Artshow
     type: String!
     description: String!
     status: String!
+    time_period_start: AWSDate!
+    time_period_end: AWSDate!
+    artists: [ID!]
 }
 
 type Artwork
@@ -44,7 +47,18 @@ type Artwork
     image3: S3Object
 }
 
-type S3Object {
+type S3Object
+    @model
+    @auth(
+        rules: [
+            { allow: owner, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
     bucket: String!
     region: String!
     key: String!

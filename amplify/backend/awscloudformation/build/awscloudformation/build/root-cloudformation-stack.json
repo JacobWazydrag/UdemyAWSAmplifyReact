@@ -210,7 +210,7 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"706056917128237\",\"client_secret\":\"c2403ef6969d2e989e5ee7bcf91d50d4\"},{\"ProviderName\":\"Google\",\"client_id\":\"958544426706-tm32sifuecoaqoi5mg7076dnbr8juc29.apps.googleusercontent.com\",\"client_secret\":\"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\"},{\"ProviderName\":\"LoginWithAmazon\",\"client_id\":\"amzn1.application-oa2-client.69e56d7557cc4655925a22b4baf3a3e0\",\"client_secret\":\"09163fac649e8054da1b3631ff87b436b8649d6eed993c8ff36d225c17e32e7b\"}]",
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\"},{\"ProviderName\":\"Google\"},{\"ProviderName\":\"LoginWithAmazon\"}]",
           "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
           "adminQueryGroup": "Admin",
           "env": "staging"
@@ -265,7 +265,7 @@
             ]
           },
           "S3DeploymentBucket": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/5ceb91e37f695dd084940da02896691b221b247a",
+          "S3DeploymentRootKey": "amplify-appsync-files/b18474e9a972892f2d126c7df3e2037b54fa8148",
           "env": "staging"
         }
       }
