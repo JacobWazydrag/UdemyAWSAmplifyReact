@@ -81,7 +81,7 @@ export default function ArtworkUpload() {
                 API.graphql(graphqlOperation(createArtwork, { input: inputs }))
                     .then((el) => console.log('upload successful'))
                     .catch((err) => {
-                        console.log('err');
+                        console.log('ArtworkUpload line 84 err: ', err);
                     });
                 setTitleValue('');
                 setDescriptionValue('');
