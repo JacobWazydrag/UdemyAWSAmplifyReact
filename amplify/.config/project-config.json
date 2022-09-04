@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "artspaceforms",
+  "projectName": "UdemyAWSAmplifyReact",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
