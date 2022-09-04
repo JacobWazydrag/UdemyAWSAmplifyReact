@@ -55,7 +55,7 @@ export default function App() {
                                     element={<AllArtworksAdmin />}
                                 />
                                 <Route
-                                    path='/all-artworks/:id'
+                                    path='/all-artworks/:id/'
                                     element={<AllArtworksDetailAdmin />}
                                 />
                                 <Route
