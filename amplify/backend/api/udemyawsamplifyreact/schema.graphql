@@ -19,8 +19,8 @@ type Artshow
     type: String!
     description: String!
     status: String!
-    time_period_start: Date!
-    time_period_end: Date!
+    time_period_start: AWSDate!
+    time_period_end: AWSDate!
     artists: [ID!]
 }
 
