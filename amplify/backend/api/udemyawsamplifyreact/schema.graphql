@@ -47,18 +47,7 @@ type Artwork
     image3: S3Object
 }
 
-type S3Object
-    @model
-    @auth(
-        rules: [
-            { allow: owner, operations: [create, update, read, delete] }
-            {
-                allow: groups
-                groups: ["Admin"]
-                operations: [create, update, read, delete]
-            }
-        ]
-    ) {
+type S3Object {
     bucket: String!
     region: String!
     key: String!
