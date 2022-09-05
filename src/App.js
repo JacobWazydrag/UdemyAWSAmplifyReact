@@ -17,6 +17,7 @@ import ArtworkUpload from './Pages/User/ArtworkUpload';
 import AllArtistsAdmin from './Pages/Admin/AllArtists.Admin';
 import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
 import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
+import CreateArtshowAdmin from './Pages/Admin/CreateArtshow.Admin';
 import HomeAdmin from './Pages/Admin/Home.Admin';
 import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
@@ -55,7 +56,7 @@ export default function App() {
                                     element={<AllArtworksAdmin />}
                                 />
                                 <Route
-                                    path='/all-artworks/:id/'
+                                    path='/all-artworks/:id'
                                     element={<AllArtworksDetailAdmin />}
                                 />
                                 <Route
@@ -65,6 +66,10 @@ export default function App() {
                                 <Route
                                     path='/all-artists/:id'
                                     element={<AllArtistDetailAdmin />}
+                                />
+                                <Route
+                                    path='/create-artshow'
+                                    element={<CreateArtshowAdmin />}
                                 />
                                 <Route
                                     path='/admin-profile'

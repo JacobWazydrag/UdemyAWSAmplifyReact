@@ -13,6 +13,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import GroupsIcon from '@mui/icons-material/Groups';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -66,6 +67,11 @@ export default function LayoutAdmin({ children, user, signout }) {
             text: 'Artists',
             icon: <GroupsIcon color='primary' />,
             path: '/all-artists'
+        },
+        {
+            text: 'Create Artshow',
+            icon: <AddBoxIcon color='primary' />,
+            path: '/create-artshow'
         }
     ];
     return (

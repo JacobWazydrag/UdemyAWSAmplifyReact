@@ -15,13 +15,14 @@ type Artshow
         ]
     ) {
     id: ID!
-    artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
+    artworks: [Artwork] @hasMany
     type: String!
     description: String!
     status: String!
     time_period_start: AWSDate!
     time_period_end: AWSDate!
     artists: [ID!]
+    image1: S3Object!
 }
 
 type Artwork
@@ -37,7 +38,7 @@ type Artwork
         ]
     ) {
     id: ID!
-    artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
+    artshows: [Artshow] @hasMany
     title: String
     description: String
     status: String
