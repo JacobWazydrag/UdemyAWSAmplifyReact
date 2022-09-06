@@ -15,7 +15,7 @@ type Artshow
         ]
     ) {
     id: ID!
-    artworks: [Artwork] @hasMany
+    artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
     type: String!
     description: String!
     status: String!
@@ -38,7 +38,7 @@ type Artwork
         ]
     ) {
     id: ID!
-    artshows: [Artshow] @hasMany
+    artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
     title: String
     description: String
     status: String
