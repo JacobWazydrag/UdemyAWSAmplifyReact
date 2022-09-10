@@ -103,6 +103,7 @@ export default function Layout({ children, user, signout }) {
                 <List>
                     {menuItems.map((item) => (
                         <ListItem
+                            disabled={!user.attributes.profile || !user.attributes.phone_number}
                             button
                             onClick={() => navigate(item.path)}
                             key={item.text}

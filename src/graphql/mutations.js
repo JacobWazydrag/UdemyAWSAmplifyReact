@@ -101,7 +101,16 @@ export const createArtwork = /* GraphQL */ `
         nextToken
       }
       title
-      description
+      UOM
+      artistNameFirst
+      artistNameLast
+      dimensionsL
+      dimensionsW
+      framings
+      framingsOthersExplained
+      mediumOthersExplained
+      mediums
+      isFramed
       status
       price
       image1 {

@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Storage } from 'aws-amplify';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
 import { Authenticator } from '@aws-amplify/ui-react';
 import {
     Box,
-    Button,
     Card,
     CardActions,
     CardContent,
     Divider,
     Typography
 } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import PictureNotFound from '../../Assets/404Painting.jpg';
 
 export const AccountProfile = (props) => {
+    let [error, setError] = useState('');
+    const onLoadedImage = (e) => {
+        if (e && e.returnValue === true) {
+            setError('Error');
+        }
+    };
     async function uploadPhoto(file, id) {
         Storage.put(`profileImage/profile${id}.png`, file, {
             contentType: 'image/png',
@@ -37,11 +42,22 @@ export const AccountProfile = (props) => {
                                 display: 'flex',
                                 flexDirection: 'column'
                             }}>
-                            <AmplifyS3Image
-                            imgProps={{style:{height: 300, width: '100%'}}}
-                                level='public'
-                                imgKey={`profileImage/profile${user.username}.png`}
-                            />
+                            {error ? (
+                                <img
+                                    src={PictureNotFound}
+                                    style={{ height: 300, width: '100%' }}
+                                />
+                            ) : (
+                                <AmplifyS3Image
+                                    imgProps={{
+                                        style: { height: 300, width: '100%' },
+                                        onError: onLoadedImage
+                                    }}
+                                    level='public'
+                                    imgKey={`profileImage/profile${user.username}.png`}
+                                />
+                            )}
+
                             <Typography
                                 color='textPrimary'
                                 gutterBottom
@@ -66,24 +82,13 @@ export const AccountProfile = (props) => {
                     </CardContent>
                     <Divider />
                     <CardActions>
-                        <Button
-                            style={{
-                                backgroundColor: '#ff7800',
-                                color: 'white'
-                            }}>
-                            <AddPhotoAlternateIcon />{' '}
-                            <input
-                                style={{ opacity: 0 }}
-                                type='file'
-                                accept='image/*'
-                                onChange={(e) =>
-                                    uploadPhoto(
-                                        e.target.files[0],
-                                        user.username
-                                    )
-                                }
-                            />
-                        </Button>
+                        <input
+                            type='file'
+                            accept='image/*'
+                            onChange={(e) =>
+                                uploadPhoto(e.target.files[0], user.username)
+                            }
+                        />
                     </CardActions>
                 </Card>
             )}

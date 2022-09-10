@@ -26,7 +26,7 @@ export default function ArtworkImage(props) {
     const getUrls = async () => {
         let promises = [];
         _.forEach(props.detail, (value, key) => {
-            if (key.includes('image')) {
+            if (key.includes('image') && value) {
                 return promises.push(returnMyUrlsForMainImage(value.key));
             }
         });

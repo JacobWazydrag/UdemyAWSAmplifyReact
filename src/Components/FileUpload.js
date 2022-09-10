@@ -10,9 +10,10 @@ import Alert from '@mui/material/Alert';
 export default function FileUpload(props) {
     const [ImageUrls, setImageURLs] = useState([]);
     const [Images, setImages] = useState([]);
-
+    const multiple = props.multiple
+    const imagesToUpload = multiple ? 3 : 1
     const onDrop = (files) => {
-        if (Images.length === 3) {
+        if (Images.length === imagesToUpload) {
             return alert(
                 'Only 3 images allowed. Please delete one to make room and continue uploading'
             );
@@ -44,9 +45,9 @@ export default function FileUpload(props) {
     }
     const thumbsContainer = {
         display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
         marginTop: 16
+        // textAlign: 'justify'
     };
     const thumb = {
         display: 'inline-flex',
@@ -78,14 +79,51 @@ export default function FileUpload(props) {
             style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                placeContent: "center"
             }}>
+            <>
+                {Images.length === imagesToUpload ? (
+                    <div
+                        style={{
+                            display: 'inline-flex',
+                            paddingLeft: 50,
+                            marginBottom: '-40px'
+                        }}>
+                        <CheckCircleOutlineIcon
+                            style={{
+                                fontSize: 30,
+                                color: 'limegreen'
+                            }}></CheckCircleOutlineIcon>
+                        <Typography variant='h6'>
+                            {Images.length}/{imagesToUpload} Images Staged!
+                        </Typography>
+                    </div>
+                ) : (
+                    <div
+                        style={{
+                            display: 'inline-flex',
+                            paddingLeft: 50,
+                            marginBottom: '-40px'
+                        }}>
+                        <WarningAmberIcon
+                            style={{
+                                fontSize: 30,
+                                color: 'red'
+                            }}
+                        />
+                        <Typography variant='h6'>
+                            {Images.length}/{imagesToUpload} Images Staged
+                        </Typography>
+                    </div>
+                )}
+            </>
             <Dropzone
                 accept={{ 'image/*': [] }}
                 onDrop={onDrop}
                 multiple={false}
                 maxSize={800000000}
-                maxFiles={3}>
+                maxFiles={imagesToUpload}>
                 {({
                     getRootProps,
                     getInputProps,
@@ -96,8 +134,8 @@ export default function FileUpload(props) {
                     <>
                         <div
                             style={{
-                                width: '100%',
-                                height: '240px',
+                                width: '600px',
+                                height: '300px',
                                 border: isDragAccept
                                     ? '3px dashed #00e676'
                                     : isDragReject
@@ -132,52 +170,22 @@ export default function FileUpload(props) {
                                 </Typography>
                             )}
                         </div>
-                        {Images.length === 3 ? (
-                            <div
-                                style={{
-                                    display: 'inline-flex',
-                                    paddingLeft: 50,
-                                    marginTop: '-50px'
-                                }}>
-                                <CheckCircleOutlineIcon
-                                    style={{
-                                        fontSize: 30,
-                                        color: 'limegreen'
-                                    }}></CheckCircleOutlineIcon>
-                                <Typography variant='h6'>
-                                    {Images.length}/3 Images Staged!
-                                </Typography>
-                            </div>
-                        ) : (
-                            <div
-                                style={{
-                                    display: 'inline-flex',
-                                    paddingLeft: 50,
-                                    marginTop: '-50px'
-                                }}>
-                                <WarningAmberIcon
-                                    style={{
-                                        fontSize: 30,
-                                        color: 'red'
-                                    }}
-                                />
-                                <Typography variant='h6'>
-                                    {Images.length}/3 Images Staged
-                                </Typography>
-                            </div>
-                        )}
                     </>
                 )}
             </Dropzone>
-
             <aside style={thumbsContainer}>
                 {ImageUrls.map((image, index) => (
-                    <div key={index}>
+                    <div
+                        style={{
+                            display: 'inline-flex',
+                            flexFlow: 'row-reverse',
+                            cursor: 'pointer'
+                        }}
+                        key={index}>
                         <ClearIcon
                             style={{
                                 fontSize: 35,
-                                color: 'red',
-                                cursor: 'pointer'
+                                color: 'red'
                             }}
                             onClick={() => onDelete(image)}
                         />

@@ -29,7 +29,7 @@ Amplify.configure(awsExports);
 export default function App() {
     const theme = createTheme({});
     return (
-        <Authenticator socialProviders={['google', 'facebook', 'amazon']}>
+        <Authenticator>
             {({ signOut, user }) =>
                 user.getSignInUserSession().getAccessToken().payload[
                     'cognito:groups'
@@ -39,7 +39,6 @@ export default function App() {
                     .getAccessToken()
                     .payload['cognito:groups'].includes('Admin') ? (
                     <ThemeProvider theme={theme}>
-                        {console.log('user', user)}
                         <LayoutAdmin user={user} signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<HomeAdmin />} />
@@ -61,7 +60,7 @@ export default function App() {
                                 />
                                 <Route
                                     path='/all-artists'
-                                    element={<AllArtistsAdmin />}
+                                    element={<AllArtistsAdmin user={user}/>}
                                 />
                                 <Route
                                     path='/all-artists/:id'
@@ -78,7 +77,13 @@ export default function App() {
                             </Routes>
                         </LayoutAdmin>
                     </ThemeProvider>
-                ) : (
+                ) : user.getSignInUserSession().getAccessToken().payload[
+                      'cognito:groups'
+                  ] &&
+                  user
+                      .getSignInUserSession()
+                      .getAccessToken()
+                      .payload['cognito:groups'].includes('Artists') ? (
                     <ThemeProvider theme={theme}>
                         <Layout user={user} signout={signOut}>
                             <Routes>
@@ -96,11 +101,13 @@ export default function App() {
                                 <Route path='/profile' element={<Profile />} />
                                 <Route
                                     path='/upload-artwork'
-                                    element={<ArtworkUpload />}
+                                    element={<ArtworkUpload user={user}/>}
                                 />
                             </Routes>
                         </Layout>
                     </ThemeProvider>
+                ) : (
+                    <div>Not Allowed{console.log(user.getSignInUserSession().getAccessToken().payload)}</div>
                 )
             }
         </Authenticator>

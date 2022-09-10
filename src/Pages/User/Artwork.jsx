@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { listArtworks } from '../../graphql/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Grid,
+    Button,
+    Typography
+} from '@mui/material';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link } from 'react-router-dom';
 
 export default function Artwork() {
@@ -85,9 +93,15 @@ export default function Artwork() {
                         display: 'flex',
                         height: '300px',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        flexDirection: 'column'
                     }}>
-                    <h2>No post yet...</h2>
+                    <h2>No Artworks yet...</h2>
+                    <br></br>
+                    <Button href='/upload-artwork' variant='contained' color="secondary">
+                        Get started!
+                        <ExitToAppIcon />
+                    </Button>
                 </div>
             ) : (
                 <>{renderCards}</>

@@ -16,12 +16,12 @@ type Artshow
     ) {
     id: ID!
     artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
-    type: String!
+    type: [String]!
     description: String!
     status: String!
     time_period_start: AWSDate!
     time_period_end: AWSDate!
-    artists: [ID!]
+    artists: [ID]!
     image1: S3Object!
 }
 
@@ -40,9 +40,18 @@ type Artwork
     id: ID!
     artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
     title: String
-    description: String
+    dimensionsL: Float
+    dimensionsW: Float
+    UOM: String
     status: String
-    price: Int
+    price: Float
+    artistNameFirst: String
+    artistNameLast: String
+    mediums: [String]!
+    mediumOthersExplained: [String]!
+    framings: [String]!
+    framingsOthersExplained: [String]!
+    isFramed: Boolean!
     image1: S3Object
     image2: S3Object
     image3: S3Object

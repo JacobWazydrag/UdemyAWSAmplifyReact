@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Auth, API, Storage } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
-
-export default function AllArtistsAdmin() {
+import PictureNotFound from '../../Assets/404Painting.jpg';
+import Button from '@mui/material/Button';
+import ExitToApp from '@mui/icons-material/ExitToApp';
+export default function AllArtistsAdmin(user) {
     let [artists, setArtists] = useState([]);
+    let [error, setError] = useState('');
     useEffect(() => {
         getAllArtists();
     }, []);
-    Storage.list('', { level: 'private' })
-        .then((result) => console.log(result))
-        .catch((err) => console.log(err));
+    const onLoadedImage = (e) => {
+        if (e && e.returnValue === true) {
+            setError('Error');
+        }
+    };
+
     let nextToken;
     async function getAllArtists() {
         let apiName = 'AdminQueries';
@@ -29,7 +35,11 @@ export default function AllArtistsAdmin() {
         };
         const { NextToken, ...rest } = await API.get(apiName, path, myInit);
         nextToken = NextToken;
-        setArtists(rest.Users);
+        setArtists(
+            rest.Users.filter((el) => {
+                return el.Attributes[0].Value !== user.user.attributes.sub;
+            })
+        );
     }
 
     const renderTable = () => {
@@ -40,11 +50,21 @@ export default function AllArtistsAdmin() {
                 width: 150,
                 renderCell: (params) =>
                     params.value ? (
-                        <AmplifyS3Image
-                            imgProps={{ style: { height: 150, width: '100%' } }}
-                            level='public'
-                            imgKey={`profileImage/profile${params.value}.png`}
-                        />
+                        error ? (
+                            <img
+                                src={PictureNotFound}
+                                style={{ height: 150, width: '100%' }}
+                            />
+                        ) : (
+                            <AmplifyS3Image
+                                imgProps={{
+                                    style: { height: 150, width: '100%' },
+                                    onError: onLoadedImage
+                                }}
+                                level='public'
+                                imgKey={`profileImage/profile${params.value}.png`}
+                            />
+                        )
                     ) : (
                         <div>loading</div>
                     )
@@ -116,7 +136,26 @@ export default function AllArtistsAdmin() {
     };
 
     if (artists.length === 0) {
-        return <div>Loading</div>;
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    height: '300px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column'
+                }}>
+                <h2>No Artists yet...</h2>
+                <br></br>
+                <Button
+                    href='/home'
+                    variant='contained'
+                    color='secondary'>
+                    Go Back Home
+                    <ExitToApp />
+                </Button>
+            </div>
+        );
     } else {
         return renderTable();
     }

@@ -1,24 +1,51 @@
 import React, { useState, useEffect } from 'react';
+import { MenuItem, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import ExitToApp from '@mui/icons-material/ExitToApp';
 import { DataGrid } from '@mui/x-data-grid';
-import { listArtworks } from '../../graphql/queries';
+import {
+    listArtworksWithArtshowsAdminWithStatus,
+    listArtshowDescriptions
+} from '../../graphql/queries';
+import {
+    createArtshowArtwork,
+    updateArtshowArtwork
+} from '../../graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 export default function AllArtworksAdmin() {
     const [artworks, setArtworks] = useState([]);
     const [mainImageUrlFromArtworks, setMainImageUrlFromArtworks] = useState(
         []
     );
+
+    const [descriptions, setDescriptions] = useState([]);
+
     useEffect(() => {
         getAllArworks();
+    }, []);
+    useEffect(() => {
+        getAllArtshowSelections();
     }, []);
 
     useEffect(() => {
         getMainUrls();
     }, [artworks]);
-
+    const refreshFunction = () => {
+        getAllArworks();
+    };
     async function getAllArworks() {
-        await API.graphql(graphqlOperation(listArtworks))
+        await API.graphql(
+            graphqlOperation(listArtworksWithArtshowsAdminWithStatus)
+        )
             .then((el) => {
                 setArtworks(el.data.listArtworks.items);
+            })
+            .catch((err) => console.log(err));
+    }
+    async function getAllArtshowSelections() {
+        await API.graphql(graphqlOperation(listArtshowDescriptions))
+            .then((el) => {
+                setDescriptions(el.data.listArtshows.items);
             })
             .catch((err) => console.log(err));
     }
@@ -76,6 +103,42 @@ export default function AllArtworksAdmin() {
                 renderCell: (params) => (
                     <a href={`/all-artworks/${params.value}`}>Go to Detail</a>
                 )
+            },
+            {
+                field: 'setArtshow',
+                headerName: 'Apply to Artshow',
+                width: 300,
+                renderCell: (params) => (
+                    <TextField
+                        select
+                        style={{ width: '100%' }}
+                        value={params.value.artshow}
+                        label='Artshow'
+                        error={!params.value.artshow}
+                        onChange={(e) =>
+                            onUpdateArtshow({
+                                artshowID: descriptions.filter((el) => {
+                                    return el.description === e.target.value;
+                                })[0].id,
+                                artworkID: params.value.artworkID,
+                                id: params.value.id
+                            })
+                        }>
+                        {descriptions.length >= 1 ? (
+                            descriptions.map((el, i) => {
+                                return (
+                                    <MenuItem key={i} value={el.description}>
+                                        {el.description}
+                                    </MenuItem>
+                                );
+                            })
+                        ) : (
+                            <MenuItem value={'NO ARTSHOWS'}>
+                                NO ARTSHOWS
+                            </MenuItem>
+                        )}
+                    </TextField>
+                )
             }
         ];
         let rows = [];
@@ -88,9 +151,75 @@ export default function AllArtworksAdmin() {
             userObjToPush.description = artwork.description;
             userObjToPush.image = mainImageUrlFromArtworks[index1];
             userObjToPush.goToDetail = artwork.id;
+            userObjToPush.setArtshow = {
+                artworkID: artwork.id,
+                artshowID:
+                    artwork.artshows &&
+                    artwork.artshows.items &&
+                    artwork.artshows.items.length > 0 &&
+                    artwork.artshows.items[0] &&
+                    artwork.artshows.items[0].artshow &&
+                    artwork.artshows.items[0].artshow.id
+                        ? artwork.artshows.items[0].artshow.id
+                        : '',
+                artshow:
+                    artwork.artshows &&
+                    artwork.artshows.items &&
+                    artwork.artshows.items.length > 0 &&
+                    artwork.artshows.items[0] &&
+                    artwork.artshows.items[0].artshow &&
+                    artwork.artshows.items[0].artshow.description
+                        ? artwork.artshows.items[0].artshow.description
+                        : '',
+                id:
+                    artwork.artshows &&
+                    artwork.artshows.items &&
+                    artwork.artshows.items.length > 0 &&
+                    artwork.artshows.items[0] &&
+                    artwork.artshows.items[0].id
+                        ? artwork.artshows.items[0].id
+                        : ''
+            };
 
             return rows.push(userObjToPush);
         });
+        const onUpdateArtshow = async (updateObj) => {
+            if (!updateObj.id) {
+                let createInputs = {
+                    artshowID: updateObj.artshowID,
+                    artworkID: updateObj.artworkID
+                };
+                await API.graphql(
+                    graphqlOperation(createArtshowArtwork, {
+                        input: createInputs
+                    })
+                )
+                    .then((el) => console.log('upload successful', el))
+                    .catch((err) => {
+                        console.log('ArtworkUpload line 84 err: ', err);
+                    });
+                refreshFunction();
+            } else {
+                let updateInputs = {
+                    id: updateObj.id,
+                    artshowID: updateObj.artshowID,
+                    artworkID: updateObj.artworkID
+                };
+                console.log(updateInputs);
+                await API.graphql(
+                    graphqlOperation(updateArtshowArtwork, {
+                        input: updateInputs
+                    })
+                )
+                    .then((el) => {
+                        console.log('success!', el);
+                    })
+                    .catch((err) => {
+                        console.log('AllArtworks err 214', err);
+                    });
+                refreshFunction();
+            }
+        };
         return (
             <DataGrid
                 rows={rows}
@@ -104,7 +233,23 @@ export default function AllArtworksAdmin() {
         );
     };
     if (artworks.length === 0) {
-        return <div>Loading</div>;
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    height: '300px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column'
+                }}>
+                <h2>No Artworks yet...</h2>
+                <br></br>
+                <Button href='/home' variant='contained' color='secondary'>
+                    Go Back Home
+                    <ExitToApp />
+                </Button>
+            </div>
+        );
     } else {
         return renderTable();
     }
