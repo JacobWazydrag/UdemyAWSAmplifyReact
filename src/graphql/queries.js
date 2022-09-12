@@ -67,10 +67,8 @@ export const getArtwork = /* GraphQL */ `
             UOM
             artistNameFirst
             artistNameLast
-            dimensionsL
+            dimensionsH
             dimensionsW
-            framings
-            framingsOthersExplained
             mediumOthersExplained
             mediums
             isFramed
@@ -113,10 +111,8 @@ export const listArtworks = /* GraphQL */ `
                 UOM
                 artistNameFirst
                 artistNameLast
-                dimensionsL
+                dimensionsH
                 dimensionsW
-                framings
-                framingsOthersExplained
                 mediumOthersExplained
                 mediums
                 isFramed

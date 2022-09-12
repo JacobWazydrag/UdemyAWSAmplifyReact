@@ -45,7 +45,7 @@ const useStyles = makeStyles({
         overflowWrap: 'break-word'
     }
 });
-export default function Layout({ children, user, signout }) {
+export default function Layout({ children, user, userInfo, signout }) {
     const classes = useStyles();
     let navigate = useNavigate();
     const location = useLocation();
@@ -101,9 +101,16 @@ export default function Layout({ children, user, signout }) {
                     </Typography>
                 </div>
                 <List>
+                {console.log(userInfo)}
                     {menuItems.map((item) => (
                         <ListItem
-                            disabled={!user.attributes.profile || !user.attributes.phone_number}
+                            disabled={
+                                !user.attributes.profile ||
+                                !user.attributes.phone_number ||
+                                !user.attributes.family_name ||
+                                !user.attributes.name ||
+                                !userInfo.attributes['custom:profile_pic']
+                            }
                             button
                             onClick={() => navigate(item.path)}
                             key={item.text}
@@ -112,7 +119,10 @@ export default function Layout({ children, user, signout }) {
                                     ? { background: '#f4f4f4' }
                                     : null
                             }>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemIcon>
+                                
+                                {item.icon}
+                            </ListItemIcon>
                             <ListItemText primary={item.text}></ListItemText>
                         </ListItem>
                     ))}

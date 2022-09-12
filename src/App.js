@@ -1,6 +1,7 @@
 import './App.css';
 import { Amplify } from 'aws-amplify';
-import React from 'react';
+import { Auth } from 'aws-amplify';
+import React, { useState, useEffect } from 'react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
@@ -23,23 +24,43 @@ import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
 import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
 import ProfileAdmin from './Pages/Admin/Profile.Admin';
+var _ = require('underscore');
 
 Amplify.configure(awsExports);
 
 export default function App() {
     const theme = createTheme({});
+    const [userInfo, setUserInfo] = useState({});
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+    const getUsers = async (user) => {
+        try {
+            const user = await Auth.currentUserInfo();
+            setUserInfo(user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
+        // {_.size(userInfo) === 0 ? <div>Not Loaded</div> : s}
         <Authenticator>
             {({ signOut, user }) =>
-                user.getSignInUserSession().getAccessToken().payload[
-                    'cognito:groups'
-                ] &&
-                user
-                    .getSignInUserSession()
-                    .getAccessToken()
-                    .payload['cognito:groups'].includes('Admin') ? (
+                _.size(userInfo) === 0 ? (
+                    <>No user found</>
+                ) : user.getSignInUserSession().getAccessToken().payload[
+                      'cognito:groups'
+                  ] &&
+                  user
+                      .getSignInUserSession()
+                      .getAccessToken()
+                      .payload['cognito:groups'].includes('Admin') ? (
                     <ThemeProvider theme={theme}>
-                        <LayoutAdmin user={user} signout={signOut}>
+                        <LayoutAdmin
+                            user={user}
+                            userInfo={userInfo}
+                            signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<HomeAdmin />} />
                                 <Route
@@ -60,7 +81,7 @@ export default function App() {
                                 />
                                 <Route
                                     path='/all-artists'
-                                    element={<AllArtistsAdmin user={user}/>}
+                                    element={<AllArtistsAdmin user={user} />}
                                 />
                                 <Route
                                     path='/all-artists/:id'
@@ -85,7 +106,10 @@ export default function App() {
                       .getAccessToken()
                       .payload['cognito:groups'].includes('Artists') ? (
                     <ThemeProvider theme={theme}>
-                        <Layout user={user} signout={signOut}>
+                        <Layout
+                            user={user}
+                            userInfo={userInfo}
+                            signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/artshow' element={<Artshow />} />
@@ -101,13 +125,18 @@ export default function App() {
                                 <Route path='/profile' element={<Profile />} />
                                 <Route
                                     path='/upload-artwork'
-                                    element={<ArtworkUpload user={user}/>}
+                                    element={<ArtworkUpload user={user} />}
                                 />
                             </Routes>
                         </Layout>
                     </ThemeProvider>
                 ) : (
-                    <div>Not Allowed{console.log(user.getSignInUserSession().getAccessToken().payload)}</div>
+                    <div>
+                        Not Allowed
+                        {console.log(
+                            user.getSignInUserSession().getAccessToken().payload
+                        )}
+                    </div>
                 )
             }
         </Authenticator>

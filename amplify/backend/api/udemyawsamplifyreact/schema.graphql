@@ -40,7 +40,7 @@ type Artwork
     id: ID!
     artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
     title: String
-    dimensionsL: Float
+    dimensionsH: Float
     dimensionsW: Float
     UOM: String
     status: String
@@ -48,9 +48,7 @@ type Artwork
     artistNameFirst: String
     artistNameLast: String
     mediums: [String]!
-    mediumOthersExplained: [String]!
-    framings: [String]!
-    framingsOthersExplained: [String]!
+    mediumOthersExplained: String!
     isFramed: Boolean!
     image1: S3Object
     image2: S3Object

@@ -11,6 +11,7 @@ import {
     Typography
 } from '@mui/material';
 import PictureNotFound from '../../Assets/404Painting.jpg';
+import { Auth } from 'aws-amplify';
 
 export const AccountProfile = (props) => {
     let [error, setError] = useState('');
@@ -30,6 +31,16 @@ export const AccountProfile = (props) => {
                 window.location.reload();
             })
             .catch((err) => console.log(err));
+        try {
+            const user = await Auth.currentAuthenticatedUser();
+            await Auth.updateUserAttributes(user, {
+                'custom:profile_pic': `profileImage/profile${id}.png`
+            });
+            setError('success');
+        } catch (error) {
+            console.log(error);
+            setError('error');
+        }
     }
     return (
         <Authenticator>

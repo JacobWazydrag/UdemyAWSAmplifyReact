@@ -72,7 +72,7 @@ export const AccountForm = (props) => {
     useEffect(() => {
         initializeForm();
     }, []);
-    console.log(values, 'values');
+    
     return (
         <Authenticator>
             {({ signOut, user }) => (

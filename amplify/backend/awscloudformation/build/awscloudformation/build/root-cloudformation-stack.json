@@ -265,7 +265,7 @@
             ]
           },
           "S3DeploymentBucket": "amplify-amplify9701e0c9649e4-staging-102759-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/191c9d2e15ba560e97588d7138e4a38507928ff8",
+          "S3DeploymentRootKey": "amplify-appsync-files/d47d9f821458ebb3a2146c9f4962b5be9f789433",
           "env": "staging"
         }
       }
