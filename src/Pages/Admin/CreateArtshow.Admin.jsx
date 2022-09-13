@@ -43,7 +43,6 @@ export default function ArtworkUpload() {
     };
 
     const onStatusChange = (newStatus) => {
-        console.log(newStatus);
         setStatus(newStatus);
     };
 
@@ -93,10 +92,6 @@ export default function ArtworkUpload() {
         });
         Promise.all(promises)
             .then((uploadedImgs) => {
-                // console.log(
-                //     'Yayy, all images are uploaded successfully',
-                //     uploadedImgs
-                // );
                 inputs.image1 = uploadedImgs[0];
                 inputs.image2 = uploadedImgs[1];
                 inputs.image3 = uploadedImgs[2];

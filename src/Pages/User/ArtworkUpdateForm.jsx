@@ -16,7 +16,8 @@ import {
     Checkbox,
     FormControlLabel,
     Autocomplete,
-    CircularProgress
+    CircularProgress,
+    Typography
 } from '@mui/material';
 import 'react-phone-number-input/style.css';
 import { Authenticator } from '@aws-amplify/ui-react';
@@ -27,9 +28,7 @@ import { updateArtwork } from '../../graphql/mutations';
 var _ = require('lodash');
 
 export const ArtworkUpdateForm = (props) => {
-    console.log(props.detail)
     const validProps = _.size(props.detail) !== 0;
-
     const [TitleValue, setTitleValue] = useState('');
     const [mediumsOtherExplained, setMediumsOtherExplained] = useState('');
     const [PriceValue, setPriceValue] = useState(0);
@@ -138,6 +137,13 @@ export const ArtworkUpdateForm = (props) => {
                         <CardContent>
                             {_.size(props.detail) !== 0 ? (
                                 <Grid container spacing={3}>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                Give your artwork a title
+                                            </Typography>
+                                        </Grid>
                                     <Grid item md={6} xs={12}>
                                         <TextField
                                             label={'Title'}
@@ -146,6 +152,16 @@ export const ArtworkUpdateForm = (props) => {
                                             error={!TitleValue}
                                         />
                                     </Grid>
+                                    <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What are the dimensions?
+                                            </Typography>
+                                        </Grid>
                                     <Grid item md={6} xs={12}>
                                         <TextField
                                             label={'Height'}
@@ -183,6 +199,16 @@ export const ArtworkUpdateForm = (props) => {
                                             </MenuItem>
                                         </TextField>
                                     </Grid>
+                                    <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What mediums were used?
+                                            </Typography>
+                                        </Grid>
                                     <Grid item md={6} xs={6}>
                                         <Autocomplete
                                             PopperComponent={PopperMy}
@@ -215,6 +241,16 @@ export const ArtworkUpdateForm = (props) => {
                                             />
                                         </Grid>
                                     ) : null}
+                                     <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                Is It Framed?
+                                            </Typography>
+                                        </Grid>
                                     <Grid item md={6} xs={12}>
                                         <Grid container row='true'>
                                             <FormControlLabel
@@ -234,6 +270,16 @@ export const ArtworkUpdateForm = (props) => {
                                             />
                                         </Grid>
                                     </Grid>
+                                    <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What would you like to charge?
+                                            </Typography>
+                                        </Grid>
                                     <Grid item md={6} xs={12}>
                                         <TextField
                                             label={'Price $'}

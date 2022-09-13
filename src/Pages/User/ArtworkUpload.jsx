@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import {
-    Typography,
+    Box,
     Button,
     TextField,
     Grid,
     Paper,
     Autocomplete,
     Popper,
-    FormControlLabel
+    FormControlLabel,
+    Container,
+    Card,
+    CardHeader,
+    Divider,
+    CardContent,
+    Typography
 } from '@mui/material';
 import FileUpload from '../../Components/FileUpload';
 import { v4 as uuidv4 } from 'uuid';
@@ -162,183 +168,238 @@ export default function ArtworkUpload(props) {
                 minWidth: 350
             }}
             elevation={3}>
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                <Typography variant={'h2'}> Upload Artwork!</Typography>
-            </div>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <FileUpload
-                        refreshFunction={updateImages}
-                        images={Images}
-                        multiple={mediums.includes('Sculpture') ? true : false}
-                    />
-                </Grid>
-                <Grid
-                    item
-                    xs={6}
-                    rowSpacing={5}
-                    style={{ marginLeft: '-60px', marginTop: '50px' }}>
-                    <Grid container direction='column' spacing={2}>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <TextField
-                                style={{ width: '55%' }}
-                                label={'Title'}
-                                onChange={onTitleChange}
-                                value={TitleValue}
-                                error={!TitleValue}
+            <Box
+                component='main'
+                sx={{
+                    flexGrow: 1,
+                    py: 8
+                }}>
+                <Container maxWidth='lg'>
+                    <Grid container spacing={3}>
+                        <Grid
+                            item
+                            lg={4}
+                            md={6}
+                            xs={12}
+                            style={{ marginLeft: -60 }}>
+                            <FileUpload
+                                refreshFunction={updateImages}
+                                images={Images}
+                                multiple={
+                                    mediums.includes('Sculpture') ? true : false
+                                }
                             />
-                        </Grid>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <TextField
-                                style={{ width: '55%' }}
-                                label={'Height'}
-                                onChange={onDimensionHChange}
-                                value={DimensionH}
-                                type='number'
-                                error={!DimensionH}
-                            />
-                        </Grid>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <TextField
-                                style={{ width: '55%' }}
-                                label={'Width'}
-                                onChange={onDimensionWChange}
-                                value={DimensionW}
-                                type='number'
-                                error={!DimensionW}
-                            />
-                        </Grid>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <TextField
-                                select
-                                style={{ width: '55%' }}
-                                error={!uom}
-                                id='uom'
-                                value={uom}
-                                label='Unit of Measure'
-                                onChange={onUOMChange}>
-                                <MenuItem value={'Feet'}>Feet</MenuItem>
-                                <MenuItem value={'Inches'}>Inches</MenuItem>
-                                <MenuItem value={'Centimeters'}>
-                                    Centimeters
-                                </MenuItem>
-                            </TextField>
                         </Grid>
                         <Grid
                             item
-                            xs={6}
-                            rowSpacing={5}
-                            style={{ display: 'flex' }}>
-                            <Autocomplete
-                                PopperComponent={PopperMy}
-                                multiple
-                                id='tags-artTypes'
-                                options={artTypes}
-                                getOptionLabel={(option) => option}
-                                onChange={(event, value) =>
-                                    onMediumsChange(value)
-                                }
-                                style={{
-                                    marginLeft: 165,
-                                    maxWidth: 374,
-                                    width: '100%'
-                                }}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        error={mediums.length === 0}
-                                        label='Mediums'
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        {mediums.includes('Other') ? (
-                            <Grid item xs={6} rowSpacing={1}>
-                                <TextField
-                                    style={{ width: '55%' }}
-                                    label={'Explain other mediums'}
-                                    onChange={onMediumsOtherExplainedChange}
-                                    value={mediumsOtherExplained}
-                                    error={!mediumsOtherExplained}
+                            lg={8}
+                            md={6}
+                            xs={12}
+                            style={{ paddingLeft: 180 }}>
+                            <Card>
+                                <CardHeader
+                                    style={{ textAlign: '-webkit-left' }}
+                                    subheader='Fill in the required fields and click "Submit" when finished'
+                                    title={`Upload Artwork`}
                                 />
-                            </Grid>
-                        ) : null}
-                        <Grid
-                            item
-                            xs={6}
-                            rowSpacing={1}
-                            style={{ marginLeft: '180px', padding: 10 }}>
-                            <Grid container row='true'>
-                                <FormControlLabel
-                                    label='Framed'
-                                    control={
-                                        <Checkbox
-                                            checked={framed}
-                                            onChange={handleIsFramed}
-                                        />
-                                    }
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <TextField
-                                style={{ width: '55%' }}
-                                label={'Price $'}
-                                onChange={onPriceChange}
-                                value={PriceValue}
-                                type='number'
-                                error={!PriceValue}
-                            />
-                        </Grid>
-                        <Grid item xs={6} rowSpacing={1}>
-                            <Button
-                                disabled={
-                                    !TitleValue ||
-                                    !PriceValue ||
-                                    !DimensionH ||
-                                    !DimensionW ||
-                                    !uom ||
-                                    mediums.length === 0 ||
-                                    Images.length !== imagesToUpload
-                                }
-                                variant='contained'
-                                onClick={onSubmit}
-                                style={{ width: '55%' }}>
-                                Submit
-                            </Button>
+                                <Divider />
+                                <CardContent
+                                    style={{ textAlign: '-webkit-left' }}>
+                                    <Grid container spacing={3}>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                Give your artwork a title
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <TextField
+                                                label={'Title'}
+                                                onChange={onTitleChange}
+                                                value={TitleValue}
+                                                error={!TitleValue}
+                                            />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What are the dimensions?
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <TextField
+                                                label={'Height'}
+                                                onChange={onDimensionHChange}
+                                                value={DimensionH}
+                                                type='number'
+                                                error={!DimensionH}
+                                            />
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <TextField
+                                                label={'Width'}
+                                                onChange={onDimensionWChange}
+                                                value={DimensionW}
+                                                type='number'
+                                                error={!DimensionW}
+                                            />
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <TextField
+                                                style={{ minWidth: 225 }}
+                                                select
+                                                error={!uom}
+                                                id='uom'
+                                                value={uom}
+                                                label='Unit of Measure'
+                                                onChange={onUOMChange}>
+                                                <MenuItem value={'Feet'}>
+                                                    Feet
+                                                </MenuItem>
+                                                <MenuItem value={'Inches'}>
+                                                    Inches
+                                                </MenuItem>
+                                                <MenuItem value={'Centimeters'}>
+                                                    Centimeters
+                                                </MenuItem>
+                                            </TextField>
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What mediums were used?
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <Autocomplete
+                                                style={{ maxWidth: 225 }}
+                                                PopperComponent={PopperMy}
+                                                multiple
+                                                id='tags-artTypes'
+                                                options={artTypes}
+                                                getOptionLabel={(option) =>
+                                                    option
+                                                }
+                                                onChange={(event, value) =>
+                                                    onMediumsChange(value)
+                                                }
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        error={
+                                                            mediums.length === 0
+                                                        }
+                                                        label='Mediums'
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+                                        {mediums.includes('Other') ? (
+                                            <Grid item md={6} xs={12}>
+                                                <TextField
+                                                    label={
+                                                        'Explain other mediums'
+                                                    }
+                                                    onChange={
+                                                        onMediumsOtherExplainedChange
+                                                    }
+                                                    value={
+                                                        mediumsOtherExplained
+                                                    }
+                                                    error={
+                                                        !mediumsOtherExplained
+                                                    }
+                                                />
+                                            </Grid>
+                                        ) : null}
+                                        <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                Is It Framed?
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <Grid container row='true'>
+                                                <FormControlLabel
+                                                    label='Framed'
+                                                    control={
+                                                        <Checkbox
+                                                            checked={framed}
+                                                            onChange={
+                                                                handleIsFramed
+                                                            }
+                                                        />
+                                                    }
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                What would you like to charge?
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item md={6} xs={12}>
+                                            <TextField
+                                                label={'Price $'}
+                                                onChange={onPriceChange}
+                                                value={PriceValue}
+                                                type='number'
+                                                error={!PriceValue}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                                <Divider />
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        p: 2,
+                                        textAlign: '-webkit-right'
+                                    }}>
+                                    <Grid item md={6} xs={12}>
+                                        <Button
+                                            disabled={
+                                                !TitleValue ||
+                                                !PriceValue ||
+                                                !DimensionH ||
+                                                !DimensionW ||
+                                                !uom ||
+                                                mediums.length === 0 ||
+                                                Images.length !== imagesToUpload
+                                            }
+                                            variant='contained'
+                                            onClick={onSubmit}>
+                                            Submit
+                                        </Button>
+                                    </Grid>
+                                </Box>
+                            </Card>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid>
+                </Container>
+            </Box>
         </Paper>
     );
 }
-
-// @model
-// @auth(
-//     rules: [
-//         { allow: owner, operations: [create, update, read, delete] }
-//         {
-//             allow: groups
-//             groups: ["Admin"]
-//             operations: [create, update, read, delete]
-//         }
-//     ]
-// ) {
-// id: ID!
-// artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
-// title: String
-// dimensionsL: Int
-// dimensionsW: Int
-// UOM: String
-// status: String
-// price: Int
-// artistNameFirst: String
-// artistNameLast: String
-// mediums: [String]!
-// image1: S3Object
-// image2: S3Object
-// image3: S3Object
 const artTypes = [
     'Oil',
     'Acrylic',

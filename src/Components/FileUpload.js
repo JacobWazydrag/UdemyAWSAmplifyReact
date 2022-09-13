@@ -80,7 +80,7 @@ export default function FileUpload(props) {
                 display: 'flex',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                placeContent: "center"
+                placeContent: "left"
             }}>
             <>
                 {Images.length === imagesToUpload ? (

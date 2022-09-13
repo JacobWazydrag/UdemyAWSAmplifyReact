@@ -3,7 +3,7 @@ import { Storage } from 'aws-amplify';
 import _ from 'underscore';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-
+import { Card } from '@mui/material';
 export default function ArtworkImage(props) {
     const [imageUrls, setImgUrls] = useState([]);
     useEffect(() => {
@@ -39,20 +39,20 @@ export default function ArtworkImage(props) {
                 console.log('error', err);
             });
     };
-console.log(imageUrls)
+    console.log(imageUrls);
     return (
-        <div style={{ maxHeight: 600, maxWidth: 600 }}>
+        <Card style={{ maxHeight: 600, maxWidth: 341 }}>
             {imageUrls.length === 0 ? null : (
                 <Carousel showStatus={false}>
                     {imageUrls.map((el, i) => {
                         return (
                             <div key={i}>
-                                <img src={el.original} alt={'main'}/>
+                                <img src={el.original} alt={'main'} />
                             </div>
                         );
                     })}
                 </Carousel>
             )}
-        </div>
+        </Card>
     );
 }

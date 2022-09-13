@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Auth, API } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
-import PictureNotFound from '../../Assets/404Painting.jpg';
-import Button from '@mui/material/Button';
+import { Button, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import ExitToApp from '@mui/icons-material/ExitToApp';
-export default function AllArtistsAdmin(user) {
+var _ = require('underscore');
+
+export default function AllArtistsAdmin(props) {
     let [artists, setArtists] = useState([]);
+    let [artistsGroups, setArtistsGroups] = useState([]);
     let [error, setError] = useState('');
     useEffect(() => {
         getAllArtists();
     }, []);
-    const onLoadedImage = (e) => {
-        if (e && e.returnValue === true) {
-            setError('Error');
-        }
-    };
-
+    useEffect(() => {
+        getGroups();
+    }, [artists]);
     let nextToken;
     async function getAllArtists() {
         let apiName = 'AdminQueries';
@@ -28,7 +27,8 @@ export default function AllArtistsAdmin(user) {
             },
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `${(await Auth.currentSession())
+                Authorization: `${props.user
+                    .getSignInUserSession()
                     .getAccessToken()
                     .getJwtToken()}`
             }
@@ -37,9 +37,94 @@ export default function AllArtistsAdmin(user) {
         nextToken = NextToken;
         setArtists(
             rest.Users.filter((el) => {
-                return el.Attributes[0].Value !== user.user.attributes.sub;
+                return el.Attributes[0].Value !== props.user.attributes.sub;
             })
         );
+    }
+
+    async function listGroupsForUser(id) {
+        return new Promise((resolve, reject) => {
+            let apiName = 'AdminQueries';
+            let path = '/listGroupsForUser';
+            let myInit = {
+                queryStringParameters: {
+                    username: id
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `${props.user
+                        .getSignInUserSession()
+                        .getAccessToken()
+                        .getJwtToken()}`
+                }
+            };
+            API.get(apiName, path, myInit)
+                .then((returnQuery) => {
+                    resolve({ id: id, groups: returnQuery.Groups });
+                })
+                .catch((err) => console.log(err));
+        });
+    }
+
+    const getGroups = () => {
+        let promises = [];
+        artists.map((artist, i) => {
+            return promises.push(listGroupsForUser(artist.Username));
+        });
+
+        Promise.all(promises)
+            .then((groupProms) => {
+                setArtistsGroups(groupProms);
+            })
+            .catch((err) => {
+                console.log('erre', err);
+            });
+    };
+
+    async function addToGroup(id, group) {
+        let apiName = 'AdminQueries';
+        let path = '/addUserToGroup';
+        let myInit = {
+            body: {
+                username: id,
+                groupname: group
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `${props.user
+                    .getSignInUserSession()
+                    .getAccessToken()
+                    .getJwtToken()}`
+            }
+        };
+        return await API.post(apiName, path, myInit)
+            .then((el) => {
+                getGroups();
+            })
+            .catch((err) => console.log(err));
+    }
+
+    async function removeFromGroup(id, group) {
+        let apiName = 'AdminQueries';
+        let path = '/removeUserFromGroup';
+        let myInit = {
+            body: {
+                username: id,
+                groupname: group
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `${props.user
+                    .getSignInUserSession()
+                    .getAccessToken()
+                    .getJwtToken()}`
+            }
+        };
+        return await API.post(apiName, path, myInit)
+            .then((el) => {
+                getGroups();
+            })
+            .catch((err) => console.log(err));
     }
 
     const renderTable = () => {
@@ -48,26 +133,15 @@ export default function AllArtistsAdmin(user) {
                 field: 'profile_image',
                 headerName: 'Picture',
                 width: 150,
-                renderCell: (params) =>
-                    params.value ? (
-                        error ? (
-                            <img
-                                src={PictureNotFound}
-                                style={{ height: 150, width: '100%' }}
-                            />
-                        ) : (
-                            <AmplifyS3Image
-                                imgProps={{
-                                    style: { height: 150, width: '100%' },
-                                    onError: onLoadedImage
-                                }}
-                                level='public'
-                                imgKey={`profileImage/profile${params.value}.png`}
-                            />
-                        )
-                    ) : (
-                        <div>loading</div>
-                    )
+                renderCell: (params) => (
+                    <AmplifyS3Image
+                        imgProps={{
+                            style: { height: 150, width: '100%' }
+                        }}
+                        level='public'
+                        imgKey={`profileImage/profile${params.value}.png`}
+                    />
+                )
             },
             { field: 'name', headerName: 'First Name', width: 150 },
             {
@@ -96,14 +170,83 @@ export default function AllArtistsAdmin(user) {
                 field: 'status',
                 headerName: 'User Status',
                 width: 200
+            },
+            {
+                field: 'setGroups',
+                headerName: 'Assign Group',
+                width: 150,
+                renderCell: (params) => (
+                    <FormGroup>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={
+                                        params.value.groups.includes('Admin')
+                                            ? true
+                                            : false
+                                    }
+                                    onChange={(e) => {
+                                        if (e.target.checked === false) {
+                                            removeFromGroup(
+                                                params.value.id,
+                                                'Admin'
+                                            );
+                                        } else {
+                                            addToGroup(
+                                                params.value.id,
+                                                'Admin'
+                                            );
+                                        }
+                                    }}
+                                />
+                            }
+                            label='Admin'
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={
+                                        params.value.groups.includes('Artists')
+                                            ? true
+                                            : false
+                                    }
+                                    onChange={(e) => {
+                                        if (e.target.checked === false) {
+                                            removeFromGroup(
+                                                params.value.id,
+                                                'Artists'
+                                            );
+                                        } else {
+                                            addToGroup(
+                                                params.value.id,
+                                                'Artists'
+                                            );
+                                        }
+                                    }}
+                                />
+                            }
+                            label='Artists'
+                        />
+                    </FormGroup>
+                )
             }
         ];
         let rows = [];
         artists.map((artist, index1) => {
+            let myGroupsObj = _.filter(artistsGroups, (artistGroups) => {
+                return artistGroups.id === artist.Username;
+            })[0];
+            let myGroupNames = myGroupsObj
+                ? _.pluck(myGroupsObj.groups, 'GroupName')
+                : [''];
             //first get the attributes
             let userObjToPush = {};
             userObjToPush.id = index1 + 1;
             userObjToPush.status = artist.UserStatus;
+            userObjToPush.setGroups = {
+                groups: myGroupNames,
+                id: artist.Username
+            };
             artist.Attributes.map((attribute, index2) => {
                 if (attribute.Name === 'name') {
                     userObjToPush.name = attribute.Value;
@@ -135,7 +278,7 @@ export default function AllArtistsAdmin(user) {
         );
     };
 
-    if (artists.length === 0) {
+    if (artists.length === 0 && artistsGroups.length === 0) {
         return (
             <div
                 style={{
@@ -147,10 +290,7 @@ export default function AllArtistsAdmin(user) {
                 }}>
                 <h2>No Artists yet...</h2>
                 <br></br>
-                <Button
-                    href='/home'
-                    variant='contained'
-                    color='secondary'>
+                <Button href='/home' variant='contained' color='secondary'>
                     Go Back Home
                     <ExitToApp />
                 </Button>

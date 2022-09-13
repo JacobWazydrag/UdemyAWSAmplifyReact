@@ -116,20 +116,6 @@ export const AccountForm = (props) => {
                                     <Grid item md={6} xs={12}>
                                         <TextField
                                             fullWidth
-                                            name='preferred_username'
-                                            label='Username'
-                                            onChange={handleChange}
-                                            value={
-                                                values.preferred_username
-                                                    ? values.preferred_username
-                                                    : ''
-                                            }
-                                            variant='outlined'
-                                        />
-                                    </Grid>
-                                    <Grid item md={6} xs={12}>
-                                        <TextField
-                                            fullWidth
                                             name='email'
                                             onChange={handleChange}
                                             required

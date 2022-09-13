@@ -17,6 +17,7 @@ import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ArtSpaceLogo from '../Assets/ArtSpace_Logo.webp';
+import InfoIcon from '@mui/icons-material/Info';
 
 let drawerWidth = 240;
 
@@ -101,7 +102,6 @@ export default function Layout({ children, user, userInfo, signout }) {
                     </Typography>
                 </div>
                 <List>
-                {console.log(userInfo)}
                     {menuItems.map((item) => (
                         <ListItem
                             disabled={
@@ -119,10 +119,7 @@ export default function Layout({ children, user, userInfo, signout }) {
                                     ? { background: '#f4f4f4' }
                                     : null
                             }>
-                            <ListItemIcon>
-                                
-                                {item.icon}
-                            </ListItemIcon>
+                            <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text}></ListItemText>
                         </ListItem>
                     ))}
@@ -143,8 +140,19 @@ export default function Layout({ children, user, userInfo, signout }) {
                                 <FaceIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={user.attributes.preferred_username}
+                                primary={
+                                    user.attributes.name +
+                                    ' ' +
+                                    user.attributes.family_name
+                                }
                                 secondary={'Artist'}></ListItemText>
+                            {!user.attributes.profile ||
+                            !user.attributes.phone_number ||
+                            !user.attributes.family_name ||
+                            !user.attributes.name ||
+                            !userInfo.attributes['custom:profile_pic'] ? (
+                                <InfoIcon style={{ color: 'orangered' }} />
+                            ) : null}
                         </ListItem>
                         <ListItem button onClick={() => signout()}>
                             <ListItemIcon>

@@ -61,7 +61,11 @@ export default function Artwork() {
         return (
             <Grid key={index} item>
                 <Card sx={{ maxWidth: 345 }}>
-                    <Link to={`/artwork/${artwork.id}`}>
+                    <Link
+                        to={{
+                            pathname: `/artwork/${artwork.id}`,
+                            state: { artWorks: artworks }
+                        }}>
                         <CardMedia
                             component='img'
                             height='194'
@@ -98,7 +102,10 @@ export default function Artwork() {
                     }}>
                     <h2>No Artworks yet...</h2>
                     <br></br>
-                    <Button href='/upload-artwork' variant='contained' color="secondary">
+                    <Button
+                        href='/upload-artwork'
+                        variant='contained'
+                        color='secondary'>
                         Get started!
                         <ExitToAppIcon />
                     </Button>

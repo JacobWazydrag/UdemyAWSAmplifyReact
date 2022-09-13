@@ -24,6 +24,7 @@ import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
 import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
 import ProfileAdmin from './Pages/Admin/Profile.Admin';
+import { Button } from '@mui/material';
 var _ = require('underscore');
 
 Amplify.configure(awsExports);
@@ -136,6 +137,10 @@ export default function App() {
                         {console.log(
                             user.getSignInUserSession().getAccessToken().payload
                         )}
+                        <Button variant='contained'
+                            onClick={() => {
+                                signOut();
+                            }}>Log out</Button>
                     </div>
                 )
             }
