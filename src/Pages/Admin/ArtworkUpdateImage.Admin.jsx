@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 var _ = require('lodash');
 
-export const ArtworkUpdateImage = (props) => {
+export const ArtworkUpdateImageAdmin = (props) => {
     let [error, setError] = useState('');
     let [loading, setLoading] = useState(false);
     let [loadingKey, setLoadingKey] = useState('');

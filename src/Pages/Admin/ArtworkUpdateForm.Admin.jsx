@@ -26,7 +26,7 @@ import { updateArtwork } from '../../graphql/mutations';
 
 var _ = require('lodash');
 
-export const ArtworkUpdateForm = (props) => {
+export const ArtworkUpdateFormAdmin = (props) => {
     const validProps = _.size(props.detail) !== 0;
     const [TitleValue, setTitleValue] = useState('');
     const [mediumsOtherExplained, setMediumsOtherExplained] = useState('');
@@ -115,7 +115,7 @@ export const ArtworkUpdateForm = (props) => {
                 setFormFeedback('success');
             })
             .catch((err) => {
-                console.log('ArtworkUpdateFOrm line 84 err: ', err);
+                console.log('ArtworkUpdateFOrm line 119 err: ', err);
                 return alert('There was an error!');
             });
     };

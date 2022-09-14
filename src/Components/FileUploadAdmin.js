@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
-import AddIcon from '@mui/icons-material/Add';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Grid, Typography } from '@mui/material';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Alert from '@mui/material/Alert';
 
-export default function FileUpload(props) {
+export default function FileUploadAdmin(props) {
     const [ImageUrls, setImageURLs] = useState([]);
     const [Images, setImages] = useState([]);
 
@@ -96,18 +94,24 @@ export default function FileUpload(props) {
                     <>
                         <div
                             style={{
-                                width: '100%',
+                                width: '440px',
                                 height: '240px',
-                                border: isDragAccept
-                                    ? '3px dashed #00e676'
+                                transition:
+                                    'outline-offset .15s ease-in-out, background-color .15s linear',
+                                outlineOffset:
+                                    isDragAccept || isDragReject
+                                        ? '-20px'
+                                        : '-10px',
+                                outline: isDragAccept
+                                    ? '2px dashed #92b0b3'
                                     : isDragReject
                                     ? '3px dashed #ff1744'
-                                    : '3px dashed grey',
+                                    : '2px dashed #92b0b3',
                                 backgroundColor: isDragAccept
-                                    ? '#dcf9e3'
+                                    ? 'white'
                                     : isDragReject
                                     ? '#dfa0a0'
-                                    : '#efefef',
+                                    : '#c8dadf',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -117,55 +121,86 @@ export default function FileUpload(props) {
                             <input {...getInputProps()} />
 
                             {isDragAccept ? (
-                                <Alert severity='success'>
-                                    Great! Let go to start uploading
-                                </Alert>
+                                <Typography variant='h5'>
+                                    <SystemUpdateAltIcon
+                                        style={{
+                                            fontSize: '3rem',
+                                            color: '#92b0b3'
+                                        }}></SystemUpdateAltIcon>
+                                    <p
+                                        style={{
+                                            fontWeight: 'bold',
+                                            fontSize: '1rem'
+                                        }}>
+                                        Choose a file
+                                    </p>{' '}
+                                    <p
+                                        style={{
+                                            fontSize: '1rem'
+                                        }}>
+                                        or drag it here
+                                    </p>
+                                </Typography>
                             ) : isDragReject ? (
-                                <Alert severity='error'>
+                                <Alert style={{height: "35%", width: "75%"}} severity='error'>
                                     Only allowed to upload images.
                                 </Alert>
                             ) : (
-                                <Typography variant='h5'>
-                                    <AddIcon
-                                        style={{ fontSize: '3rem' }}></AddIcon>
-                                    Drag 'n' drop your Artshow image here, or click!
-                                </Typography>
+                                <>
+                                    {Images.length === 1 ? (
+                                        // <div
+                                        //     style={{
+                                        //         display: 'inline-flex',
+                                        //         paddingLeft: 50,
+                                        //         marginTop: '-50px'
+                                        //     }}>
+                                        //     <CheckCircleOutlineIcon
+                                        //         style={{
+                                        //             fontSize: 30,
+                                        //             color: 'limegreen'
+                                        //         }}></CheckCircleOutlineIcon>
+                                        //     <Typography variant='h6'>
+                                        //         {Images.length}/1 Images Staged!
+                                        //     </Typography>
+                                        // </div>
+                                        <Typography variant='h5'>
+                                            <SystemUpdateAltIcon
+                                                style={{
+                                                    fontSize: '3rem',
+                                                    color: '#92b0b3'
+                                                }}></SystemUpdateAltIcon>
+                                            <p
+                                                style={{
+                                                    fontSize: '1rem'
+                                                }}>
+                                                {Images.length}/1 Images Staged!
+                                            </p>
+                                        </Typography>
+                                    ) : (
+                                        <Typography variant='h5'>
+                                            <SystemUpdateAltIcon
+                                                style={{
+                                                    fontSize: '3rem',
+                                                    color: '#92b0b3'
+                                                }}></SystemUpdateAltIcon>
+                                            <p
+                                                style={{
+                                                    fontWeight: 'bold',
+                                                    fontSize: '1rem'
+                                                }}>
+                                                Choose a file
+                                            </p>{' '}
+                                            <p
+                                                style={{
+                                                    fontSize: '1rem'
+                                                }}>
+                                                or drag it here
+                                            </p>
+                                        </Typography>
+                                    )}
+                                </>
                             )}
                         </div>
-                        {Images.length === 1 ? (
-                            <div
-                                style={{
-                                    display: 'inline-flex',
-                                    paddingLeft: 50,
-                                    marginTop: '-50px'
-                                }}>
-                                <CheckCircleOutlineIcon
-                                    style={{
-                                        fontSize: 30,
-                                        color: 'limegreen'
-                                    }}></CheckCircleOutlineIcon>
-                                <Typography variant='h6'>
-                                    {Images.length}/1 Images Staged!
-                                </Typography>
-                            </div>
-                        ) : (
-                            <div
-                                style={{
-                                    display: 'inline-flex',
-                                    paddingLeft: 50,
-                                    marginTop: '-50px'
-                                }}>
-                                <WarningAmberIcon
-                                    style={{
-                                        fontSize: 30,
-                                        color: 'red'
-                                    }}
-                                />
-                                <Typography variant='h6'>
-                                    {Images.length}/1 Images Staged
-                                </Typography>
-                            </div>
-                        )}
                     </>
                 )}
             </Dropzone>

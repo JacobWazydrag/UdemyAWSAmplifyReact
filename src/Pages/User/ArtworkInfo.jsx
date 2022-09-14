@@ -126,7 +126,6 @@ export default function ArtworkInfo(props) {
                                     </TextField>
                                 </Grid>
                                 <Grid item md={6} xs={6}>
-                                    {console.log(artwork.mediums)}
                                     <Autocomplete
                                         PopperComponent={PopperMy}
                                         multiple
@@ -308,7 +307,6 @@ export default function ArtworkInfo(props) {
                                 </Typography>
                             </Grid>
                             <Grid item md={6} xs={6}>
-                                {console.log(artwork.mediums)}
                                 <Autocomplete
                                     PopperComponent={PopperMy}
                                     multiple

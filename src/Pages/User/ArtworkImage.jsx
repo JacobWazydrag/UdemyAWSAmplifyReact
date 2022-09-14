@@ -4,6 +4,7 @@ import _ from 'underscore';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import { Card } from '@mui/material';
+
 export default function ArtworkImage(props) {
     const [imageUrls, setImgUrls] = useState([]);
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function ArtworkImage(props) {
                 console.log('error', err);
             });
     };
-    console.log(imageUrls);
+    
     return (
         <Card style={{ maxHeight: 600, maxWidth: 341 }}>
             {imageUrls.length === 0 ? null : (

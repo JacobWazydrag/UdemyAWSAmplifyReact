@@ -80,7 +80,6 @@ export default function ArtworkUpload(props) {
     const uploadImageToS3 = async (image) => {
         let file = image;
         let extension = image.name.split('.')[1];
-        let name = image.name.split('.')[0];
         let key = `images/${uuidv4()}.${extension}`;
         return new Promise((resolve, reject) => {
             Storage.put(key, file, {
@@ -143,7 +142,7 @@ export default function ArtworkUpload(props) {
                         );
                     })
                     .catch((err) => {
-                        console.log('ArtworkUpload line 84 err: ', err);
+                        console.log('ArtworkUpload line 146 err: ', err);
                         return alert('There was an error!');
                     });
             })

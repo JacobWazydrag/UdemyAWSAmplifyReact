@@ -9,13 +9,15 @@ var _ = require('underscore');
 export default function AllArtistsAdmin(props) {
     let [artists, setArtists] = useState([]);
     let [artistsGroups, setArtistsGroups] = useState([]);
-    let [error, setError] = useState('');
+
     useEffect(() => {
         getAllArtists();
     }, []);
+
     useEffect(() => {
         getGroups();
     }, [artists]);
+    
     let nextToken;
     async function getAllArtists() {
         let apiName = 'AdminQueries';

@@ -243,13 +243,29 @@ export const listArtworksWithArtshowsAdminWithStatus = /* GraphQL */ `
                     items {
                         id
                         artshow {
+                            title
+                            description
                             status
-                            time_period_end
-                            time_period_start
-                            type
+                            locationContactInformationName
+                            locationContactInformationPhone
+                            locationContactInformationAddress
+                            locationContactInformationCity
+                            locationContactInformationState
+                            locationContactInformationZipcode
+                            locationContactInformationEmail
+                            locationContactInformationWebsite
+                            time_period_showing_start
+                            time_period_reception_start
+                            ime_period_showing_end
+                            time_period_reception_end
+                            artists
+                            image1 {
+                                bucket
+                                region
+                                key
+                            }
                             updatedAt
                             createdAt
-                            description
                             id
                             owner
                         }
@@ -261,7 +277,6 @@ export const listArtworksWithArtshowsAdminWithStatus = /* GraphQL */ `
                 title
                 updatedAt
                 id
-                description
                 createdAt
                 image1 {
                     bucket

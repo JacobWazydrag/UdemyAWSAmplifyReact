@@ -16,12 +16,22 @@ type Artshow
     ) {
     id: ID!
     artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
-    type: [String]!
+    title: String!
     description: String!
     status: String!
-    time_period_start: AWSDate!
-    time_period_end: AWSDate!
-    artists: [ID]!
+    locationContactInformationName: String!
+    locationContactInformationPhone: String!
+    locationContactInformationAddress: String!
+    locationContactInformationCity: String!
+    locationContactInformationState: String!
+    locationContactInformationZipcode: String!
+    locationContactInformationEmail: String!
+    locationContactInformationWebsite: String!
+    time_period_showing_start: AWSDate!
+    time_period_reception_start: AWSDate!
+    ime_period_showing_end: AWSDate!
+    time_period_reception_end: AWSDate!
+    artists: [ID]
     image1: S3Object!
 }
 

@@ -57,6 +57,7 @@ export const AccountProfile = (props) => {
                                 <img
                                     src={PictureNotFound}
                                     style={{ height: 300, width: '100%' }}
+                                    alt='not found'
                                 />
                             ) : (
                                 <AmplifyS3Image

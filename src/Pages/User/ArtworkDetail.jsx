@@ -11,8 +11,7 @@ import {
     Box,
     Stack,
     Typography,
-    Switch,
-    Slide
+    Switch
 } from '@mui/material';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '../../aws-exports';

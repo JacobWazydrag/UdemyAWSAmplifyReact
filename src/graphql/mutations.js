@@ -19,9 +19,27 @@ export const createArtshow = /* GraphQL */ `
                 }
                 nextToken
             }
-            type
+            title
             description
             status
+            locationContactInformationName
+            locationContactInformationPhone
+            locationContactInformationAddress
+            locationContactInformationCity
+            locationContactInformationState
+            locationContactInformationZipcode
+            locationContactInformationEmail
+            locationContactInformationWebsite
+            time_period_showing_start
+            time_period_reception_start
+            ime_period_showing_end
+            time_period_reception_end
+            artists
+            image1 {
+                bucket
+                region
+                key
+            }
             createdAt
             updatedAt
             owner

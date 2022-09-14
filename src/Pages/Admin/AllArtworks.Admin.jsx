@@ -196,7 +196,7 @@ export default function AllArtworksAdmin() {
                 )
                     .then((el) => console.log('upload successful', el))
                     .catch((err) => {
-                        console.log('ArtworkUpload line 84 err: ', err);
+                        console.log('AllArtworksAdmin line 199 err: ', err);
                     });
                 refreshFunction();
             } else {
@@ -205,7 +205,7 @@ export default function AllArtworksAdmin() {
                     artshowID: updateObj.artshowID,
                     artworkID: updateObj.artworkID
                 };
-                console.log(updateInputs);
+                
                 await API.graphql(
                     graphqlOperation(updateArtshowArtwork, {
                         input: updateInputs
@@ -215,7 +215,7 @@ export default function AllArtworksAdmin() {
                         console.log('success!', el);
                     })
                     .catch((err) => {
-                        console.log('AllArtworks err 214', err);
+                        console.log('AllArtworks err 218', err);
                     });
                 refreshFunction();
             }
