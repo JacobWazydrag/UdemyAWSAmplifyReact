@@ -211,13 +211,7 @@ export default function FileUpload(props) {
             </Dropzone>
             <aside style={thumbsContainer}>
                 {ImageUrls.map((image, index) => (
-                    <div
-                        style={{
-                            display: 'inline-flex',
-                            flexFlow: 'row-reverse',
-                            cursor: 'pointer'
-                        }}
-                        key={index}>
+                    <div key={index}>
                         <ClearIcon
                             style={{
                                 fontSize: 35,

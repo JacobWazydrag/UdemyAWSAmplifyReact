@@ -14,13 +14,10 @@ import {
     Switch
 } from '@mui/material';
 import '@aws-amplify/ui-react/styles.css';
-import awsExports from '../../aws-exports';
 import { ArtworkUpdateForm } from './ArtworkUpdateForm';
 import { ArtworkUpdateImage } from './ArtworkUpdateImage';
-import { Amplify } from 'aws-amplify';
 import { styled } from '@mui/material/styles';
 
-Amplify.configure(awsExports);
 
 export default function ArtworkDetail() {
     const ID = useParams().id;

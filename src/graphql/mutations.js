@@ -32,7 +32,7 @@ export const createArtshow = /* GraphQL */ `
             locationContactInformationWebsite
             time_period_showing_start
             time_period_reception_start
-            ime_period_showing_end
+            time_period_showing_end
             time_period_reception_end
             artists
             image1 {
@@ -257,7 +257,6 @@ export const createArtshowArtwork = /* GraphQL */ `
                 artworks {
                     nextToken
                 }
-                type
                 description
                 status
                 createdAt
@@ -270,7 +269,6 @@ export const createArtshowArtwork = /* GraphQL */ `
                     nextToken
                 }
                 title
-                description
                 status
                 price
                 image1 {

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, Stack, Alert } from '@mui/material';
 import Button from '@mui/material/Button';
 import ExitToApp from '@mui/icons-material/ExitToApp';
 import { DataGrid } from '@mui/x-data-grid';
 import {
     listArtworksWithArtshowsAdminWithStatus,
-    listArtshowDescriptions
+    listArtshowTitles
 } from '../../graphql/queries';
 import {
     createArtshowArtwork,
-    updateArtshowArtwork
+    updateArtshowArtwork,
+    updateArtwork
 } from '../../graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 export default function AllArtworksAdmin() {
@@ -17,8 +18,11 @@ export default function AllArtworksAdmin() {
     const [mainImageUrlFromArtworks, setMainImageUrlFromArtworks] = useState(
         []
     );
-
-    const [descriptions, setDescriptions] = useState([]);
+    const [formFeedback, setFormFeedback] = useState(null);
+    const [titles, setTitles] = useState([]);
+    const closeDialog = () => {
+        setFormFeedback(null);
+    };
 
     useEffect(() => {
         getAllArworks();
@@ -43,9 +47,9 @@ export default function AllArtworksAdmin() {
             .catch((err) => console.log(err));
     }
     async function getAllArtshowSelections() {
-        await API.graphql(graphqlOperation(listArtshowDescriptions))
+        await API.graphql(graphqlOperation(listArtshowTitles))
             .then((el) => {
-                setDescriptions(el.data.listArtshows.items);
+                setTitles(el.data.listArtshows.items);
             })
             .catch((err) => console.log(err));
     }
@@ -54,7 +58,6 @@ export default function AllArtworksAdmin() {
             Storage.get(image.image1.key, { level: 'public' })
                 .then((url) => resolve(url))
                 .catch((err) => console.log(err));
-            // let url2 = Storage.get(key, { level: 'public' });
         });
     };
     const getMainUrls = () => {
@@ -71,9 +74,56 @@ export default function AllArtworksAdmin() {
                 console.log('erre', err);
             });
     };
+
+    const onSubmit = async (params, event) => {
+        let value;
+
+        if (params.field === 'price') {
+            value = parseFloat(params.value.trim().replace(/\$/g, ''));
+        } else if (params.field === 'dimensionsH') {
+            value = parseFloat(
+                typeof params.value === 'string'
+                    ? params.value.trim()
+                    : params.value
+            );
+        } else if (params.field === 'dimensionsW') {
+            value = parseFloat(
+                typeof params.value === 'string'
+                    ? params.value.trim()
+                    : params.value
+            );
+        } else if (params.field === 'isFramed') {
+            if (params.value.toUpperCase() === 'YES') {
+                value = true;
+            } else if (params.value.toUpperCase() === 'NO') {
+                value = false;
+            } else {
+                getAllArworks();
+                return alert('type yes or no');
+            }
+        } else {
+            value = params.value;
+        }
+
+        const inputs = {};
+        inputs[params.field] = value;
+        inputs.id = params.id;
+        inputs.status = 'EDITED';
+
+        API.graphql(graphqlOperation(updateArtwork, { input: inputs }))
+            .then((el) => {
+                getAllArworks();
+                setFormFeedback('success');
+            })
+            .catch((err) => {
+                console.log('ArtworkUpdateTable line 85 err: ', err);
+                getAllArworks();
+                return alert('There was an error!');
+            });
+    };
+
     const renderTable = () => {
         const columns = [
-            { field: 'title', headerName: 'Title', width: 150 },
             {
                 field: 'image',
                 headerName: 'Main Artwork Image',
@@ -86,24 +136,39 @@ export default function AllArtworksAdmin() {
                     />
                 )
             },
+            { editable: true, field: 'title', headerName: 'Title', width: 150 },
+            { field: 'name', headerName: 'Name', width: 150 },
+            {
+                editable: true,
+                field: 'isFramed',
+                headerName: 'Framed',
+                width: 150
+            },
+            {
+                editable: true,
+                field: 'dimensionsH',
+                headerName: 'Height',
+                width: 150
+            },
+            {
+                editable: true,
+                field: 'dimensionsW',
+                headerName: 'Width',
+                width: 150
+            },
+            {
+                editable: true,
+                field: 'UOM',
+                headerName: 'Measure',
+                width: 150
+            },
+            { editable: true, field: 'price', headerName: 'Price', width: 150 },
             {
                 field: 'status',
                 headerName: 'Status',
                 width: 200
             },
-            {
-                field: 'description',
-                headerName: 'Description',
-                width: 200
-            },
-            {
-                field: 'goToDetail',
-                headerName: 'Details',
-                width: 200,
-                renderCell: (params) => (
-                    <a href={`/all-artworks/${params.value}`}>Go to Detail</a>
-                )
-            },
+
             {
                 field: 'setArtshow',
                 headerName: 'Apply to Artshow',
@@ -117,18 +182,18 @@ export default function AllArtworksAdmin() {
                         error={!params.value.artshow}
                         onChange={(e) =>
                             onUpdateArtshow({
-                                artshowID: descriptions.filter((el) => {
-                                    return el.description === e.target.value;
+                                artshowID: titles.filter((el) => {
+                                    return el.title === e.target.value;
                                 })[0].id,
                                 artworkID: params.value.artworkID,
                                 id: params.value.id
                             })
                         }>
-                        {descriptions.length >= 1 ? (
-                            descriptions.map((el, i) => {
+                        {titles.length >= 1 ? (
+                            titles.map((el, i) => {
                                 return (
-                                    <MenuItem key={i} value={el.description}>
-                                        {el.description}
+                                    <MenuItem key={i} value={el.title}>
+                                        {el.title}
                                     </MenuItem>
                                 );
                             })
@@ -139,15 +204,30 @@ export default function AllArtworksAdmin() {
                         )}
                     </TextField>
                 )
+            },
+            {
+                field: 'goToDetail',
+                headerName: 'Details',
+                width: 200,
+                renderCell: (params) => (
+                    <a href={`/all-artworks/${params.value}`}>Go to Detail</a>
+                )
             }
         ];
         let rows = [];
         artworks.map((artwork, index1) => {
             //first get the attributes
             let userObjToPush = {};
-            userObjToPush.id = index1 + 1;
+            userObjToPush.id = artwork.id;
             userObjToPush.status = artwork.status;
             userObjToPush.title = artwork.title;
+            userObjToPush.name =
+                artwork.artistNameFirst + ' ' + artwork.artistNameLast;
+            userObjToPush.isFramed = artwork.isFramed ? 'Yes' : 'No';
+            userObjToPush.dimensionsH = artwork.dimensionsH;
+            userObjToPush.dimensionsW = artwork.dimensionsW;
+            userObjToPush.UOM = artwork.UOM;
+            userObjToPush.price = '$ ' + artwork.price;
             userObjToPush.description = artwork.description;
             userObjToPush.image = mainImageUrlFromArtworks[index1];
             userObjToPush.goToDetail = artwork.id;
@@ -168,8 +248,8 @@ export default function AllArtworksAdmin() {
                     artwork.artshows.items.length > 0 &&
                     artwork.artshows.items[0] &&
                     artwork.artshows.items[0].artshow &&
-                    artwork.artshows.items[0].artshow.description
-                        ? artwork.artshows.items[0].artshow.description
+                    artwork.artshows.items[0].artshow.title
+                        ? artwork.artshows.items[0].artshow.title
                         : '',
                 id:
                     artwork.artshows &&
@@ -205,7 +285,7 @@ export default function AllArtworksAdmin() {
                     artshowID: updateObj.artshowID,
                     artworkID: updateObj.artworkID
                 };
-                
+
                 await API.graphql(
                     graphqlOperation(updateArtshowArtwork, {
                         input: updateInputs
@@ -229,6 +309,9 @@ export default function AllArtworksAdmin() {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
+                onCellEditCommit={(params, event) => {
+                    onSubmit(params, event);
+                }}
             />
         );
     };
@@ -251,6 +334,25 @@ export default function AllArtworksAdmin() {
             </div>
         );
     } else {
-        return renderTable();
+        return (
+            <>
+                {renderTable()}
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    {formFeedback && (
+                        <Alert
+                            severity={formFeedback}
+                            onClose={() => {
+                                closeDialog();
+                            }}>
+                            {formFeedback
+                                ? formFeedback === 'success'
+                                    ? 'Saved!'
+                                    : 'Error!'
+                                : ''}
+                        </Alert>
+                    )}
+                </Stack>
+            </>
+        );
     }
 }

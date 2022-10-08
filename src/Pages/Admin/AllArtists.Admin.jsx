@@ -2,13 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { API } from 'aws-amplify';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
-import { Button, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import {
+    Button,
+    FormGroup,
+    FormControlLabel,
+    Checkbox,
+    Stack,
+    Alert,
+    Fade
+} from '@mui/material';
 import ExitToApp from '@mui/icons-material/ExitToApp';
 var _ = require('underscore');
 
 export default function AllArtistsAdmin(props) {
     let [artists, setArtists] = useState([]);
     let [artistsGroups, setArtistsGroups] = useState([]);
+    const [formFeedback, setFormFeedback] = useState(null);
 
     useEffect(() => {
         getAllArtists();
@@ -17,7 +26,10 @@ export default function AllArtistsAdmin(props) {
     useEffect(() => {
         getGroups();
     }, [artists]);
-    
+
+    const closeDialog = () => {
+        setFormFeedback(null);
+    };
     let nextToken;
     async function getAllArtists() {
         let apiName = 'AdminQueries';
@@ -102,8 +114,12 @@ export default function AllArtistsAdmin(props) {
         return await API.post(apiName, path, myInit)
             .then((el) => {
                 getGroups();
+                setFormFeedback('success');
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setFormFeedback('error');
+                console.log(err);
+            });
     }
 
     async function removeFromGroup(id, group) {
@@ -125,8 +141,12 @@ export default function AllArtistsAdmin(props) {
         return await API.post(apiName, path, myInit)
             .then((el) => {
                 getGroups();
+                setFormFeedback('success');
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                setFormFeedback('error');
+                console.log(err);
+            });
     }
 
     const renderTable = () => {
@@ -268,15 +288,35 @@ export default function AllArtistsAdmin(props) {
             return rows.push(userObjToPush);
         });
         return (
-            <DataGrid
-                rowHeight={100}
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[5]}
-                autoHeight
-                disableSelectionOnClick
-            />
+            <>
+                <DataGrid
+                    rowHeight={100}
+                    rows={rows}
+                    columns={columns}
+                    pageSize={10}
+                    rowsPerPageOptions={[5]}
+                    autoHeight
+                    disableSelectionOnClick
+                />
+                <Fade in={!!formFeedback} >
+                    <Stack sx={{ width: '100%' }} spacing={2}>
+                        {formFeedback && (
+                            <Alert
+                                severity={formFeedback}
+                                variant='filled'
+                                onClose={() => {
+                                    closeDialog();
+                                }}>
+                                {formFeedback
+                                    ? formFeedback === 'success'
+                                        ? 'Updated Role!'
+                                        : 'Error in updating Role!'
+                                    : ''}
+                            </Alert>
+                        )}
+                    </Stack>
+                </Fade>
+            </>
         );
     };
 

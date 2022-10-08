@@ -29,7 +29,7 @@ type Artshow
     locationContactInformationWebsite: String!
     time_period_showing_start: AWSDate!
     time_period_reception_start: AWSDate!
-    ime_period_showing_end: AWSDate!
+    time_period_showing_end: AWSDate!
     time_period_reception_end: AWSDate!
     artists: [ID]
     image1: S3Object!

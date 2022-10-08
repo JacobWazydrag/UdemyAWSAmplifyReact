@@ -14,13 +14,10 @@ import {
     Switch
 } from '@mui/material';
 import '@aws-amplify/ui-react/styles.css';
-import awsExports from '../../aws-exports';
 import { ArtworkUpdateFormAdmin } from './ArtworkUpdateForm.Admin';
 import { ArtworkUpdateImageAdmin } from './ArtworkUpdateImage.Admin';
-import { Amplify } from 'aws-amplify';
 import { styled } from '@mui/material/styles';
 
-Amplify.configure(awsExports);
 
 export default function AllArtworksDetailAdmin() {
     const ID = useParams().id;

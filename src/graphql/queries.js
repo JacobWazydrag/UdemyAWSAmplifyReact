@@ -36,10 +36,33 @@ export const listArtshows = /* GraphQL */ `
                 id
                 artworks {
                     nextToken
+                    items {
+                        artwork {
+                            id
+                        }
+                    }
                 }
-                type
+                title
                 description
                 status
+                locationContactInformationName
+                locationContactInformationPhone
+                locationContactInformationAddress
+                locationContactInformationCity
+                locationContactInformationState
+                locationContactInformationZipcode
+                locationContactInformationEmail
+                locationContactInformationWebsite
+                time_period_showing_start
+                time_period_reception_start
+                time_period_showing_end
+                time_period_reception_end
+                artists
+                image1 {
+                    bucket
+                    region
+                    key
+                }
                 createdAt
                 updatedAt
                 owner
@@ -256,7 +279,7 @@ export const listArtworksWithArtshowsAdminWithStatus = /* GraphQL */ `
                             locationContactInformationWebsite
                             time_period_showing_start
                             time_period_reception_start
-                            ime_period_showing_end
+                            time_period_showing_end
                             time_period_reception_end
                             artists
                             image1 {
@@ -272,9 +295,17 @@ export const listArtworksWithArtshowsAdminWithStatus = /* GraphQL */ `
                     }
                 }
                 owner
-                price
-                status
                 title
+                dimensionsH
+                dimensionsW
+                UOM
+                status
+                price
+                artistNameFirst
+                artistNameLast
+                mediums
+                mediumOthersExplained
+                isFramed
                 updatedAt
                 id
                 createdAt
@@ -297,12 +328,12 @@ export const listArtworksWithArtshowsAdminWithStatus = /* GraphQL */ `
         }
     }
 `;
-export const listArtshowDescriptions = /* GraphQL */ `
+export const listArtshowTitles = /* GraphQL */ `
     query MyQuery {
         listArtshows(limit: 99999999) {
             nextToken
             items {
-                description
+                title
                 id
             }
         }

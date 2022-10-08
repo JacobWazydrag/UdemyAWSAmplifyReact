@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Typography,
     Button,
@@ -10,7 +10,14 @@ import {
     Card,
     CardHeader,
     Divider,
-    CardContent
+    CardContent,
+    FormControl,
+    InputLabel,
+    Select,
+    Checkbox,
+    ListItemText,
+    OutlinedInput,
+    CircularProgress
 } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -21,13 +28,35 @@ import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createArtshow } from '../../graphql/mutations';
 import config from '../../aws-exports';
+var _ = require('lodash');
 
 const {
     aws_user_files_s3_bucket_region: region,
     aws_user_files_s3_bucket: bucket
 } = config;
-
-export default function ArtworkUpload() {
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250
+        }
+    }
+};
+const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder'
+];
+export default function ArtworkUpload(props) {
     const [TitleValue, setTitleValue] = useState('');
     const [DescriptionValue, setDescriptionValue] = useState('');
     const [PriceValue, setPriceValue] = useState(0);
@@ -45,7 +74,73 @@ export default function ArtworkUpload() {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [website, setWebsite] = useState('');
+    let [artists, setArtists] = useState([]);
+    const [formFeedback, setFormFeedback] = useState(null);
+    const [personName, setPersonName] = React.useState([]);
+    const [personIds, setPersonIds] = React.useState([]);
 
+    const handleChange = (event, key) => {
+        const { name, id } = key.props.artistobj;
+        const {
+            target: { value }
+        } = event;
+        let newVals = personIds;
+        //adding an id for the first time
+        if (newVals.length === 0) {
+            newVals.push(id);
+            //everything after the first time
+        } else {
+            //if it already exits take it out
+            if (newVals.includes(id)) {
+                var index = newVals.indexOf(id);
+                if (index !== -1) {
+                    newVals.splice(index, 1);
+                }
+                //if it doesnt then add it
+            } else {
+                newVals.push(id);
+            }
+        }
+        setPersonName(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value
+        );
+        setPersonIds(newVals);
+    };
+    console.log(personIds, personName);
+    useEffect(() => {
+        getAllArtists();
+    }, []);
+
+    const closeDialog = () => {
+        setFormFeedback(null);
+    };
+
+    let nextToken;
+    async function getAllArtists() {
+        let apiName = 'AdminQueries';
+        let path = '/listUsers';
+        let myInit = {
+            queryStringParameters: {
+                limit: 0,
+                token: nextToken
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `${props.user
+                    .getSignInUserSession()
+                    .getAccessToken()
+                    .getJwtToken()}`
+            }
+        };
+        const { NextToken, ...rest } = await API.get(apiName, path, myInit);
+        nextToken = NextToken;
+        setArtists(
+            rest.Users.filter((el) => {
+                return el.Attributes[0].Value !== props.user.attributes.sub;
+            })
+        );
+    }
     const onTitleChange = (event) => {
         setTitleValue(event.currentTarget.value);
     };
@@ -114,7 +209,6 @@ export default function ArtworkUpload() {
                 .catch((err) => {
                     console.log('err', err);
                 });
-            // let url2 = Storage.get(key, { level: 'public' });
         });
     };
 
@@ -147,20 +241,21 @@ export default function ArtworkUpload() {
             locationContactInformationWebsite: name
                 ? locationsDetial[name].website
                 : '',
-            time_period_showing_start: StartDateShowing.$d
-                .toISOString()
-                .substring(0, 10),
-            time_period_reception_start: StartDateOpening.$d
-                .toISOString()
-                .substring(0, 10),
-            ime_period_showing_end: EndDateShowing.$d
-                .toISOString()
-                .substring(0, 10),
-            time_period_reception_end: EndDateOpening.$d
-                .toISOString()
-                .substring(0, 10),
-            artists: ''
+            time_period_showing_start: StartDateShowing
+                ? StartDateShowing.$d.toISOString().substring(0, 10)
+                : '',
+            time_period_reception_start: StartDateOpening
+                ? StartDateOpening.$d.toISOString().substring(0, 10)
+                : '',
+            time_period_showing_end: EndDateShowing
+                ? EndDateShowing.$d.toISOString().substring(0, 10)
+                : EndDateShowing,
+            time_period_reception_end: EndDateOpening
+                ? EndDateOpening.$d.toISOString().substring(0, 10)
+                : '',
+            artists: personIds
         };
+
         // first try to upload the images to a bucket
         let promises = [];
         Images.map((image, i) => {
@@ -181,6 +276,8 @@ export default function ArtworkUpload() {
                         setWebsite('');
                         setDescriptionValue('');
                         setImages([]);
+                        setPersonIds([]);
+                        setPersonName([]);
                         setName('');
                         setStartDateOpening(null);
                         setEndDateOpening(null);
@@ -191,11 +288,11 @@ export default function ArtworkUpload() {
                         );
                     })
                     .catch((err) => {
-                        console.log('CreateArtShow line 179 err: ', err);
+                        console.log('CreateArtShow line 293 err: ', err);
                     });
             })
             .catch((err) => {
-                console.log('erre', err);
+                console.log('CreateArtShow line 297 err: ', err);
             });
     };
 
@@ -524,6 +621,110 @@ export default function ArtworkUpload() {
                                                 />
                                             </LocalizationProvider>
                                         </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Divider />
+                                        </Grid>
+                                        <Grid item md={12} xs={12}>
+                                            <Typography
+                                                sx={{ fontSize: 14 }}
+                                                gutterBottom>
+                                                Pick Artist
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6} rowSpacing={5}>
+                                            {artists.length === 0 ? (
+                                                <Box sx={{ display: 'flex' }}>
+                                                    <CircularProgress />
+                                                </Box>
+                                            ) : (
+                                                <FormControl
+                                                    sx={{ m: 1, width: '100%' }}
+                                                    error={
+                                                        personName.length === 0
+                                                    }>
+                                                    <InputLabel
+                                                        style={{
+                                                            width: '100%'
+                                                        }}
+                                                        id='demo-multiple-checkbox-label'>
+                                                        Artists
+                                                    </InputLabel>
+                                                    <Select
+                                                        labelId='demo-multiple-checkbox-label'
+                                                        id='demo-multiple-checkbox'
+                                                        multiple
+                                                        value={personName}
+                                                        onChange={handleChange}
+                                                        input={
+                                                            <OutlinedInput label='Artists' />
+                                                        }
+                                                        renderValue={(
+                                                            selected
+                                                        ) =>
+                                                            selected.join(', ')
+                                                        }
+                                                        MenuProps={MenuProps}>
+                                                        {artists.map(
+                                                            (artist) => {
+                                                                let name =
+                                                                    _.find(
+                                                                        artist.Attributes,
+                                                                        (
+                                                                            el,
+                                                                            i
+                                                                        ) => {
+                                                                            return (
+                                                                                el.Name ===
+                                                                                'name'
+                                                                            );
+                                                                        }
+                                                                    ).Value +
+                                                                    ' ' +
+                                                                    _.find(
+                                                                        artist.Attributes,
+                                                                        (
+                                                                            el,
+                                                                            i
+                                                                        ) => {
+                                                                            return (
+                                                                                el.Name ===
+                                                                                'family_name'
+                                                                            );
+                                                                        }
+                                                                    ).Value;
+                                                                return (
+                                                                    <MenuItem
+                                                                        artistobj={{
+                                                                            id: artist.Username,
+                                                                            name: name
+                                                                        }}
+                                                                        key={
+                                                                            artist.Username
+                                                                        }
+                                                                        value={
+                                                                            name
+                                                                        }>
+                                                                        <Checkbox
+                                                                            checked={
+                                                                                personName.indexOf(
+                                                                                    name
+                                                                                ) >
+                                                                                -1
+                                                                            }
+                                                                        />
+                                                                        <ListItemText
+                                                                            primary={
+                                                                                name
+                                                                            }
+                                                                        />
+                                                                    </MenuItem>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </Select>
+                                                </FormControl>
+                                            )}
+                                        </Grid>
                                         <Grid
                                             item
                                             xs={6}
@@ -538,7 +739,8 @@ export default function ArtworkUpload() {
                                                     !name ||
                                                     !TitleValue ||
                                                     !DescriptionValue ||
-                                                    Images.length === 0
+                                                    Images.length === 0 ||
+                                                    personName.length === 0
                                                 }
                                                 variant='contained'
                                                 onClick={onSubmit}

@@ -3,14 +3,11 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/material';
-import { Amplify } from 'aws-amplify';
 import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import awsExports from '../../aws-exports';
 import { AccountFormAdmin } from './AccountForm.Admin';
 import { AccountProfileAdmin } from './AccountProfile.Admin';
 
-Amplify.configure(awsExports);
 
 function ProfileAdmin() {
     return (

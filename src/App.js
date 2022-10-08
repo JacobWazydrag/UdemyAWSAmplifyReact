@@ -20,6 +20,7 @@ import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
 import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
 import CreateArtshowAdmin from './Pages/Admin/CreateArtshow.Admin';
 import HomeAdmin from './Pages/Admin/Home.Admin';
+import Chat from './Pages/Admin/Chat.Admin';
 import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
 import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
@@ -90,11 +91,15 @@ export default function App() {
                                 />
                                 <Route
                                     path='/create-artshow'
-                                    element={<CreateArtshowAdmin />}
+                                    element={<CreateArtshowAdmin user={user}/>}
                                 />
                                 <Route
                                     path='/admin-profile'
                                     element={<ProfileAdmin />}
+                                />
+                                <Route
+                                    path='/admin-chat'
+                                    element={<Chat />}
                                 />
                             </Routes>
                         </LayoutAdmin>
