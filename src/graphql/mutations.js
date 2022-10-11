@@ -46,6 +46,51 @@ export const createArtshow = /* GraphQL */ `
         }
     }
 `;
+
+export const createChatroom = /* GraphQL */ `
+    mutation CreateArtshow(
+        $input: CreateChatroomInput!
+        $condition: ModelChatroomConditionInput
+    ) {
+        createChatroom(input: $input, condition: $condition) {
+            id
+            messages {
+                items {
+                    id
+                    authorFirst
+                    authorLast
+                    owner
+                    body
+                    updatedAt
+                    createdAt
+                }
+                nextToken
+            }
+            title
+            originator
+            follower
+            createdAt
+            updatedAt
+        }
+    }
+`;
+export const createMessage = /* GraphQL */ `
+    mutation CreateMessage(
+        $input: CreateMessageInput!
+        $condition: ModelMessageConditionInput
+    ) {
+        createMessage(input: $input, condition: $condition) {
+            id
+            chatroomMessagesId
+            authorFirst
+            authorLast
+            owner
+            body
+            createdAt
+            updatedAt
+        }
+    }
+`;
 export const updateArtshow = /* GraphQL */ `
     mutation UpdateArtshow(
         $input: UpdateArtshowInput!

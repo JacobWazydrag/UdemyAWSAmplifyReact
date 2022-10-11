@@ -20,7 +20,8 @@ import AllArtshowsAdmin from './Pages/Admin/AllArtshows.Admin';
 import AllArtworksAdmin from './Pages/Admin/AllArtworks.Admin';
 import CreateArtshowAdmin from './Pages/Admin/CreateArtshow.Admin';
 import HomeAdmin from './Pages/Admin/Home.Admin';
-import Chat from './Pages/Admin/Chat.Admin';
+import Chat from './Pages/User/Chat';
+import AdminChat from './Pages/Admin/Chat.Admin';
 import LayoutAdmin from './Components/Layout.Admin';
 import AllArtistDetailAdmin from './Pages/Admin/AllArtistDetail.Admin';
 import AllArtworksDetailAdmin from './Pages/Admin/AllArtworksDetail.Admin';
@@ -32,37 +33,20 @@ Amplify.configure(awsExports);
 
 export default function App() {
     const theme = createTheme({});
-    const [userInfo, setUserInfo] = useState({});
-    useEffect(() => {
-        getUsers();
-    }, []);
 
-    const getUsers = async (user) => {
-        try {
-            const user = await Auth.currentUserInfo();
-            setUserInfo(user);
-        } catch (error) {
-            console.log(error);
-        }
-    };
     return (
         // {_.size(userInfo) === 0 ? <div>Not Loaded</div> : s}
         <Authenticator>
             {({ signOut, user }) =>
-                _.size(userInfo) === 0 ? (
-                    <>No user found</>
-                ) : user.getSignInUserSession().getAccessToken().payload[
-                      'cognito:groups'
-                  ] &&
-                  user
-                      .getSignInUserSession()
-                      .getAccessToken()
-                      .payload['cognito:groups'].includes('Admin') ? (
+                user.getSignInUserSession().getAccessToken().payload[
+                    'cognito:groups'
+                ] &&
+                user
+                    .getSignInUserSession()
+                    .getAccessToken()
+                    .payload['cognito:groups'].includes('Admin') ? (
                     <ThemeProvider theme={theme}>
-                        <LayoutAdmin
-                            user={user}
-                            userInfo={userInfo}
-                            signout={signOut}>
+                        <LayoutAdmin user={user} signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<HomeAdmin />} />
                                 <Route
@@ -91,7 +75,7 @@ export default function App() {
                                 />
                                 <Route
                                     path='/create-artshow'
-                                    element={<CreateArtshowAdmin user={user}/>}
+                                    element={<CreateArtshowAdmin user={user} />}
                                 />
                                 <Route
                                     path='/admin-profile'
@@ -99,7 +83,7 @@ export default function App() {
                                 />
                                 <Route
                                     path='/admin-chat'
-                                    element={<Chat />}
+                                    element={<AdminChat user={user} />}
                                 />
                             </Routes>
                         </LayoutAdmin>
@@ -112,10 +96,7 @@ export default function App() {
                       .getAccessToken()
                       .payload['cognito:groups'].includes('Artists') ? (
                     <ThemeProvider theme={theme}>
-                        <Layout
-                            user={user}
-                            userInfo={userInfo}
-                            signout={signOut}>
+                        <Layout user={user} signout={signOut}>
                             <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/artshow' element={<Artshow />} />
@@ -133,6 +114,10 @@ export default function App() {
                                     path='/upload-artwork'
                                     element={<ArtworkUpload user={user} />}
                                 />
+                                <Route
+                                    path='/chat'
+                                    element={<Chat user={user} />}
+                                />
                             </Routes>
                         </Layout>
                     </ThemeProvider>
@@ -142,10 +127,13 @@ export default function App() {
                         {console.log(
                             user.getSignInUserSession().getAccessToken().payload
                         )}
-                        <Button variant='contained'
+                        <Button
+                            variant='contained'
                             onClick={() => {
                                 signOut();
-                            }}>Log out</Button>
+                            }}>
+                            Log out
+                        </Button>
                     </div>
                 )
             }

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import API, { graphqlOperation } from '@aws-amplify/api';
 import { listChatrooms } from '../../graphql/queries';
-import { createMessage } from '../../graphql/mutations';
-import { onCreateMessage } from '../../graphql/subscriptions';
+import { createChatroom, createMessage } from '../../graphql/mutations';
+import '@aws-amplify/pubsub';
+import { onCreateMessageByChatroomId } from '../../graphql/subscriptions';
 import { makeStyles } from '@mui/styles';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
 import Paper from '@mui/material/Paper';
@@ -16,6 +17,32 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import StepContent from '@mui/material/StepContent';
+import Button from '@mui/material/Button';
+import Fade from '@mui/material/Fade';
+import { Alert, Stack } from '@mui/material';
+const steps = [
+    {
+        label: 'Get Started',
+        description: `Before you can start uploading your artwork, 
+        you must go into your profile settings and fill out all the 
+        information. Once you submit that information the links to start 
+        the uploading process will be available.`
+    },
+    {
+        label: 'Upload your artwork!',
+        description:
+            'Use the fields and image uploader to create artworks. These will then go through an approval process that will finally result in being added to an Artshow.'
+    },
+    {
+        label: 'Await Approval',
+        description: `Once your artwork is approved and attatched to an artshow you can check out your artshow in the Artshows tab.`
+    }
+];
 var _ = require('underscore');
 
 const useStyles = makeStyles({
@@ -38,38 +65,61 @@ const useStyles = makeStyles({
     }
 });
 
-const AdminChat = (props) => {
-    let [artists, setArtists] = useState([]);
+const Chat = (props) => {
     const [chatRoom, setChatRoom] = useState({});
+    const [activeStep, setActiveStep] = React.useState(0);
     const [TextInput, setTextTinput] = useState('');
     const [formFeedback, setFormFeedback] = useState(null);
     const messagesEndRef = useRef(null);
 
-    const handleText = (event) => {
-        setTextTinput(event.target.value);
-    };
     const scrollToBottom = () => {
         messagesEndRef.current
             ? messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
             : console.log('whoo');
     };
+
     useEffect(() => {
         scrollToBottom();
     }, [chatRoom]);
 
-    useEffect(() => {
-        getAllArtists();
-    }, []);
+    const handleText = (event) => {
+        setTextTinput(event.target.value);
+    };
+
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleReset = () => {
+        setActiveStep(0);
+        createChatrooms();
+    };
+
+    const closeDialog = () => {
+        setFormFeedback(null);
+    };
 
     useEffect(() => {
+        checkChatrooms();
+    }, []);
+
+    const refreshFunction = () => {
+        checkChatrooms();
+    };
+    useEffect(() => {
         if (_.size(chatRoom) > 0 && chatRoom.id) {
-            console.log('yes');
             const subscription = API.graphql({
-                query: onCreateMessage
+                query: onCreateMessageByChatroomId,
+                variables: {
+                    chatroomMessagesId: chatRoom.id
+                }
             }).subscribe({
                 next: (data) => {
                     refreshFunction();
-                    console.log('data: ', data);
                 }
             });
 
@@ -77,14 +127,37 @@ const AdminChat = (props) => {
                 console.log('unscubscribed!');
                 subscription.unsubscribe();
             };
-        } else {
-            console.log('no');
         }
     }, [chatRoom]);
-
-    const refreshFunction = () => {
-        checkChatrooms();
-    };
+    async function checkChatrooms() {
+        await API.graphql(
+            graphqlOperation(listChatrooms, {
+                filter: {
+                    follower: { eq: props.user.username }
+                }
+            })
+        )
+            .then((el) => {
+                setChatRoom(el.data.listChatrooms.items[0]);
+            })
+            .catch((err) => {
+                console.log('Check Chatrooms error: ', err);
+            });
+    }
+    async function createChatrooms() {
+        const inputs = {
+            follower: props.user.username,
+            originator: 'cf0eca38-1976-480b-a2c6-68b04de9ddec',
+            title: 'TEST'
+        };
+        await API.graphql(graphqlOperation(createChatroom, { input: inputs }))
+            .then((el) => {
+                refreshFunction();
+            })
+            .catch((err) => {
+                console.log('Create Chat error: ', err);
+            });
+    }
     async function sendMessage() {
         const inputs = {
             authorFirst: props.user.attributes.name,
@@ -99,54 +172,14 @@ const AdminChat = (props) => {
         await API.graphql(graphqlOperation(createMessage, { input: inputs }))
             .then((el) => {
                 refreshFunction();
+                setTextTinput('');
             })
             .catch((err) => {
-                console.log('Send Message err: ', err);
+                console.log('Send Message error: ', err);
             });
     }
-    async function checkChatrooms(username) {
-        await API.graphql(
-            graphqlOperation(listChatrooms, {
-                filter: {
-                    follower: { eq: username }
-                }
-            })
-        )
-            .then((el) => {
-                setChatRoom(el.data.listChatrooms.items[0]);
-            })
-            .catch((err) => {
-                console.log('Check Chatrooms err: ', err);
-            });
-    }
-
-    let nextToken;
-    async function getAllArtists() {
-        let apiName = 'AdminQueries';
-        let path = '/listUsers';
-        let myInit = {
-            queryStringParameters: {
-                limit: 0,
-                token: nextToken
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${props.user
-                    .getSignInUserSession()
-                    .getAccessToken()
-                    .getJwtToken()}`
-            }
-        };
-        const { NextToken, ...rest } = await API.get(apiName, path, myInit);
-        nextToken = NextToken;
-        setArtists(
-            rest.Users.filter((el) => {
-                return el.Attributes[0].Value !== props.user.attributes.sub;
-            })
-        );
-    }
-
     const classes = useStyles();
+    console.log(chatRoom);
     return (
         <div>
             <Grid container>
@@ -159,29 +192,9 @@ const AdminChat = (props) => {
             <Grid container component={Paper} className={classes.chatSection}>
                 <Grid item xs={3} className={classes.borderRight500}>
                     <List>
-                        {artists.map((artist, index1) => {
-                            let userObjToPush = {};
-                            userObjToPush[artist.Username] = {};
-                            artist.Attributes.map((attribute, index2) => {
-                                if (attribute.Name === 'name') {
-                                    userObjToPush[artist.Username].name =
-                                        attribute.Value;
-                                } else if (attribute.Name === 'family_name') {
-                                    userObjToPush[artist.Username].familyName =
-                                        attribute.Value;
-                                } else if (attribute.Name === 'sub') {
-                                    userObjToPush[artist.Username].sub =
-                                        attribute.Value;
-                                }
-                            });
-
+                        {admins.map((admin, index1) => {
                             return (
-                                <ListItem
-                                    onClick={() => {
-                                        checkChatrooms(artist.Username);
-                                    }}
-                                    button
-                                    key={artist.Username}>
+                                <ListItem button key={admin.sub}>
                                     <ListItemIcon>
                                         <AmplifyS3Image
                                             imgProps={{
@@ -193,17 +206,11 @@ const AdminChat = (props) => {
                                                 }
                                             }}
                                             level='public'
-                                            imgKey={`profileImage/profile${
-                                                userObjToPush[artist.Username]
-                                                    .sub
-                                            }.png`}
+                                            imgKey={`profileImage/profile${admin.sub}.png`}
                                         />
                                     </ListItemIcon>
                                     <ListItemText>
-                                        {userObjToPush[artist.Username].name +
-                                            ' ' +
-                                            userObjToPush[artist.Username]
-                                                .familyName}
+                                        {admin.name + ' ' + admin.familyName}
                                     </ListItemText>
                                     <ListItemText
                                         secondary='online'
@@ -216,33 +223,93 @@ const AdminChat = (props) => {
                 <Grid item xs={9}>
                     <List className={classes.messageArea}>
                         {_.size(chatRoom) === 0 ? (
-                            <ListItem key='1'>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        <ListItemText
-                                            align='center'
-                                            primary='Start chatting by clicking a User to your left! '></ListItemText>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <ListItemText
-                                            align='center'
-                                            secondary='Type below and press enter or press the send button to send the message.'></ListItemText>
-                                    </Grid>
-                                </Grid>
-                            </ListItem>
+                            <Fade in timeout={2500}>
+                                <Box sx={{ maxWidth: 400 }}>
+                                    <Stepper
+                                        activeStep={activeStep}
+                                        orientation='vertical'>
+                                        {steps.map((step, index) => (
+                                            <Step key={step.label}>
+                                                <StepLabel
+                                                    optional={
+                                                        index === 2 ? (
+                                                            <Typography variant='caption'>
+                                                                Last step
+                                                            </Typography>
+                                                        ) : null
+                                                    }>
+                                                    {step.label}
+                                                </StepLabel>
+                                                <StepContent>
+                                                    <Typography>
+                                                        {step.description}
+                                                    </Typography>
+                                                    <Box sx={{ mb: 2 }}>
+                                                        <div>
+                                                            <Button
+                                                                variant='contained'
+                                                                onClick={
+                                                                    handleNext
+                                                                }
+                                                                sx={{
+                                                                    mt: 1,
+                                                                    mr: 1
+                                                                }}>
+                                                                {index ===
+                                                                steps.length - 1
+                                                                    ? 'Finish'
+                                                                    : 'Continue'}
+                                                            </Button>
+                                                            <Button
+                                                                disabled={
+                                                                    index === 0
+                                                                }
+                                                                onClick={
+                                                                    handleBack
+                                                                }
+                                                                sx={{
+                                                                    mt: 1,
+                                                                    mr: 1
+                                                                }}>
+                                                                Back
+                                                            </Button>
+                                                        </div>
+                                                    </Box>
+                                                </StepContent>
+                                            </Step>
+                                        ))}
+                                    </Stepper>
+                                    {activeStep === steps.length && (
+                                        <Paper
+                                            square
+                                            elevation={0}
+                                            sx={{ p: 3 }}>
+                                            <Typography>
+                                                All steps completed -
+                                                you&apos;re finished!
+                                            </Typography>
+                                            <Button
+                                                onClick={handleReset}
+                                                sx={{ mt: 1, mr: 1 }}>
+                                                Get Started!
+                                            </Button>
+                                        </Paper>
+                                    )}
+                                </Box>
+                            </Fade>
                         ) : (
                             <>
                                 <ListItem key='1'>
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <ListItemText
-                                                align='right'
+                                                align='left'
                                                 primary='Welcome to Artspace and Congratulations! If you have any questions or need help getting started just let me know!'></ListItemText>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <ListItemText
-                                                align='right'
-                                                secondary=''></ListItemText>
+                                                align='left'
+                                                secondary='09:30'></ListItemText>
                                         </Grid>
                                     </Grid>
                                 </ListItem>
@@ -315,8 +382,29 @@ const AdminChat = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                {formFeedback && (
+                    <Alert
+                        severity={formFeedback}
+                        onClose={() => {
+                            closeDialog();
+                        }}>
+                        {formFeedback
+                            ? formFeedback === 'success'
+                                ? 'Success!'
+                                : 'Error!'
+                            : ''}
+                    </Alert>
+                )}
+            </Stack>
         </div>
     );
 };
-
-export default AdminChat;
+const admins = [
+    {
+        sub: 'cf0eca38-1976-480b-a2c6-68b04de9ddec',
+        name: 'Jacob',
+        familyName: 'AdminDrag'
+    }
+];
+export default Chat;

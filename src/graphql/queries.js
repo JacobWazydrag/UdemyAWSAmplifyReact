@@ -71,6 +71,43 @@ export const listArtshows = /* GraphQL */ `
         }
     }
 `;
+export const listMessages = /* GraphQL */ `
+    query listMessages {
+        listMessages {
+            items {
+                id
+                author
+                body
+                createdAt
+                updatedAt
+            }
+        }
+    }
+`;
+export const listChatrooms = /* GraphQL */ `
+    query MyQuery($filter: ModelChatroomFilterInput) {
+        listChatrooms(
+            # filter: { follower: { eq: "a7462dac-b612-4255-b31b-6f6c86a52902" } }
+            filter: $filter
+        ) {
+            nextToken
+            items {
+                id
+                messages {
+                    items {
+                        authorFirst
+                        authorLast
+                        body
+                        createdAt
+                        updatedAt
+                        id
+                        owner
+                    }
+                }
+            }
+        }
+    }
+`;
 export const getArtwork = /* GraphQL */ `
     query GetArtwork($id: ID!) {
         getArtwork(id: $id) {

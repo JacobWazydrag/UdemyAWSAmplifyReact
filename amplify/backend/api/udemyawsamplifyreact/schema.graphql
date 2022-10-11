@@ -65,6 +65,50 @@ type Artwork
     image3: S3Object
 }
 
+type Chatroom
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [create, read] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID
+    title: String
+    originator: ID!
+    follower: ID!
+    messages: [Message] @hasMany
+}
+
+type Message
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    authorFirst: String!
+    authorLast: String!
+    chatroomMessagesId: ID!
+    owner: ID!
+    body: String!
+}
+
+type Subscription {
+    onCreateMessageByChatroomId(chatroomMessagesId: ID!): Message
+        @aws_subscribe(mutations: ["createMessage"])
+}
+
 type S3Object {
     bucket: String!
     region: String!

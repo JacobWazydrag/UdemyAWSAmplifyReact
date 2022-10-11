@@ -14,6 +14,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import FaceIcon from '@mui/icons-material/Face';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ChatIcon from '@mui/icons-material/Chat';
 import { makeStyles } from '@mui/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ArtSpaceLogo from '../Assets/ArtSpace_Logo.webp';
@@ -65,7 +66,7 @@ const useStyles = makeStyles({
         overflowWrap: 'break-word'
     }
 });
-export default function Layout({ children, user, userInfo, signout }) {
+export default function Layout({ children, user, signout }) {
     const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
     const [hamburgerVisible, sethamburgerVisible] = useState(isMobile);
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -93,6 +94,11 @@ export default function Layout({ children, user, userInfo, signout }) {
             text: 'Upload Artwork',
             icon: <FileUploadIcon color='primary' />,
             path: '/upload-artwork'
+        },
+        {
+            text: 'Chat',
+            icon: <ChatIcon color='primary' />,
+            path: '/chat'
         }
     ];
     return (
@@ -190,7 +196,7 @@ export default function Layout({ children, user, userInfo, signout }) {
                                 !user.attributes.phone_number ||
                                 !user.attributes.family_name ||
                                 !user.attributes.name ||
-                                !userInfo.attributes['custom:profile_pic']
+                                !user.attributes['custom:profile_pic']
                             }
                             button
                             onClick={() => navigate(item.path)}
@@ -254,7 +260,7 @@ export default function Layout({ children, user, userInfo, signout }) {
                             !user.attributes.phone_number ||
                             !user.attributes.family_name ||
                             !user.attributes.name ||
-                            !userInfo.attributes['custom:profile_pic'] ? (
+                            !user.attributes['custom:profile_pic'] ? (
                                 <InfoIcon style={{ color: 'orangered' }} />
                             ) : null}
                         </ListItem>
