@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3udemyawsamplifyreactstorage48843bf6",
+  "bucketName": "udemyawsamplifyreact-storage-48843bf6",
+  "policyUUID": "b1b9350a",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

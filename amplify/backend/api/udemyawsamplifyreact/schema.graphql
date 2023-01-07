@@ -1,0 +1,117 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Artshow
+    @model
+    @auth(
+        rules: [
+            { allow: owner, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    artworks: [Artwork] @manyToMany(relationName: "ArtshowArtwork")
+    title: String!
+    description: String!
+    status: String!
+    locationContactInformationName: String!
+    locationContactInformationPhone: String!
+    locationContactInformationAddress: String!
+    locationContactInformationCity: String!
+    locationContactInformationState: String!
+    locationContactInformationZipcode: String!
+    locationContactInformationEmail: String!
+    locationContactInformationWebsite: String!
+    time_period_showing_start: AWSDate!
+    time_period_reception_start: AWSDate!
+    time_period_showing_end: AWSDate!
+    time_period_reception_end: AWSDate!
+    artists: [ID]
+    image1: S3Object!
+}
+
+type Artwork
+    @model
+    @auth(
+        rules: [
+            { allow: owner, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    artshows: [Artshow] @manyToMany(relationName: "ArtshowArtwork")
+    title: String
+    dimensionsH: Float
+    dimensionsW: Float
+    UOM: String
+    status: String
+    price: Float
+    artistNameFirst: String
+    artistNameLast: String
+    mediums: [String]!
+    mediumOthersExplained: String!
+    isFramed: Boolean!
+    artShow: ID
+    image1: S3Object
+    image2: S3Object
+    image3: S3Object
+}
+
+type Chatroom
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [create, read] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID
+    title: String
+    originator: ID!
+    follower: ID!
+    messages: [Message] @hasMany
+}
+
+type Message
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [create, update, read, delete] }
+            {
+                allow: groups
+                groups: ["Admin"]
+                operations: [create, update, read, delete]
+            }
+        ]
+    ) {
+    id: ID!
+    authorFirst: String!
+    authorLast: String!
+    chatroomMessagesId: ID!
+    owner: ID!
+    body: String!
+}
+
+type Subscription {
+    onCreateMessageByChatroomId(chatroomMessagesId: ID!): Message
+        @aws_subscribe(mutations: ["createMessage"])
+}
+
+type S3Object {
+    bucket: String!
+    region: String!
+    key: String!
+}
