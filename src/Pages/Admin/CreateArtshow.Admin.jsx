@@ -44,18 +44,7 @@ const MenuProps = {
         }
     }
 };
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder'
-];
+
 export default function ArtworkUpload(props) {
     const [TitleValue, setTitleValue] = useState('');
     const [DescriptionValue, setDescriptionValue] = useState('');
@@ -78,7 +67,7 @@ export default function ArtworkUpload(props) {
     const [formFeedback, setFormFeedback] = useState(null);
     const [personName, setPersonName] = React.useState([]);
     const [personIds, setPersonIds] = React.useState([]);
-
+    
     const handleChange = (event, key) => {
         const { name, id } = key.props.artistobj;
         const {
@@ -666,7 +655,7 @@ export default function ArtworkUpload(props) {
                                                         MenuProps={MenuProps}>
                                                         {artists.map(
                                                             (artist) => {
-                                                                let name =
+                                                                let nameObj =
                                                                     _.find(
                                                                         artist.Attributes,
                                                                         (
@@ -678,20 +667,8 @@ export default function ArtworkUpload(props) {
                                                                                 'name'
                                                                             );
                                                                         }
-                                                                    ).Value +
-                                                                    ' ' +
-                                                                    _.find(
-                                                                        artist.Attributes,
-                                                                        (
-                                                                            el,
-                                                                            i
-                                                                        ) => {
-                                                                            return (
-                                                                                el.Name ===
-                                                                                'family_name'
-                                                                            );
-                                                                        }
-                                                                    ).Value;
+                                                                    );
+                                                                let name = nameObj ? nameObj.Value : "No Name Created"
                                                                 return (
                                                                     <MenuItem
                                                                         artistobj={{

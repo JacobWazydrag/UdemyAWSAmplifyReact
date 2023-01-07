@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { API } from 'aws-amplify';
 import { AmplifyS3Image } from '@aws-amplify/ui-react/legacy';
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import {
     Button,
     FormGroup,
@@ -18,7 +19,14 @@ export default function AllArtistsAdmin(props) {
     let [artists, setArtists] = useState([]);
     let [artistsGroups, setArtistsGroups] = useState([]);
     const [formFeedback, setFormFeedback] = useState(null);
+    let [error, setError] = useState('');
 
+    const onLoadedImage = (e, artistId) => {
+        console.log(e, artistId);
+        if (e && e.returnValue === true) {
+            setError({ status: 'Error', value: artistId });
+        }
+    };
     useEffect(() => {
         getAllArtists();
     }, []);
@@ -155,15 +163,36 @@ export default function AllArtistsAdmin(props) {
                 field: 'profile_image',
                 headerName: 'Picture',
                 width: 150,
-                renderCell: (params) => (
-                    <AmplifyS3Image
-                        imgProps={{
-                            style: { height: 150, width: '100%' }
-                        }}
-                        level='public'
-                        imgKey={`profileImage/profile${params.value}.png`}
-                    />
-                )
+                align: 'center',
+                headerAlign: 'center',
+                renderCell: (params) => {
+                    if (
+                        error &&
+                        _.size(error) > 0 &&
+                        error.value === params.value
+                    ) {
+                        return (
+                            <div>
+                                <ImageNotSupportedIcon
+                                    style={{
+                                        fontSize: 60
+                                    }}></ImageNotSupportedIcon>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <AmplifyS3Image
+                                imgProps={{
+                                    style: { height: 300, width: '100%' },
+                                    onError: (e) =>
+                                        onLoadedImage(e, params.value)
+                                }}
+                                level='public'
+                                imgKey={`profileImage/profile${params.value}.png`}
+                            />
+                        );
+                    }
+                }
             },
             { field: 'name', headerName: 'First Name', width: 150 },
             {
@@ -298,7 +327,7 @@ export default function AllArtistsAdmin(props) {
                     autoHeight
                     disableSelectionOnClick
                 />
-                <Fade in={!!formFeedback} >
+                <Fade in={!!formFeedback}>
                     <Stack sx={{ width: '100%' }} spacing={2}>
                         {formFeedback && (
                             <Alert

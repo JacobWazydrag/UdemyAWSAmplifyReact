@@ -60,6 +60,7 @@ type Artwork
     mediums: [String]!
     mediumOthersExplained: String!
     isFramed: Boolean!
+    artShow: ID
     image1: S3Object
     image2: S3Object
     image3: S3Object

@@ -121,7 +121,22 @@ export default function AllArtworksAdmin() {
                 return alert('There was an error!');
             });
     };
+    const updateArtworkAfterAssociation = (artworkID, artshowID, action) => {
+        const inputs = {};
+        inputs.id = artworkID;
+        inputs.artShow = action === 'create' ? artshowID : '';
 
+        API.graphql(graphqlOperation(updateArtwork, { input: inputs }))
+            .then((el) => {
+                getAllArworks();
+                setFormFeedback('success');
+            })
+            .catch((err) => {
+                console.log('ArtworkUpdateTable line 85 err: ', err);
+                getAllArworks();
+                return alert('There was an error!');
+            });
+    };
     const renderTable = () => {
         const columns = [
             {
@@ -274,7 +289,10 @@ export default function AllArtworksAdmin() {
                         input: createInputs
                     })
                 )
-                    .then((el) => console.log('upload successful', el))
+                    .then((el) => {
+                        console.log('upload successful');
+                        updateArtworkAfterAssociation(updateObj.artworkID, updateObj.artshowID, 'create');
+                    })
                     .catch((err) => {
                         console.log('AllArtworksAdmin line 199 err: ', err);
                     });
@@ -297,6 +315,7 @@ export default function AllArtworksAdmin() {
                     .catch((err) => {
                         console.log('AllArtworks err 218', err);
                     });
+                updateArtworkAfterAssociation(updateObj.artworkID, updateObj.artshowID, 'create');
                 refreshFunction();
             }
         };

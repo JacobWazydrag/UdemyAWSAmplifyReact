@@ -53,22 +53,27 @@ const AdminChat = (props) => {
             ? messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
             : console.log('whoo');
     };
-    useEffect(() => {
-        scrollToBottom();
-    }, [chatRoom]);
 
     useEffect(() => {
         getAllArtists();
     }, []);
 
     useEffect(() => {
+        if (artists && artists.length > 0 && artists[0].Username){
+            checkChatrooms(artists[0].Username)
+        }
+    }, [artists]);
+
+    useEffect(() => {
         if (_.size(chatRoom) > 0 && chatRoom.id) {
-            console.log('yes');
+            scrollToBottom();
+            console.log('yes',chatRoom.follower);
             const subscription = API.graphql({
                 query: onCreateMessage
             }).subscribe({
                 next: (data) => {
-                    refreshFunction();
+                    console.log(data, 'hereeeeeeee line 71');
+                    refreshFunction(chatRoom.follower);
                     console.log('data: ', data);
                 }
             });
@@ -82,8 +87,8 @@ const AdminChat = (props) => {
         }
     }, [chatRoom]);
 
-    const refreshFunction = () => {
-        checkChatrooms();
+    const refreshFunction = (username) => {
+        checkChatrooms(username);
     };
     async function sendMessage() {
         const inputs = {
@@ -98,7 +103,8 @@ const AdminChat = (props) => {
         }
         await API.graphql(graphqlOperation(createMessage, { input: inputs }))
             .then((el) => {
-                refreshFunction();
+                refreshFunction(props.user.attributes.sub);
+                setTextTinput('');
             })
             .catch((err) => {
                 console.log('Send Message err: ', err);

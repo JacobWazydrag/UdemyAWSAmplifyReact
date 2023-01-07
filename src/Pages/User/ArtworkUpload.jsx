@@ -109,7 +109,8 @@ export default function ArtworkUpload(props) {
             mediumOthersExplained: mediumsOtherExplained,
             isFramed: framed,
             price: parseFloat(PriceValue),
-            status: 'STAGED'
+            status: 'STAGED',
+            artShow: ""
         };
         // first try to upload the images to a bucket
         let promises = [];

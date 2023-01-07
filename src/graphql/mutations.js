@@ -109,9 +109,27 @@ export const updateArtshow = /* GraphQL */ `
                 }
                 nextToken
             }
-            type
+            title
             description
             status
+            locationContactInformationName
+            locationContactInformationPhone
+            locationContactInformationAddress
+            locationContactInformationCity
+            locationContactInformationState
+            locationContactInformationZipcode
+            locationContactInformationEmail
+            locationContactInformationWebsite
+            time_period_showing_start
+            time_period_reception_start
+            time_period_showing_end
+            time_period_reception_end
+            artists
+            image1 {
+                bucket
+                region
+                key
+            }
             createdAt
             updatedAt
             owner
@@ -173,6 +191,7 @@ export const createArtwork = /* GraphQL */ `
             mediums
             isFramed
             status
+            artShow
             price
             image1 {
                 bucket
@@ -223,6 +242,7 @@ export const updateArtwork = /* GraphQL */ `
             mediums
             isFramed
             status
+            artShow
             price
             image1 {
                 bucket
@@ -266,6 +286,7 @@ export const deleteArtwork = /* GraphQL */ `
             title
             description
             status
+            artShow
             price
             image1 {
                 bucket
@@ -315,6 +336,7 @@ export const createArtshowArtwork = /* GraphQL */ `
                 }
                 title
                 status
+                artShow
                 price
                 image1 {
                     bucket
@@ -369,6 +391,7 @@ export const updateArtshowArtwork = /* GraphQL */ `
                 }
                 title
                 description
+                artShow
                 status
                 price
                 image1 {
@@ -425,6 +448,7 @@ export const deleteArtshowArtwork = /* GraphQL */ `
                 title
                 description
                 status
+                artShow
                 price
                 image1 {
                     bucket

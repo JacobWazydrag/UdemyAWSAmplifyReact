@@ -39,6 +39,9 @@ export const listArtshows = /* GraphQL */ `
                     items {
                         artwork {
                             id
+                            title
+                            artistNameFirst
+                            artistNameLast
                         }
                     }
                 }
@@ -93,6 +96,8 @@ export const listChatrooms = /* GraphQL */ `
             nextToken
             items {
                 id
+                originator
+                follower
                 messages {
                     items {
                         authorFirst
@@ -133,6 +138,7 @@ export const getArtwork = /* GraphQL */ `
             mediums
             isFramed
             status
+            artShow
             price
             image1 {
                 bucket
@@ -175,6 +181,7 @@ export const listArtworks = /* GraphQL */ `
                 dimensionsW
                 mediumOthersExplained
                 mediums
+                artShow
                 isFramed
                 status
                 price
@@ -228,6 +235,7 @@ export const getArtshowArtwork = /* GraphQL */ `
                 description
                 status
                 price
+                artShow
                 image1 {
                     bucket
                     region
@@ -282,6 +290,7 @@ export const listArtshowArtworks = /* GraphQL */ `
                     title
                     description
                     status
+                    artShow
                     price
                     createdAt
                     updatedAt
@@ -372,6 +381,19 @@ export const listArtshowTitles = /* GraphQL */ `
             items {
                 title
                 id
+            }
+        }
+    }
+`;
+
+export const listArtworksWithNoArtshows = /* GraphQL */ `
+    query MyQuery {
+        listArtworks(filter: { artShow: { eq: "" } }) {
+            items {
+                id
+                title
+                artistNameFirst
+                artistNameLast
             }
         }
     }

@@ -35,7 +35,6 @@ export default function App() {
     const theme = createTheme({});
 
     return (
-        // {_.size(userInfo) === 0 ? <div>Not Loaded</div> : s}
         <Authenticator>
             {({ signOut, user }) =>
                 user.getSignInUserSession().getAccessToken().payload[

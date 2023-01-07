@@ -107,6 +107,7 @@ export const ArtworkUpdateImageAdmin = (props) => {
         });
         return returnInputs;
     };
+    console.log(props.detail)
     return (
         <Authenticator>
             {({ signOut, user }) => (
